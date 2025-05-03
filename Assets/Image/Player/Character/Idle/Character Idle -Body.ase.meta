@@ -1,0 +1,500 @@
+fileFormatVersion: 2
+guid: aa2a8a226f618514cbf70514befc384c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Character Idle -Body_Frame_0
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.058823533}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 60
+      height: 102
+    spriteID: 66b45305076f4de4580ffdf85126b1b7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Character Idle -Body_Frame_1
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.058823533}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 72
+      y: 4
+      width: 60
+      height: 102
+    spriteID: 18e568a8779083844a24e6e19bc699b6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 4}
+  - name: Character Idle -Body_Frame_2
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.058823533}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 4
+      width: 60
+      height: 102
+    spriteID: 14e2c527d578ffc4b8139186823c10dc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 4}
+  - name: Character Idle -Body_Frame_3
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.058823533}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 208
+      y: 4
+      width: 60
+      height: 102
+    spriteID: 289a0f21970f039449021bf430b0752a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 208, y: 4}
+  - name: Character Idle -Body_Frame_4
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.058823533}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 4
+      width: 60
+      height: 102
+    spriteID: 857bad4dc6be8d042b22d6fd07ca81a6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 4}
+  - name: Character Idle -Body_Frame_5
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.0625}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 344
+      y: 114
+      width: 60
+      height: 96
+    spriteID: ab0a236507ae45546b0e2becbf4151db
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 344, y: 114}
+  - name: Character Idle -Body_Frame_6
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.060606062}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 412
+      y: 4
+      width: 60
+      height: 99
+    spriteID: c3ea69b00b2d33749a05c0fb1bddeea6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 412, y: 4}
+  - name: Character Idle -Body_Frame_7
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.060606062}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 114
+      width: 60
+      height: 99
+    spriteID: 85e29dd7586093a4ab746e7864e3b88f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 114}
+  - name: Character Idle -Body_Frame_8
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.060606062}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 72
+      y: 114
+      width: 60
+      height: 99
+    spriteID: 796126ddd29120449a8879556d3c16a3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 114}
+  - name: Character Idle -Body_Frame_9
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.060606062}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 114
+      width: 60
+      height: 99
+    spriteID: 80e7879da4142534cbfd29a297e9ee47
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 114}
+  - name: Character Idle -Body_Frame_10
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.060606062}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 208
+      y: 114
+      width: 60
+      height: 99
+    spriteID: beca5ed78f34e4448a806cb3cc2c0b6c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 208, y: 114}
+  - name: Character Idle -Body_Frame_11
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.060606062}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 114
+      width: 60
+      height: 99
+    spriteID: e31e37a492e748b438ca5cebb816976d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 114}
+  - name: Character Idle -Body_Frame_12
+    originalName: 
+    pivot: {x: 0.14999998, y: -0.058823533}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 344
+      y: 4
+      width: 60
+      height: 102
+    spriteID: 3ef5d550cd5a4a54ea6e1baeacdef61f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 344, y: 4}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1949676598
+    name: Character Idle -Body
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Character Idle -Body_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 102
+      spriteId: 66b45305076f4de4580ffdf85126b1b7
+    - name: Character Idle -Body_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 102
+      spriteId: 18e568a8779083844a24e6e19bc699b6
+    - name: Character Idle -Body_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 102
+      spriteId: 14e2c527d578ffc4b8139186823c10dc
+    - name: Character Idle -Body_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 102
+      spriteId: 289a0f21970f039449021bf430b0752a
+    - name: Character Idle -Body_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 102
+      spriteId: 857bad4dc6be8d042b22d6fd07ca81a6
+    - name: Character Idle -Body_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 96
+      spriteId: ab0a236507ae45546b0e2becbf4151db
+    - name: Character Idle -Body_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 99
+      spriteId: c3ea69b00b2d33749a05c0fb1bddeea6
+    - name: Character Idle -Body_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 99
+      spriteId: 85e29dd7586093a4ab746e7864e3b88f
+    - name: Character Idle -Body_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 99
+      spriteId: 796126ddd29120449a8879556d3c16a3
+    - name: Character Idle -Body_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 99
+      spriteId: 80e7879da4142534cbfd29a297e9ee47
+    - name: Character Idle -Body_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 99
+      spriteId: beca5ed78f34e4448a806cb3cc2c0b6c
+    - name: Character Idle -Body_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 99
+      spriteId: e31e37a492e748b438ca5cebb816976d
+    - name: Character Idle -Body_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 51
+        y: 6
+        width: 60
+        height: 102
+      spriteId: 3ef5d550cd5a4a54ea6e1baeacdef61f
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 120, y: 120}

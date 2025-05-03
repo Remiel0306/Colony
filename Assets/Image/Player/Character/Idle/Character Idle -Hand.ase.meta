@@ -1,0 +1,500 @@
+fileFormatVersion: 2
+guid: eeaaebb1c77cd744a98bcbce2d3d7df3
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Character Idle -Hand_Frame_0
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.8125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 87
+      height: 48
+    spriteID: fbf66fad20fdab44c8693395d25d4074
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Character Idle -Hand_Frame_1
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.8125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 60
+      width: 87
+      height: 48
+    spriteID: 26314068374df19468fe18b6d24771c1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 60}
+  - name: Character Idle -Hand_Frame_2
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.8125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 116
+      width: 87
+      height: 48
+    spriteID: f1109f40ea1e6e14aa9d954f76b5a432
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 116}
+  - name: Character Idle -Hand_Frame_3
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.8125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 172
+      width: 87
+      height: 48
+    spriteID: 914eb01f00b549145b710ffab358f658
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 172}
+  - name: Character Idle -Hand_Frame_4
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.8125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 228
+      width: 87
+      height: 48
+    spriteID: f3ed1d6e09b2e2145a16db56b106ba9a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 228}
+  - name: Character Idle -Hand_Frame_5
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.6875}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 284
+      width: 87
+      height: 48
+    spriteID: e1690ac2ca0a30144a3a6db702e8f1dd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 284}
+  - name: Character Idle -Hand_Frame_6
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 340
+      width: 87
+      height: 48
+    spriteID: afa399ad0cfdc39419e195d0ac0def30
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 340}
+  - name: Character Idle -Hand_Frame_7
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 396
+      width: 87
+      height: 48
+    spriteID: 9890cf3ed30846d4592657dcc71fb64b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 396}
+  - name: Character Idle -Hand_Frame_8
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 452
+      width: 87
+      height: 48
+    spriteID: 026d2bb410bea7e4186db62d4e1483e8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 452}
+  - name: Character Idle -Hand_Frame_9
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 99
+      y: 4
+      width: 87
+      height: 48
+    spriteID: 679bfd445fbc1e44fb57f034c9a1da0b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 99, y: 4}
+  - name: Character Idle -Hand_Frame_10
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 99
+      y: 60
+      width: 87
+      height: 48
+    spriteID: 95820c3c10198dd468a2f9e3d22c80ab
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 99, y: 60}
+  - name: Character Idle -Hand_Frame_11
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 99
+      y: 116
+      width: 87
+      height: 48
+    spriteID: 234a67091c21f164e9b4fd225e00316a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 99, y: 116}
+  - name: Character Idle -Hand_Frame_12
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.8125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 99
+      y: 172
+      width: 87
+      height: 48
+    spriteID: 383defc3eaf89f341b4645d317baf208
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 99, y: 172}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -2052694793
+    name: Character Idle -Hand
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Character Idle -Hand_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 30
+        y: 39
+        width: 87
+        height: 48
+      spriteId: fbf66fad20fdab44c8693395d25d4074
+    - name: Character Idle -Hand_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 30
+        y: 39
+        width: 87
+        height: 48
+      spriteId: 26314068374df19468fe18b6d24771c1
+    - name: Character Idle -Hand_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 30
+        y: 39
+        width: 87
+        height: 48
+      spriteId: f1109f40ea1e6e14aa9d954f76b5a432
+    - name: Character Idle -Hand_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 30
+        y: 39
+        width: 87
+        height: 48
+      spriteId: 914eb01f00b549145b710ffab358f658
+    - name: Character Idle -Hand_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 30
+        y: 39
+        width: 87
+        height: 48
+      spriteId: f3ed1d6e09b2e2145a16db56b106ba9a
+    - name: Character Idle -Hand_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 30
+        y: 33
+        width: 87
+        height: 48
+      spriteId: e1690ac2ca0a30144a3a6db702e8f1dd
+    - name: Character Idle -Hand_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 30
+        y: 36
+        width: 87
+        height: 48
+      spriteId: afa399ad0cfdc39419e195d0ac0def30
+    - name: Character Idle -Hand_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 30
+        y: 36
+        width: 87
+        height: 48
+      spriteId: 9890cf3ed30846d4592657dcc71fb64b
+    - name: Character Idle -Hand_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 30
+        y: 36
+        width: 87
+        height: 48
+      spriteId: 026d2bb410bea7e4186db62d4e1483e8
+    - name: Character Idle -Hand_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 30
+        y: 36
+        width: 87
+        height: 48
+      spriteId: 679bfd445fbc1e44fb57f034c9a1da0b
+    - name: Character Idle -Hand_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 30
+        y: 36
+        width: 87
+        height: 48
+      spriteId: 95820c3c10198dd468a2f9e3d22c80ab
+    - name: Character Idle -Hand_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 30
+        y: 36
+        width: 87
+        height: 48
+      spriteId: 234a67091c21f164e9b4fd225e00316a
+    - name: Character Idle -Hand_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 30
+        y: 39
+        width: 87
+        height: 48
+      spriteId: 383defc3eaf89f341b4645d317baf208
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 120, y: 120}
