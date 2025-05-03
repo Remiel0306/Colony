@@ -63,15 +63,15 @@ public class PlayerControl : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
-            bodyAnimator.SetBool("isMoving", true);
-            gunAnimator.SetBool("isMoving", true);
-            handAnimator.SetBool("isMoving", true);
+            //bodyAnimator.SetBool("isMoving", true);
+            //gunAnimator.SetBool("isMoving", true);
+            //handAnimator.SetBool("isMoving", true);
         }
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
-            bodyAnimator.SetBool("isMoving", false);
-            gunAnimator.SetBool("isMoving", false);
-            handAnimator.SetBool("isMoving", false);
+            //bodyAnimator.SetBool("isMoving", false);
+            //gunAnimator.SetBool("isMoving", false);
+            //handAnimator.SetBool("isMoving", false);
         }
 
         if(onCrossGround && Input.GetKeyDown(KeyCode.S))
