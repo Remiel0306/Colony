@@ -55,26 +55,27 @@ public class PlayerControl : MonoBehaviour
         else if(Input.GetKey(KeyCode.D))
         {
             facingCheck = 1f;
-        }        
-        if(facingCheck != 0)
+        }
+        if (facingCheck != 0)
         {
             rb2D.velocity = new Vector2(facingCheck * Speed, rb2D.velocity.y);
         }
 
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        if (facingCheck != 0)
         {
-            //bodyAnimator.SetBool("isMoving", true);
-            //gunAnimator.SetBool("isMoving", true);
-            //handAnimator.SetBool("isMoving", true);
-        }
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-        {
-            //bodyAnimator.SetBool("isMoving", false);
-            //gunAnimator.SetBool("isMoving", false);
-            //handAnimator.SetBool("isMoving", false);
+            bodyAnimator.SetBool("isMoving", true);
+            gunAnimator.SetBool("isMoving", true);
+            handAnimator.SetBool("isMoving", true);
         }
 
-        if(onCrossGround && Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        {
+            bodyAnimator.SetBool("isMoving", false);
+            gunAnimator.SetBool("isMoving", false);
+            handAnimator.SetBool("isMoving", false);
+        }
+
+        if (onCrossGround && Input.GetKeyDown(KeyCode.S))
         {
             boxCollider2D.enabled = false;
             StartCoroutine(ColliderBack());

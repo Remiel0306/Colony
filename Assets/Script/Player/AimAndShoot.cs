@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class AimAndShoot : MonoBehaviour
 {
-    [SerializeField] Shotgun shotgun;
+    [SerializeField] Shotgun shotgunScript;
     [SerializeField] GameObject gun;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shotgunBullet;
@@ -47,15 +47,21 @@ public class AimAndShoot : MonoBehaviour
 
         if (isAim)
         {
-            if (shotgun.isShotgun && shotgun.shotgunCanShoot)
+            if (shotgunScript.isShotgun && shotgunScript.shotgunCanShoot)
             {
                 HandleGunRotation();
-                ShotgunShoot();
+                if (shotgunScript.canShoot)
+                {
+                    ShotgunShoot();
+                }
             }
             else
             {
                 HandleGunRotation();
-                HandleGunShooting();
+                if (shotgunScript.canShoot)
+                {
+                    HandleGunShooting();
+                }
             }
         }
         else
