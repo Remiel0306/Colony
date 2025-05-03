@@ -11,6 +11,8 @@ TagManager:
   - Normal Bullet
   - CrossGround
   - Ground
+  - Fly Bug
+  - Boom
   layers:
   - Default
   - TransparentFX

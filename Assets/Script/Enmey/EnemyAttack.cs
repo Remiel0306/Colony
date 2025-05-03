@@ -9,7 +9,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] bool facingRight = false;
     [SerializeField] bool showUp = false;
     [SerializeField] bool attackAgain = true;
-    [SerializeField] float speed = 7f;
+    [SerializeField] float speed;
     [SerializeField] Transform playerTransform;
     [SerializeField] GameObject boomObj;
     [SerializeField] LayerMask boomAttackLayer;
@@ -47,7 +47,6 @@ public class EnemyAttack : MonoBehaviour
     void Update()
     {
         Debug.Log("isDied: " + enemyScript.isDied);
-        Debug.Log("Boom: " + IsBoomAttack());
 
         if (showUp)
         {
@@ -55,18 +54,23 @@ public class EnemyAttack : MonoBehaviour
             childSR.color = color;
         }
 
-        if (move && enemyScript.contactPlayer == false && IsPlatformAhead())
+        if (move && enemyScript.contactPlayer == false && IsPlatformAhead() && !enemyScript.isStop)
         {
             if (facingRight)
             {
-                transform.position += new Vector3(speed * Time.deltaTime, 0f, 0f);
+                rb2D.velocity = new Vector3(speed * Time.deltaTime, 0f, 0f);
                 StartCoroutine(StopAttack());
             }
             if (!facingRight)
             {
-                transform.position += new Vector3(-speed * Time.deltaTime, 0f, 0f);
+                rb2D.velocity = new Vector3(-speed * Time.deltaTime, 0f, 0f);
                 StartCoroutine(StopAttack());
             }
+        }
+
+        if (enemyScript.isStop)
+        {
+            StartCoroutine(AttackAgain());
         }
 
         if(IsPlatformAhead())
@@ -114,7 +118,8 @@ public class EnemyAttack : MonoBehaviour
 
         if (enemyScript.isDied)
         {
-            Boom();
+            speed = 0f;
+            StartCoroutine(Boom());
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -168,6 +173,7 @@ public class EnemyAttack : MonoBehaviour
 
         move = true;
         attackAgain = false;
+        enemyScript.isStop = false;
     }
     bool IsPlatformAhead()
     {
@@ -182,12 +188,7 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(attackAgainTime);
 
-        IsBoomAttack();
+        boomObj.SetActive(true);
         enemyScript.isDied = true;
-    }
-
-    public bool IsBoomAttack()
-    {
-        return Physics2D.OverlapCircle(transform.position, 1.4f, boomAttackLayer);
     }
 }

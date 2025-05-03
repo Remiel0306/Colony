@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public bool isDied = false;
     public bool contactPlayer = false;
-    private float currentHealth;
+    public bool isStop = false;
+    float currentHealth;
     Rigidbody2D rb2DParent;
 
     void Start()
@@ -20,7 +21,10 @@ public class Enemy : MonoBehaviour, IDamageable
     }
     private void Update()
     {
-
+        if (isStop)
+        {
+            //OnTriggerEnter2D("Shotgun Bullet");
+        }
     }
     public void Damage(float damageAmount)
     {
@@ -48,16 +52,16 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.CompareTag("Shotgun Bullet"))
         {
-            Debug.Log("is shotgun bullet");
-
             Vector2 direction = (transform.position - collision.transform.position).normalized;
             rb2DParent.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
+
+            isStop = true;
         }
     }
 
     IEnumerator Died()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(3f);
 
         gameObject.SetActive(false);
     }

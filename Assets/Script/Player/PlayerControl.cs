@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -17,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float jumpMultiplier;
     [SerializeField] float coyoteTime;
     [SerializeField] float jumpBufferTime;
+    [SerializeField] float boomForce;
     [SerializeField] BoxCollider2D boxCollider2D;
     
     public Rigidbody2D rb2D;
@@ -29,6 +31,7 @@ public class PlayerControl : MonoBehaviour
     bool doublejump;
     bool isJumping;
     bool onCrossGround = false;
+    bool isBoom = false;
     float jumpCounter;
     float coyoteTimeCounter;
     float jumpBufferCounter;
@@ -45,7 +48,7 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        Debug.Log("CrossGround " + onCrossGround);
+        Debug.Log("Boom " + isBoom);
 
         float facingCheck = 0f;
         if (Input.GetKey(KeyCode.A))
@@ -173,6 +176,14 @@ public class PlayerControl : MonoBehaviour
         {
             bodyAnimator.Play("Double Jump Body");
         }
+
+        if (isBoom)
+        {
+            Vector2 boomDirction = -gameObject.transform.right;
+            rb2D.AddForce(boomDirction * boomForce, ForceMode2D.Impulse);
+
+            isBoom = false;
+        }
     }
 
     private void Flip()
@@ -202,7 +213,14 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    IEnumerator ColliderBack()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Boom"))
+        {
+            isBoom = true;
+        }
+    }
+IEnumerator ColliderBack()
     {
         yield return new WaitForSeconds(.2f);
 
