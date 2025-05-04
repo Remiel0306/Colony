@@ -1,22 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UiManager;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] EnemyAttack enemyAttack;
-    [SerializeField] float playerHp = 15;
-    [SerializeField] float bugBoomDamage = 3f;
+    [SerializeField] UiManager uiManager;
+    [SerializeField] int maxHealth = 5;
+    [SerializeField] int boomDamage = 2;
+    [SerializeField] int boomBugDamage = 1;
 
-    // Start is called before the first frame update
+    public int currentHealth;
+
     void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("BoomBug"))
+        {
+            currentHealth -= boomBugDamage;
 
+            Debug.Log("Touch");
+        }
+
+        if (collision.gameObject.CompareTag("Boom"))
+        {
+            currentHealth -= boomDamage;
+        }
     }
 }

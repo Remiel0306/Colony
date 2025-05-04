@@ -13,8 +13,8 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] Transform playerTransform;
     [SerializeField] GameObject boomObj;
-    [SerializeField] LayerMask boomAttackLayer;
     [SerializeField] Animator boomAnimator;
+    [SerializeField] BoxCollider2D bodyCollider;
     [SerializeField] private ScreenShakeProfile boomProfile;
 
     public float stopAttackTime = 1.5f;
@@ -44,6 +44,7 @@ public class EnemyAttack : MonoBehaviour
         color.a = 0.2f;
         childSR.color = color;
         boomObj.SetActive(false);
+        bodyCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -163,6 +164,7 @@ public class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(showUpTime);
 
         move = true;
+        bodyCollider.enabled = true;
     }
 
     IEnumerator StopAttack()

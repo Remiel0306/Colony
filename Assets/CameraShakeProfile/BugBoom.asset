@@ -12,53 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f071c2acb2eb094289afe677d90b229, type: 3}
   m_Name: BugBoom
   m_EditorClassIdentifier: 
-  impactTime: 0.14
-  impactForce: 1
-  defaultVelocity: {x: 0.5, y: 0.2, z: 0}
+  impactTime: 0.012
+  impactForce: 1.8
+  defaultVelocity: {x: 0.6, y: 0.2, z: 0}
   impactCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -3.6179323
-      outSlope: -3.6179323
-      tangentMode: 34
+      inSlope: -3.838542
+      outSlope: -3.838542
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.40570137
+    - serializedVersion: 3
+      time: 0.17658748
+      value: 0.4905876
+      inSlope: -0.02399174
+      outSlope: -0.02399174
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.74643666
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.16766109
-      value: 0.39341354
-      inSlope: -0.5532335
-      outSlope: -0.5532335
+      time: 0.41248184
+      value: 1.453166
+      inSlope: -0.19551158
+      outSlope: -0.19551158
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.46893936
-      value: 1.1500635
-      inSlope: 0.6166504
-      outSlope: 0.6166504
-      tangentMode: 34
+      time: 0.5574696
+      value: 0.8048428
+      inSlope: -0.31352493
+      outSlope: -0.31352493
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.70030713
-      value: 0.85433745
-      inSlope: -0.39606255
-      outSlope: -0.39606255
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.11771157
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.4860394
-      outSlope: 0.4860394
+      inSlope: 0.44100288
+      outSlope: 0.44100288
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

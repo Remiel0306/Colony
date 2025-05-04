@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
+    [SerializeField] PlayerManager playerManager;
     [SerializeField] GameObject detectorUi;
+    [SerializeField] GameObject[] healthBlocks;
 
     public int openDetector = 0;
 
@@ -31,5 +33,13 @@ public class UiManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void UpdateHp()
+    {
+        for (int i = playerManager.currentHealth; i < 6; i--)
+        {
+            healthBlocks[i].SetActive(false);
+        }
     }
 }
