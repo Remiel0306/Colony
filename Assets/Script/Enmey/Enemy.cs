@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     IEnumerator Died()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(.7f);
 
         gameObject.SetActive(false);
     }

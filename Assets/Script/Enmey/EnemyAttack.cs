@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Tilemaps;
@@ -13,6 +14,8 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] Transform playerTransform;
     [SerializeField] GameObject boomObj;
     [SerializeField] LayerMask boomAttackLayer;
+    [SerializeField] Animator boomAnimator;
+    [SerializeField] private ScreenShakeProfile boomProfile;
 
     public float stopAttackTime = 1.5f;
     public float attackAgainTime = 1.5f;
@@ -22,8 +25,9 @@ public class EnemyAttack : MonoBehaviour
     Enemy enemyScript;
     Rigidbody2D rb2D;
     BoxCollider2D bc2D;
-    CapsuleCollider2D childCC;
     SpriteRenderer childSR;
+    CinemachineImpulseSource impulseSource;
+
     Color color;
 
     public GameObject bugBody;
@@ -33,13 +37,12 @@ public class EnemyAttack : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         bc2D = GetComponent<BoxCollider2D>();
         childSR = GetComponentInChildren<SpriteRenderer>();
-        childCC = GetComponentInChildren<CapsuleCollider2D>();
         enemyScript = GetComponentInChildren<Enemy>();
-        color = childSR.color;
+        impulseSource = GetComponent<CinemachineImpulseSource>();
 
+        color = childSR.color;
         color.a = 0.2f;
         childSR.color = color;
-        childCC.enabled = false;
         boomObj.SetActive(false);
     }
 
@@ -56,6 +59,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (move && enemyScript.contactPlayer == false && IsPlatformAhead() && !enemyScript.isStop)
         {
+            boomAnimator.SetBool("isMoving", true);
             if (facingRight)
             {
                 rb2D.velocity = new Vector3(speed * Time.deltaTime, 0f, 0f);
@@ -64,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
             if (!facingRight)
             {
                 rb2D.velocity = new Vector3(-speed * Time.deltaTime, 0f, 0f);
-                StartCoroutine(StopAttack());
+                StartCoroutine(StopAttack());;
             }
         }
 
@@ -119,7 +123,10 @@ public class EnemyAttack : MonoBehaviour
         if (enemyScript.isDied)
         {
             speed = 0f;
+            boomAnimator.Play("Boom Bug Boom");
             StartCoroutine(Boom());
+
+            enemyScript.isDied = false;
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -156,7 +163,6 @@ public class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(showUpTime);
 
         move = true;
-        childCC.enabled = true;
     }
 
     IEnumerator StopAttack()
@@ -165,6 +171,8 @@ public class EnemyAttack : MonoBehaviour
 
         move = false;
         attackAgain = true;
+
+        boomAnimator.SetBool("isMoving", false);
     }
 
     IEnumerator AttackAgain()
@@ -186,8 +194,9 @@ public class EnemyAttack : MonoBehaviour
     }
     IEnumerator Boom()
     {
-        yield return new WaitForSeconds(attackAgainTime);
+        yield return new WaitForSeconds(.4f);
 
+        CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
         boomObj.SetActive(true);
         enemyScript.isDied = true;
     }
