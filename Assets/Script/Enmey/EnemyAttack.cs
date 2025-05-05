@@ -126,8 +126,6 @@ public class EnemyAttack : MonoBehaviour
             speed = 0f;
             boomAnimator.Play("Boom Bug Boom");
             StartCoroutine(Boom());
-
-            enemyScript.isDied = false;
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -201,5 +199,6 @@ public class EnemyAttack : MonoBehaviour
         CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
         boomObj.SetActive(true);
         enemyScript.isDied = true;
+        enemyScript.isDied = false;
     }
 }

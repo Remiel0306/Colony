@@ -30,10 +30,15 @@ public class PlayerManager : MonoBehaviour
 
             Debug.Log("Touch");
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Boom"))
         {
             currentHealth -= boomDamage;
+
+            Debug.Log("Boom Attack");
         }
     }
 }

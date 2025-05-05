@@ -7,12 +7,14 @@ public class UiManager : MonoBehaviour
     [SerializeField] PlayerManager playerManager;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
+    [SerializeField] GameObject one;
 
     public int openDetector = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         detectorUi.SetActive(false);
     }
 
@@ -33,13 +35,26 @@ public class UiManager : MonoBehaviour
             }
         }
 
+        UpdateHp();
+        //if (playerManager.currentHealth == 3)
+        //{
+        //    healthBlocks[0].SetActive(false);
+        //    one.SetActive(false);
+        //}
     }
 
     public void UpdateHp()
     {
-        for (int i = playerManager.currentHealth; i < 6; i--)
+        for (int i = 0; i < healthBlocks.Length; i++)
         {
-            healthBlocks[i].SetActive(false);
+            if (i < playerManager.currentHealth)
+            {
+                healthBlocks[i].SetActive(true);  // 還有血：打開
+            }
+            else
+            {
+                healthBlocks[i].SetActive(false); // 沒血了：關閉
+            }
         }
     }
 }
