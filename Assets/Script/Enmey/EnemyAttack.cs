@@ -1,38 +1,43 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] bool move = false;
+    [SerializeField] UiManager uiManager;
+    [SerializeField] EnemyManager enemyManagerScript;
     [SerializeField] bool facingRight = false;
-    [SerializeField] bool showUp = false;
     [SerializeField] bool attackAgain = true;
-    [SerializeField] float speed;
+    [SerializeField] public float speed;
     [SerializeField] Transform playerTransform;
     [SerializeField] GameObject boomObj;
-    [SerializeField] Animator boomAnimator;
+    [SerializeField] public Animator boomAnimator;
     [SerializeField] BoxCollider2D bodyCollider;
     [SerializeField] BoxCollider2D hitTrigger;
     [SerializeField] BoxCollider2D groundCheck;
     [SerializeField] private ScreenShakeProfile boomProfile;
 
+
+    public GameObject bugBody;
     public float stopAttackTime = 1.5f;
     public float attackAgainTime = 1.5f;
     public float showUpTime = 1.5f;
-    bool playerEnter = false;
+    bool showUp = false;
+    bool isMove = false;
+    bool isTurning = false;
 
     Enemy enemyScript;
     Rigidbody2D rb2D;
     BoxCollider2D bc2D;
     SpriteRenderer childSR;
     CinemachineImpulseSource impulseSource;
+    public Vector3 startPosition;
 
     Color color;
 
-    public GameObject bugBody;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +53,8 @@ public class EnemyAttack : MonoBehaviour
         boomObj.SetActive(false);
         bodyCollider.enabled = false;
         hitTrigger.enabled = false;
+
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -55,13 +62,18 @@ public class EnemyAttack : MonoBehaviour
     {
         Debug.Log("isDied: " + enemyScript.isDied);
 
+        if (enemyManagerScript.isRespawn)
+        {
+            enemyManagerScript.isRespawn = false;
+        }
+
         if (showUp)
         {
             color.a = Mathf.Lerp(color.a, 1f, Time.deltaTime * 1f);
             childSR.color = color;
         }
 
-        if (move && enemyScript.contactPlayer == false && IsPlatformAhead() && !enemyScript.isStop)
+        if (isMove && !enemyScript.contactPlayer && IsPlatformAhead() && !enemyScript.isStop)
         {
             boomAnimator.SetBool("isMoving", true);
             if (facingRight)
@@ -72,7 +84,7 @@ public class EnemyAttack : MonoBehaviour
             if (!facingRight)
             {
                 rb2D.velocity = new Vector3(-speed * Time.deltaTime, 0f, 0f);
-                StartCoroutine(StopAttack());;
+                StartCoroutine(StopAttack()); ;
             }
         }
 
@@ -81,14 +93,14 @@ public class EnemyAttack : MonoBehaviour
             StartCoroutine(AttackAgain());
         }
 
-        if(IsPlatformAhead())
+        if (IsPlatformAhead())
         {
             if (attackAgain) //After attack wait few seconds and use Coroutine to controller bool-move
             {
                 StartCoroutine(AttackAgain());
                 enemyScript.contactPlayer = false;
 
-                if(transform.position.x > playerTransform.position.x)
+                if (transform.position.x > playerTransform.position.x)
                 {
                     facingRight = false;
                     if (!facingRight)
@@ -102,12 +114,12 @@ public class EnemyAttack : MonoBehaviour
                     if (facingRight)
                     {
                         transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                    }   
+                    }
                 }
             }
         }
 
-        if(IsPlatformAhead() == false)
+        if (IsPlatformAhead() == false)
         {
             FaceingPlayer();
         }
@@ -116,12 +128,13 @@ public class EnemyAttack : MonoBehaviour
         if (bugBody != null && !bugBody.activeSelf)
         {
             gameObject.SetActive(false);
-            move = false;
+            isMove = false;
         }
 
         if (enemyScript.contactPlayer == true)
         {
-            move = false;
+            isMove = false;
+            enemyScript.contactPlayer = false;
         }
 
         if (enemyScript.isDied)
@@ -130,11 +143,16 @@ public class EnemyAttack : MonoBehaviour
             boomAnimator.Play("Boom Bug Boom");
             StartCoroutine(Boom());
         }
+
+        if (!IsPlatformAhead() && !isTurning)
+        {
+            StartCoroutine(HandleTurnOnEdge());
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {            
+        {
             showUp = true;
             FaceingPlayer();
             StartCoroutine(StartMoving());
@@ -154,7 +172,7 @@ public class EnemyAttack : MonoBehaviour
             Flip();
             facingRight = true;
         }
-        if(transform.position.x > playerTransform.position.x && facingRight)
+        if (transform.position.x > playerTransform.position.x && facingRight)
         {
             Flip();
             facingRight = false;
@@ -165,7 +183,7 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(showUpTime);
 
-        move = true;
+        isMove = true;
         bodyCollider.enabled = true;
         hitTrigger.enabled = true;
     }
@@ -174,7 +192,7 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(stopAttackTime);
 
-        move = false;
+        isMove = false;
         attackAgain = true;
     }
 
@@ -182,7 +200,7 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(attackAgainTime);
 
-        move = true;
+        isMove = true;
         attackAgain = false;
         enemyScript.isStop = false;
     }
@@ -203,5 +221,35 @@ public class EnemyAttack : MonoBehaviour
         boomObj.SetActive(true);
         enemyScript.isDied = true;
         enemyScript.isDied = false;
+    }
+
+    IEnumerator HandleTurnOnEdge()
+    {
+        isTurning = true;
+        isMove = false; // °±¤U¨Ó
+        FaceingPlayer(); // Â½Âà
+        yield return new WaitForSeconds(0.5f);
+        isMove = true;
+        isTurning = false;
+        boomAnimator.SetBool("isMoving", false);
+    }
+
+    public void BugDead()
+    {
+        speed = 0f;
+        boomAnimator.Play("Boom Bug Boom");
+        StartCoroutine(Boom());
+    }
+    public void Respawn()
+    {
+        boomObj.SetActive(false);
+        enemyManagerScript.isRespawn = false;
+    }
+
+    public void Rest()
+    {
+        showUp = false;
+        isMove = false;
+        attackAgain = false;
     }
 }

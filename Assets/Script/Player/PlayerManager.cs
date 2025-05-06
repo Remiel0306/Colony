@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int toxicMucus = 1;
     [SerializeField] int respawnHealth = 3;
 
-    public bool isDead = false;
+    public bool isPlayerDead = false;
     public bool isRespawn = false;
     public int currentHealth;
 
@@ -23,12 +23,14 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("isDead: " + isPlayerDead);
+
         if(currentHealth <= 0)
         {
-            isDead = true;
+            isPlayerDead = true;
         }
 
-        if (isDead)
+        if (isPlayerDead)
         {
             gameObject.SetActive(false);
         }
