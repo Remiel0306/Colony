@@ -15,6 +15,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] GameObject boomObj;
     [SerializeField] Animator boomAnimator;
     [SerializeField] BoxCollider2D bodyCollider;
+    [SerializeField] BoxCollider2D hitTrigger;
     [SerializeField] private ScreenShakeProfile boomProfile;
 
     public float stopAttackTime = 1.5f;
@@ -45,6 +46,7 @@ public class EnemyAttack : MonoBehaviour
         childSR.color = color;
         boomObj.SetActive(false);
         bodyCollider.enabled = false;
+        hitTrigger.enabled = false;
     }
 
     // Update is called once per frame
@@ -163,6 +165,7 @@ public class EnemyAttack : MonoBehaviour
 
         move = true;
         bodyCollider.enabled = true;
+        hitTrigger.enabled = true;
     }
 
     IEnumerator StopAttack()

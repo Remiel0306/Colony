@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f071c2acb2eb094289afe677d90b229, type: 3}
   m_Name: BugBoom
   m_EditorClassIdentifier: 
-  impactTime: 0.012
-  impactForce: 1.8
+  impactTime: 0.0012
+  impactForce: 0.8
   defaultVelocity: {x: 0.6, y: 0.2, z: 0}
   impactCurve:
     serializedVersion: 2
@@ -28,8 +28,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.40570137
     - serializedVersion: 3
-      time: 0.17658748
-      value: 0.4905876
+      time: 0.084142104
+      value: 0.5155815
       inSlope: -0.02399174
       outSlope: -0.02399174
       tangentMode: 0
@@ -37,28 +37,28 @@ MonoBehaviour:
       inWeight: 0.74643666
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.41248184
-      value: 1.453166
-      inSlope: -0.19551158
-      outSlope: -0.19551158
+      time: 0.22758347
+      value: 1.5094137
+      inSlope: 0.9567349
+      outSlope: 0.9567349
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5574696
-      value: 0.8048428
-      inSlope: -0.31352493
-      outSlope: -0.31352493
+      time: 0.37555432
+      value: 0.7673367
+      inSlope: -1.1986367
+      outSlope: -1.1986367
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.11771157
+      outWeight: 0.35083187
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.44100288
-      outSlope: 0.44100288
+      time: 0.5109253
+      value: 1.012497
+      inSlope: 1.8110251
+      outSlope: 1.8110251
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

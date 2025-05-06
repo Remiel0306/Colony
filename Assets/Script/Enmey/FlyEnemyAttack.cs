@@ -15,7 +15,7 @@ public class FlyEnemyAttack : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Transform playerTransform;
     [SerializeField] float speed = 5f;
-    [SerializeField] Enemy enemyScript;
+    [SerializeField] FlyEnemy flyEnemyScript;
     [SerializeField] FlyBug flyBug;
     [SerializeField] Animator flyBugAnimator;
 
@@ -41,9 +41,9 @@ public class FlyEnemyAttack : MonoBehaviour
     {
         StateMachine();
 
-        if(currentState != FlyBugState.Attack && enemyScript.contactPlayer == true)
+        if(currentState != FlyBugState.Attack && flyEnemyScript.contactPlayer == true)
         {
-            enemyScript.contactPlayer = false;
+            flyEnemyScript.contactPlayer = false;
         }
 
         if (currentState == FlyBugState.Attack && flyBug.isTouchGround)
@@ -52,7 +52,7 @@ public class FlyEnemyAttack : MonoBehaviour
             flyBug.isTouchGround = false;
         }
 
-        if (enemyScript.isDied)
+        if (flyEnemyScript.isDied)
         {
             currentState = FlyBugState.AttackToBack;
             flyBugAnimator.Play("Fly Bug Death");
@@ -85,14 +85,14 @@ public class FlyEnemyAttack : MonoBehaviour
             case FlyBugState.Attack:
                 DoAttack();
 
-                if (Vector3.Distance(transform.position, targetCurrentPosition) < 0.2f || enemyScript.contactPlayer)
+                if (Vector3.Distance(transform.position, targetCurrentPosition) < 0.2f || flyEnemyScript.contactPlayer)
                 {
                     currentState = FlyBugState.AttackToBack;
                 }
                 break;
 
             case FlyBugState.AttackToBack:
-                enemyScript.contactPlayer = false;
+                flyEnemyScript.contactPlayer = false;
                 StartCoroutine(FinishAttack());
                 currentState = FlyBugState.Stay; // 防止重複啟動協程
                 break;

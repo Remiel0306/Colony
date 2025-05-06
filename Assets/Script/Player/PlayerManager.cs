@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UiManager;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int maxHealth = 5;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
+    [SerializeField] int flyBugDamage = 1;
+    [SerializeField] int toxicMucus = 1;
 
     public int currentHealth;
 
@@ -24,11 +25,9 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("BoomBug"))
+        if(collision.gameObject.CompareTag("Fly Bug"))
         {
-            currentHealth -= boomBugDamage;
-
-            Debug.Log("Touch");
+            currentHealth -= flyBugDamage;
         }
     }
 
@@ -39,6 +38,18 @@ public class PlayerManager : MonoBehaviour
             currentHealth -= boomDamage;
 
             Debug.Log("Boom Attack");
+        }
+
+        if (collision.gameObject.CompareTag("BoomBug"))
+        {
+            currentHealth -= boomBugDamage;
+
+            Debug.Log("Touch");
+        }
+
+        if(collision.gameObject.CompareTag("Toxic Mucus"))
+        {
+            currentHealth -= toxicMucus;
         }
     }
 }

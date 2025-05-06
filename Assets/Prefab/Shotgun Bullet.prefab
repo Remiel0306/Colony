@@ -173,7 +173,7 @@ MonoBehaviour:
   physicsBulletDamage: 2
   shotgunBulletSpeed: 35
   shotgunBulletDamage: 0.2
-  shotgunBulletDestoryTime: 0.1
+  shotgunBulletDestoryTime: 0.15
   bulletType: 2
 --- !u!114 &5156042055315458802
 MonoBehaviour:

@@ -32,10 +32,11 @@ public class PlayerControl : MonoBehaviour
     bool isJumping;
     bool onCrossGround = false;
     bool isBoom = false;
+    bool isFlip = false;
     float jumpCounter;
     float coyoteTimeCounter;
     float jumpBufferCounter;
-
+    Coroutine moveCoroutine;
     
     // Start is called before the first frame update
     void Start()
@@ -47,31 +48,64 @@ public class PlayerControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        Debug.Log("Boom " + isBoom);
+    {
+        //float facingCheck = 0f;
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    facingCheck = -1f;
+        //}
+        //else if(Input.GetKey(KeyCode.D))
+        //{
+        //    facingCheck = 1f;
+        //}
+        //if (facingCheck != 0)
+        //{
+        //    rb2D.velocity = new Vector2(facingCheck * Speed, rb2D.velocity.y);
+        //}
 
+        //if (facingCheck != 0)
+        //{
+        //    bodyAnimator.SetBool("isMoving", true);
+        //    gunAnimator.SetBool("isMoving", true);
+        //    handAnimator.SetBool("isMoving", true);
+        //}
+
+        //if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        //{
+        //    bodyAnimator.SetBool("isMoving", false);
+        //    gunAnimator.SetBool("isMoving", false);
+        //    handAnimator.SetBool("isMoving", false);
+        //}
         float facingCheck = 0f;
         if (Input.GetKey(KeyCode.A))
         {
-            facingCheck = - 1f;
+            facingCheck = -1f;
         }
-        else if(Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             facingCheck = 1f;
         }
-        if (facingCheck != 0)
-        {
-            rb2D.velocity = new Vector2(facingCheck * Speed, rb2D.velocity.y);
-        }
 
+        // 延遲移動控制（如果角色翻轉了，延遲一幀才移動）
         if (facingCheck != 0)
         {
+            if ((facingCheck > 0 && !facingRight) || (facingCheck < 0 && facingRight))
+            {
+                Flip();
+                if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+                moveCoroutine = StartCoroutine(DelayedMove(facingCheck));
+            }
+            else
+            {
+                rb2D.velocity = new Vector2(facingCheck * Speed, rb2D.velocity.y);
+            }
+
+            // 移動動畫
             bodyAnimator.SetBool("isMoving", true);
             gunAnimator.SetBool("isMoving", true);
             handAnimator.SetBool("isMoving", true);
         }
-
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        else
         {
             bodyAnimator.SetBool("isMoving", false);
             gunAnimator.SetBool("isMoving", false);
@@ -220,10 +254,15 @@ public class PlayerControl : MonoBehaviour
             isBoom = true;
         }
     }
-IEnumerator ColliderBack()
+    IEnumerator ColliderBack()
     {
         yield return new WaitForSeconds(.2f);
 
         boxCollider2D.enabled = true;
+    }
+    IEnumerator DelayedMove(float direction)
+    {
+        yield return null; // 等待 1 frame
+        rb2D.velocity = new Vector2(direction * Speed, rb2D.velocity.y);
     }
 }
