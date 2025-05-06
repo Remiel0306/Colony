@@ -16,6 +16,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] Animator boomAnimator;
     [SerializeField] BoxCollider2D bodyCollider;
     [SerializeField] BoxCollider2D hitTrigger;
+    [SerializeField] BoxCollider2D groundCheck;
     [SerializeField] private ScreenShakeProfile boomProfile;
 
     public float stopAttackTime = 1.5f;
@@ -137,6 +138,7 @@ public class EnemyAttack : MonoBehaviour
             showUp = true;
             FaceingPlayer();
             StartCoroutine(StartMoving());
+            boomAnimator.SetBool("isMoving", false);
         }
     }
 
@@ -174,8 +176,6 @@ public class EnemyAttack : MonoBehaviour
 
         move = false;
         attackAgain = true;
-
-        boomAnimator.SetBool("isMoving", false);
     }
 
     IEnumerator AttackAgain()

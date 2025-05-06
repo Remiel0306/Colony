@@ -10,7 +10,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
     [SerializeField] int toxicMucus = 1;
+    [SerializeField] int respawnHealth = 3;
 
+    public bool isDead = false;
+    public bool isRespawn = false;
     public int currentHealth;
 
     void Start()
@@ -20,7 +23,20 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        
+        if(currentHealth <= 0)
+        {
+            isDead = true;
+        }
+
+        if (isDead)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if(isRespawn)
+        {
+            currentHealth = respawnHealth;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
