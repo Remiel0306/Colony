@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int toxicMucus = 1;
     [SerializeField] int respawnHealth = 3;
 
-    public bool isDead = false;
+    public bool isPlayerDead = false;
     public bool isRespawn = false;
     public int currentHealth;
 
@@ -23,12 +23,13 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        if(currentHealth <= 0)
+        if (currentHealth <= 0 && !isPlayerDead)
         {
-            isDead = true;
+            isPlayerDead = true;
+            gameObject.SetActive(false); // ✅ 只在第一次設死的那一刻執行一次
         }
 
-        if (isDead)
+        if (isPlayerDead)
         {
             gameObject.SetActive(false);
         }
