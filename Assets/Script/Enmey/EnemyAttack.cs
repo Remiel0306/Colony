@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [SerializeField] BugGroundCheck bugGroundCheck;
     [SerializeField] bool move = false;
     [SerializeField] bool facingRight = false;
     [SerializeField] bool showUp = false;
@@ -78,10 +79,17 @@ public class EnemyAttack : MonoBehaviour
 
         if (enemyScript.isStop)
         {
-            StartCoroutine(AttackAgain());
+            move = false;
+            StartCoroutine(StopAttack());
+            enemyScript.isStop = false;
+
+            Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
+            float knockbackForce = 5f;
+
+            rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
         }
 
-        if(IsPlatformAhead())
+        if (IsPlatformAhead())
         {
             if (attackAgain) //After attack wait few seconds and use Coroutine to controller bool-move
             {
@@ -111,6 +119,19 @@ public class EnemyAttack : MonoBehaviour
         {
             FaceingPlayer();
         }
+
+        if (!IsGrounded())
+        {
+            move = false;
+            boomAnimator.SetBool("isMoving", false);
+        }
+
+        //if (!bugGroundCheck.isGrounded)
+        //{
+        //    move = false;
+        //    StartCoroutine(StopAttack());
+        //    boomAnimator.SetBool("isMoving", false);
+        //}
 
 
         if (bugBody != null && !bugBody.activeSelf)
@@ -174,6 +195,7 @@ public class EnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(stopAttackTime);
 
+        enemyScript.contactPlayer = false;
         move = false;
         attackAgain = true;
     }
@@ -185,6 +207,7 @@ public class EnemyAttack : MonoBehaviour
         move = true;
         attackAgain = false;
         enemyScript.isStop = false;
+        boomAnimator.SetBool("isMoving", false);
     }
     bool IsPlatformAhead()
     {
@@ -195,6 +218,10 @@ public class EnemyAttack : MonoBehaviour
 
         return hit.collider != null;
     }
+    bool IsGrounded()
+    {
+        return Physics2D.OverlapBox(groundCheck.bounds.center, groundCheck.bounds.size, 0f, LayerMask.GetMask("Ground"));
+    }
     IEnumerator Boom()
     {
         yield return new WaitForSeconds(.4f);
@@ -203,5 +230,13 @@ public class EnemyAttack : MonoBehaviour
         boomObj.SetActive(true);
         enemyScript.isDied = true;
         enemyScript.isDied = false;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.GetMask("Ground"))
+        {
+            StartCoroutine(StopAttack());
+        }
     }
 }

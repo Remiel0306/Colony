@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    IEnumerator Died()
+    public IEnumerator Died()
     {
         yield return new WaitForSeconds(.7f);
 

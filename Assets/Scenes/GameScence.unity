@@ -2732,7 +2732,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1619611487
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.9150943, g: 0.24747826, b: 0.9150943, a: 1}
   m_FlipX: 0
@@ -2753,7 +2753,7 @@ Transform:
   m_GameObject: {fileID: 331014647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.0463, y: 1.7882, z: 0}
+  m_LocalPosition: {x: 10.0463, y: 1.77, z: 0}
   m_LocalScale: {x: 1.8126, y: 0.5423671, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5853,6 +5853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cdfb1c4c5d41e4ab8cc736e365aec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bugGroundCheck: {fileID: 1580101941}
   move: 0
   facingRight: 0
   showUp: 0
@@ -5883,7 +5884,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1.2
   m_LinearDrag: 1
-  m_AngularDrag: 0.1
+  m_AngularDrag: 2
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -6607,6 +6608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerManager: {fileID: 596627446}
+  enemyManager: {fileID: 1948782500}
   detectorUi: {fileID: 792905627}
   healthBlocks:
   - {fileID: 1293518777}
@@ -76559,7 +76561,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000028133, y: 0.000013351}
+  m_AnchoredPosition: {x: -0.000028133, y: -144.2}
   m_SizeDelta: {x: 152.6424, y: 56.4874}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1459459242
@@ -76888,14 +76890,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 222144390cfa063429ceb6f01fa5df67, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77926,6 +77928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1580101938}
   - component: {fileID: 1580101940}
+  - component: {fileID: 1580101941}
   m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
@@ -77942,7 +77945,7 @@ Transform:
   m_GameObject: {fileID: 1580101937}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.18, y: -0.459, z: 0}
+  m_LocalPosition: {x: -1.65, y: -0.459, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77993,6 +77996,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.36939192, y: 0.39396095}
   m_EdgeRadius: 0
+--- !u!114 &1580101941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580101937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d369e4e3cf7b09d4b868585c8361fe34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrounded: 0
 --- !u!1 &1603791858
 GameObject:
   m_ObjectHideFlags: 0
@@ -80504,6 +80520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1948782499}
+  - component: {fileID: 1948782500}
   m_Layer: 0
   m_Name: BoomBug
   m_TagString: Untagged
@@ -80527,6 +80544,21 @@ Transform:
   - {fileID: 700282685}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1948782500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948782498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652a1a1d0e650334c9696bb0c9734ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 701397976}
+  enemyAttack: {fileID: 700282683}
+  playerManager: {fileID: 596627446}
 --- !u!43 &1952357216
 Mesh:
   m_ObjectHideFlags: 0

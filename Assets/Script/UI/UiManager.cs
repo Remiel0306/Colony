@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
+    [SerializeField] EnemyManager enemyManager;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] Image blackPannel;
@@ -16,14 +17,15 @@ public class UiManager : MonoBehaviour
 
     bool isPannelOpen = false;
 
-    // Start is called before the first frame update
+    // 固定 panel 顏色為 RGB(225,225,225) = 0.882f
+    private Color panelBaseColor = new Color(0.882f, 0.882f, 0.882f, 0f);
+
     void Start()
     {
         detectorUi.SetActive(false);
         respawnBtn.SetActive(false);
-        blackPannel.color = new Color(0, 0, 0, 0);
+        blackPannel.color = panelBaseColor;
 
-        // 確保按鈕有 CanvasGroup
         var cg = respawnBtn.GetComponent<CanvasGroup>();
         if (cg == null)
             cg = respawnBtn.AddComponent<CanvasGroup>();
@@ -33,10 +35,8 @@ public class UiManager : MonoBehaviour
         cg.blocksRaycasts = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         Debug.Log(playerManager.isPlayerDead);
         UpdateHp();
 
@@ -61,26 +61,22 @@ public class UiManager : MonoBehaviour
     {
         for (int i = 0; i < healthBlocks.Length; i++)
         {
-            if (i < playerManager.currentHealth)
-            {
-                healthBlocks[i].SetActive(true);  // 還有血：打開
-            }
-            else
-            {
-                healthBlocks[i].SetActive(false); // 沒血了：關閉
-            }
+            healthBlocks[i].SetActive(i < playerManager.currentHealth);
         }
     }
 
     public void RespawnButton()
     {
+        StartCoroutine(FadeOutUI());
+        isPannelOpen = false;
+
         playerManager.gameObject.transform.position = level1Point.position;
         playerManager.gameObject.SetActive(true);
         playerManager.currentHealth = 3;
         playerManager.isPlayerDead = false;
 
-        isPannelOpen = false;
-        StartCoroutine(FadeOutUI());
+        enemyManager.ResetBugs();
+
     }
 
     IEnumerator FadeInBlackPanel()
@@ -91,12 +87,17 @@ public class UiManager : MonoBehaviour
         while (elapsed < duration)
         {
             float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
-            blackPannel.color = new Color(0f, 0f, 0f, alpha);
+            Color c = panelBaseColor;
+            c.a = alpha;
+            blackPannel.color = c;
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        blackPannel.color = new Color(0f, 0f, 0f, 1f);
+        Color final = panelBaseColor;
+        final.a = 1f;
+        blackPannel.color = final;
 
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(FadeInRespawnButton());
@@ -135,14 +136,19 @@ public class UiManager : MonoBehaviour
             float alphaBlack = Mathf.Lerp(1f, 0f, Mathf.Clamp01(t / blackPanelDuration));
             float alphaBtn = Mathf.Lerp(1f, 0f, Mathf.Clamp01(t / buttonDuration));
 
-            blackPannel.color = new Color(0f, 0f, 0f, alphaBlack);
+            Color c = panelBaseColor;
+            c.a = alphaBlack;
+            blackPannel.color = c;
             cg.alpha = alphaBtn;
 
             yield return null;
         }
 
         // 最終設定
-        blackPannel.color = new Color(0f, 0f, 0f, 0f);
+        Color final = panelBaseColor;
+        final.a = 0f;
+        blackPannel.color = final;
+
         cg.alpha = 0f;
         cg.interactable = false;
         cg.blocksRaycasts = false;
