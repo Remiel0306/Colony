@@ -10,18 +10,22 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] GameObject gun;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shotgunBullet;
+    [SerializeField] CinemachineVirtualCamera cinemachine;
     [SerializeField] Transform bulletSpwanPoint;
     [SerializeField] float recoilForce;
     [SerializeField] private ScreenShakeProfile profile_Rifle;
     [SerializeField] private ScreenShakeProfile priflie_Shotgun;
+    [SerializeField] Texture2D cursorTexture;
+    [SerializeField] Vector2 hotspot = Vector2.zero;
+    [SerializeField] CursorMode cursorMode = CursorMode.Auto;
 
     PlayerControl playerControl;
     CinemachineImpulseSource impulseSource;
 
-    private GameObject bulletInst;
-    private Vector2 worldPosition;
-    private Vector2 direction;
-    private float angle;
+    GameObject bulletInst;
+    Vector2 worldPosition;
+    Vector2 direction;
+    float angle;
 
     public bool shotgunIsShoot = false;
     bool isAim = false;
@@ -31,6 +35,8 @@ public class AimAndShoot : MonoBehaviour
     {
         playerControl = GetComponent<PlayerControl>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
+
+        Cursor.SetCursor(cursorTexture, hotspot, cursorMode);
     }
 
     // Update is called once per frame
@@ -49,6 +55,8 @@ public class AimAndShoot : MonoBehaviour
         {
             if (shotgunScript.isShotgun && shotgunScript.shotgunCanShoot)
             {
+                cinemachine.m_Lens.OrthographicSize =4.2f;
+
                 HandleGunRotation();
                 if (shotgunScript.canShoot)
                 {
@@ -57,6 +65,8 @@ public class AimAndShoot : MonoBehaviour
             }
             else
             {
+                cinemachine.m_Lens.OrthographicSize = 4.2f;
+
                 HandleGunRotation();
                 if (shotgunScript.canShoot)
                 {
@@ -66,6 +76,8 @@ public class AimAndShoot : MonoBehaviour
         }
         else
         {
+            cinemachine.m_Lens.OrthographicSize = 4.7f;
+
             if (playerControl.facingRight)
             {
                 gun.transform.rotation = Quaternion.Lerp(gun.transform.rotation, Quaternion.Euler(0, 0, 0), 10f * Time.deltaTime);

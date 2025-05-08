@@ -8,7 +8,7 @@ public class CamFollow : MonoBehaviour
     
     PlayerControl playerCrontrol;
 
-    private Vector3 offset = new Vector3(1f, 0f, 0f);
+    private Vector3 offset = new Vector3(.5f, .8f, 0f);
     // Start is called before the first frame update
     void Start()
     {
@@ -18,16 +18,17 @@ public class CamFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+        //transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         // CamFollowOgj face left will becom z -10, it's not finish !!!!
 
-        if (playerCrontrol.facingRight == true)
+        if (playerCrontrol.facingRight)
         {
-            transform.position = Player.transform.position + offset;
+            transform.position = Player.position + offset;
         }
-        if(playerCrontrol.facingRight == false) 
+        else
         {
-            transform.position = Player.transform.position - offset;
+            Vector3 flippedOffset = new Vector3(-offset.x, offset.y, offset.z);
+            transform.position = Player.position + flippedOffset;
         }
     }
 }
