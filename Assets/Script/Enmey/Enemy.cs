@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float maxHealth = 5f;
     [SerializeField] float knockBackForce = 2f;
 
+    public float maxHealth = 5f;
     public bool isDied = false;
     public bool contactPlayer = false;
     public bool isStop = false;
-    float currentHealth;
+    public float currentHealth;
     Rigidbody2D rb2DParent;
 
     void Start()
@@ -64,5 +64,6 @@ public class Enemy : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(.7f);
 
         gameObject.SetActive(false);
+        isDied = false;
     }
 }

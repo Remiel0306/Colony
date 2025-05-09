@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -13,7 +14,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = enemy.transform.position;
+        startPosition = enemyAttack.transform.position;
     }
 
     // Update is called once per frame
@@ -23,10 +24,31 @@ public class EnemyManager : MonoBehaviour
         {
             enemy.StartCoroutine(enemy.Died());
         }
+
+        if (playerManager.isPlayerDead)
+        {
+            enemyAttack.StartCoroutine(enemyAttack.DiedDelay());
+        }
     }
 
     public void ResetBugs()
     {
-        enemy.transform.position = startPosition;
+        playerManager.isPlayerDead = false;
+        enemy.isDied = false;
+        enemy.contactPlayer = false;
+        enemy.isStop = false;
+        enemyAttack.showUp = false;
+        enemyAttack.move = false;
+        enemyAttack.attackAgain = false;
+        enemyAttack.boomAnimator.SetBool("isMoving", false);
+        enemy.currentHealth = enemy.maxHealth;
+        enemyAttack.transform.position = startPosition;
+        enemyAttack.boomObj.SetActive(false);
+
+        enemyAttack.StopAllCoroutines();
+        enemyAttack.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        enemyAttack.bugBody.SetActive(true);
+        enemyAttack.gameObject.SetActive(true);
     }
 }

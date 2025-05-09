@@ -6,24 +6,24 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] BugGroundCheck bugGroundCheck;
-    [SerializeField] bool move = false;
     [SerializeField] bool facingRight = false;
-    [SerializeField] bool showUp = false;
-    [SerializeField] bool attackAgain = true;
     [SerializeField] float speed;
     [SerializeField] Transform playerTransform;
-    [SerializeField] GameObject boomObj;
-    [SerializeField] Animator boomAnimator;
     [SerializeField] BoxCollider2D bodyCollider;
     [SerializeField] BoxCollider2D hitTrigger;
     [SerializeField] BoxCollider2D groundCheck;
-    [SerializeField] private ScreenShakeProfile boomProfile;
+    [SerializeField] ScreenShakeProfile boomProfile;
 
+    public bool move = false;
+    public bool showUp = false;
+    public bool attackAgain = true;
     public float stopAttackTime = 1.5f;
     public float attackAgainTime = 1.5f;
     public float showUpTime = 1.5f;
+    public GameObject boomObj;
+    public Animator boomAnimator;
     bool playerEnter = false;
+    bool isStopping = false;
 
     Enemy enemyScript;
     Rigidbody2D rb2D;
@@ -64,6 +64,8 @@ public class EnemyAttack : MonoBehaviour
 
         if (move && enemyScript.contactPlayer == false && IsPlatformAhead() && !enemyScript.isStop)
         {
+            Debug.Log("移動中！");
+
             boomAnimator.SetBool("isMoving", true);
             if (facingRight)
             {
@@ -73,7 +75,7 @@ public class EnemyAttack : MonoBehaviour
             if (!facingRight)
             {
                 rb2D.velocity = new Vector3(-speed * Time.deltaTime, 0f, 0f);
-                StartCoroutine(StopAttack());;
+                StartCoroutine(StopAttack()); ;
             }
         }
 
@@ -93,10 +95,13 @@ public class EnemyAttack : MonoBehaviour
         {
             if (attackAgain) //After attack wait few seconds and use Coroutine to controller bool-move
             {
+                Debug.Log("攻擊再次開始");
+                attackAgain = false;
+                move = true;
                 StartCoroutine(AttackAgain());
                 enemyScript.contactPlayer = false;
 
-                if(transform.position.x > playerTransform.position.x)
+                if (transform.position.x > playerTransform.position.x)
                 {
                     facingRight = false;
                     if (!facingRight)
@@ -110,29 +115,17 @@ public class EnemyAttack : MonoBehaviour
                     if (facingRight)
                     {
                         transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                    }   
+                    }
                 }
             }
         }
 
-        if(IsPlatformAhead() == false)
+        if (!IsPlatformAhead())
         {
+            StopAttack();
+            boomAnimator.SetBool("isMoving", false);
             FaceingPlayer();
         }
-
-        if (!IsGrounded())
-        {
-            move = false;
-            boomAnimator.SetBool("isMoving", false);
-        }
-
-        //if (!bugGroundCheck.isGrounded)
-        //{
-        //    move = false;
-        //    StartCoroutine(StopAttack());
-        //    boomAnimator.SetBool("isMoving", false);
-        //}
-
 
         if (bugBody != null && !bugBody.activeSelf)
         {
@@ -155,7 +148,7 @@ public class EnemyAttack : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {            
+        {
             showUp = true;
             FaceingPlayer();
             StartCoroutine(StartMoving());
@@ -175,7 +168,7 @@ public class EnemyAttack : MonoBehaviour
             Flip();
             facingRight = true;
         }
-        if(transform.position.x > playerTransform.position.x && facingRight)
+        if (transform.position.x > playerTransform.position.x && facingRight)
         {
             Flip();
             facingRight = false;
@@ -193,11 +186,18 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator StopAttack()
     {
+        isStopping = true;
+        Debug.Log("停止攻擊 Coroutine 啟動");
+
         yield return new WaitForSeconds(stopAttackTime);
 
+        boomAnimator.SetBool("isMoving", false);
         enemyScript.contactPlayer = false;
         move = false;
         attackAgain = true;
+        isStopping = false;
+
+        Debug.Log("攻擊結束 → move=false, attackAgain=true");
     }
 
     IEnumerator AttackAgain()
@@ -211,17 +211,15 @@ public class EnemyAttack : MonoBehaviour
     }
     bool IsPlatformAhead()
     {
-        float checkDistance = 0.5f;
-        Vector2 checkPosition = new Vector2(transform.position.x + (facingRight ? checkDistance : -checkDistance), transform.position.y - 0.5f);
+        float checkDistance = 0.1f;
+        Vector2 checkPosition = new Vector2(transform.position.x + (facingRight ? .5f : -1.5f), transform.position.y);
 
-        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+        Debug.DrawRay(checkPosition, Vector2.down * 1f, Color.red);  // 看 scene 中是否命中
 
+        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.down, 5f, LayerMask.GetMask("Ground"));
         return hit.collider != null;
     }
-    bool IsGrounded()
-    {
-        return Physics2D.OverlapBox(groundCheck.bounds.center, groundCheck.bounds.size, 0f, LayerMask.GetMask("Ground"));
-    }
+
     IEnumerator Boom()
     {
         yield return new WaitForSeconds(.4f);
@@ -230,6 +228,13 @@ public class EnemyAttack : MonoBehaviour
         boomObj.SetActive(true);
         enemyScript.isDied = true;
         enemyScript.isDied = false;
+    }
+
+    public IEnumerator DiedDelay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

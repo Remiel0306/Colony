@@ -37,7 +37,6 @@ public class UiManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(playerManager.isPlayerDead);
         UpdateHp();
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -76,7 +75,6 @@ public class UiManager : MonoBehaviour
         playerManager.isPlayerDead = false;
 
         enemyManager.ResetBugs();
-
     }
 
     IEnumerator FadeInBlackPanel()
