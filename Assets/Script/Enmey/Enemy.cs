@@ -64,6 +64,6 @@ public class Enemy : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(.7f);
 
         gameObject.SetActive(false);
-        isDied = false;
+        //isDied = false;
     }
 }

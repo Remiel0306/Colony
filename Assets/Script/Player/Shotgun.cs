@@ -40,8 +40,6 @@ public class Shotgun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Shot Gun Can Shoot: " + shotgunCanShoot);
-
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             if (nowCanSwitch)

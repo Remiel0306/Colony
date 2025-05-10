@@ -7,7 +7,6 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [SerializeField] bool facingRight = false;
-    [SerializeField] float speed;
     [SerializeField] Transform playerTransform;
     [SerializeField] BoxCollider2D bodyCollider;
     [SerializeField] BoxCollider2D hitTrigger;
@@ -20,18 +19,19 @@ public class EnemyAttack : MonoBehaviour
     public float stopAttackTime = 1.5f;
     public float attackAgainTime = 1.5f;
     public float showUpTime = 1.5f;
+    public float speed;
+    public float startSpeed;
     public GameObject boomObj;
     public Animator boomAnimator;
     bool playerEnter = false;
-    bool isStopping = false;
 
     Enemy enemyScript;
     Rigidbody2D rb2D;
     BoxCollider2D bc2D;
-    SpriteRenderer childSR;
     CinemachineImpulseSource impulseSource;
+    public SpriteRenderer childSR;
 
-    Color color;
+    public Color color;
 
     public GameObject bugBody;
     // Start is called before the first frame update
@@ -49,6 +49,7 @@ public class EnemyAttack : MonoBehaviour
         boomObj.SetActive(false);
         bodyCollider.enabled = false;
         hitTrigger.enabled = false;
+        startSpeed = speed;
     }
 
     // Update is called once per frame
@@ -64,8 +65,6 @@ public class EnemyAttack : MonoBehaviour
 
         if (move && enemyScript.contactPlayer == false && IsPlatformAhead() && !enemyScript.isStop)
         {
-            Debug.Log("移動中！");
-
             boomAnimator.SetBool("isMoving", true);
             if (facingRight)
             {
@@ -95,9 +94,6 @@ public class EnemyAttack : MonoBehaviour
         {
             if (attackAgain) //After attack wait few seconds and use Coroutine to controller bool-move
             {
-                Debug.Log("攻擊再次開始");
-                attackAgain = false;
-                move = true;
                 StartCoroutine(AttackAgain());
                 enemyScript.contactPlayer = false;
 
@@ -135,7 +131,8 @@ public class EnemyAttack : MonoBehaviour
 
         if (enemyScript.contactPlayer == true)
         {
-            move = false;
+            //move = false;
+            StartCoroutine(StopAttack());
         }
 
         if (enemyScript.isDied)
@@ -186,18 +183,12 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator StopAttack()
     {
-        isStopping = true;
-        Debug.Log("停止攻擊 Coroutine 啟動");
-
         yield return new WaitForSeconds(stopAttackTime);
 
         boomAnimator.SetBool("isMoving", false);
         enemyScript.contactPlayer = false;
         move = false;
         attackAgain = true;
-        isStopping = false;
-
-        Debug.Log("攻擊結束 → move=false, attackAgain=true");
     }
 
     IEnumerator AttackAgain()
@@ -226,7 +217,7 @@ public class EnemyAttack : MonoBehaviour
 
         CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
         boomObj.SetActive(true);
-        enemyScript.isDied = true;
+ 
         enemyScript.isDied = false;
     }
 

@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] PlayerManager playerManager;
 
     Vector3 startPosition;
+    bool deadOnce = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +23,14 @@ public class EnemyManager : MonoBehaviour
     {
         if (enemy.isDied)
         {
+            //enemy.isDied = false;
             enemy.StartCoroutine(enemy.Died());
+
         }
 
-        if (playerManager.isPlayerDead)
+        if (playerManager.isPlayerDead && !deadOnce)
         {
+            deadOnce = true;
             enemyAttack.StartCoroutine(enemyAttack.DiedDelay());
         }
     }
@@ -36,8 +40,9 @@ public class EnemyManager : MonoBehaviour
         playerManager.isPlayerDead = false;
         enemy.isDied = false;
         enemy.contactPlayer = false;
-        enemy.isStop = false;
-        enemyAttack.showUp = false;
+        deadOnce = false;
+        //enemy.isStop = false;
+        //enemyAttack.showUp = false;
         enemyAttack.move = false;
         enemyAttack.attackAgain = false;
         enemyAttack.boomAnimator.SetBool("isMoving", false);
@@ -45,8 +50,13 @@ public class EnemyManager : MonoBehaviour
         enemyAttack.transform.position = startPosition;
         enemyAttack.boomObj.SetActive(false);
 
-        enemyAttack.StopAllCoroutines();
-        enemyAttack.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        enemyAttack.color = enemyAttack.childSR.color;
+        enemyAttack.color.a = 0.2f;
+        enemyAttack.childSR.color = enemyAttack.color;
+        enemyAttack.speed = enemyAttack.startSpeed;
+
+        //enemyAttack.StopAllCoroutines();
+        //enemyAttack.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
         enemyAttack.bugBody.SetActive(true);
         enemyAttack.gameObject.SetActive(true);
