@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
+    [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] EnemyManager enemyManager;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
@@ -73,12 +74,14 @@ public class UiManager : MonoBehaviour
         playerManager.gameObject.SetActive(true);
         playerManager.currentHealth = 3;
         playerManager.isPlayerDead = false;
+        aimAndShoot.isAim = false;
 
         enemyManager.ResetBugs();
     }
 
     IEnumerator FadeInBlackPanel()
     {
+        yield return new WaitForSeconds(0.5f);
         float duration = 1f;
         float elapsed = 0f;
 

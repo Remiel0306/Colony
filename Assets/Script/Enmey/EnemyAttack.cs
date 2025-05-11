@@ -23,7 +23,7 @@ public class EnemyAttack : MonoBehaviour
     public float startSpeed;
     public GameObject boomObj;
     public Animator boomAnimator;
-    bool playerEnter = false;
+    bool isStopCoro = false;
 
     Enemy enemyScript;
     Rigidbody2D rb2D;
@@ -63,7 +63,7 @@ public class EnemyAttack : MonoBehaviour
             childSR.color = color;
         }
 
-        if (move && enemyScript.contactPlayer == false && IsPlatformAhead() && !enemyScript.isStop)
+        if (move && enemyScript.contactPlayer == false && IsPlatformAhead()) // && !enemyScript.isStop
         {
             boomAnimator.SetBool("isMoving", true);
             if (facingRight)
@@ -78,16 +78,25 @@ public class EnemyAttack : MonoBehaviour
             }
         }
 
-        if (enemyScript.isStop)
-        {
-            move = false;
-            StartCoroutine(StopAttack());
-            enemyScript.isStop = false;
+        Debug.Log("is Shotgun" + enemyScript.isShotgunShoot);
 
+        if (enemyScript.isShotgunShoot && move)
+        {
+            speed = 0f;
             Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
-            float knockbackForce = 5f;
+            float knockbackForce = 4f;
 
             rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            StartCoroutine(Wait());
+        }
+        else if(enemyScript.isShotgunShoot && !move)
+        {
+            speed = 0f;
+            Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
+            float knockbackForce = .5f;
+
+            rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            StartCoroutine(Wait());
         }
 
         if (IsPlatformAhead())
@@ -142,6 +151,14 @@ public class EnemyAttack : MonoBehaviour
             StartCoroutine(Boom());
         }
     }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(.5f);
+        enemyScript.isShotgunShoot = false;
+        speed = startSpeed;
+        isStopCoro = false;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -189,6 +206,7 @@ public class EnemyAttack : MonoBehaviour
         enemyScript.contactPlayer = false;
         move = false;
         attackAgain = true;
+        isStopCoro = true;
     }
 
     IEnumerator AttackAgain()
@@ -203,7 +221,7 @@ public class EnemyAttack : MonoBehaviour
     bool IsPlatformAhead()
     {
         float checkDistance = 0.1f;
-        Vector2 checkPosition = new Vector2(transform.position.x + (facingRight ? .5f : -1.5f), transform.position.y);
+        Vector2 checkPosition = new Vector2(transform.position.x + (facingRight ? 1.5f : -1.5f), transform.position.y);
 
         Debug.DrawRay(checkPosition, Vector2.down * 1f, Color.red);  // 看 scene 中是否命中
 

@@ -28,7 +28,7 @@ public class AimAndShoot : MonoBehaviour
     float angle;
 
     public bool shotgunIsShoot = false;
-    bool isAim = false;
+    public bool isAim = false;
 
     // Start is called before the first frame update
     void Start()

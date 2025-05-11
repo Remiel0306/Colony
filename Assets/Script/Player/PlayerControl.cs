@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour ///
 {
     [SerializeField] Animator bodyAnimator;
     [SerializeField] Animator gunAnimator;
@@ -20,7 +20,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float jumpBufferTime;
     [SerializeField] float boomForce;
     [SerializeField] BoxCollider2D boxCollider2D;
-    
+
+    [SerializeField] float acceleration = 20f;
+    [SerializeField] float deceleration = 30f;
+
     public Rigidbody2D rb2D;
     Vector2 vecGravity;
 
@@ -36,6 +39,7 @@ public class PlayerControl : MonoBehaviour
     float jumpCounter;
     float coyoteTimeCounter;
     float jumpBufferCounter;
+    float currentSpeed = 0f;
     Coroutine moveCoroutine;
     
     // Start is called before the first frame update
@@ -49,33 +53,6 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //float facingCheck = 0f;
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    facingCheck = -1f;
-        //}
-        //else if(Input.GetKey(KeyCode.D))
-        //{
-        //    facingCheck = 1f;
-        //}
-        //if (facingCheck != 0)
-        //{
-        //    rb2D.velocity = new Vector2(facingCheck * Speed, rb2D.velocity.y);
-        //}
-
-        //if (facingCheck != 0)
-        //{
-        //    bodyAnimator.SetBool("isMoving", true);
-        //    gunAnimator.SetBool("isMoving", true);
-        //    handAnimator.SetBool("isMoving", true);
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-        //{
-        //    bodyAnimator.SetBool("isMoving", false);
-        //    gunAnimator.SetBool("isMoving", false);
-        //    handAnimator.SetBool("isMoving", false);
-        //}
         float facingCheck = 0f;
         if (Input.GetKey(KeyCode.A))
         {
@@ -89,28 +66,20 @@ public class PlayerControl : MonoBehaviour
         // 延遲移動控制（如果角色翻轉了，延遲一幀才移動）
         if (facingCheck != 0)
         {
-            if ((facingCheck > 0 && !facingRight) || (facingCheck < 0 && facingRight))
-            {
-                Flip();
-                if (moveCoroutine != null) StopCoroutine(moveCoroutine);
-                moveCoroutine = StartCoroutine(DelayedMove(facingCheck));
-            }
-            else
-            {
-                rb2D.velocity = new Vector2(facingCheck * Speed, rb2D.velocity.y);
-            }
-
-            // 移動動畫
-            bodyAnimator.SetBool("isMoving", true);
-            gunAnimator.SetBool("isMoving", true);
-            handAnimator.SetBool("isMoving", true);
+            currentSpeed = Mathf.MoveTowards(currentSpeed, facingCheck * Speed, acceleration * Time.deltaTime);
         }
         else
         {
-            bodyAnimator.SetBool("isMoving", false);
-            gunAnimator.SetBool("isMoving", false);
-            handAnimator.SetBool("isMoving", false);
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
         }
+
+        rb2D.velocity = new Vector2(currentSpeed, rb2D.velocity.y);
+
+        // ─── 動畫控制 ─────────────────────────────
+        bool isMoving = Mathf.Abs(currentSpeed) > 0.01f;
+        bodyAnimator.SetBool("isMoving", isMoving);
+        gunAnimator.SetBool("isMoving", isMoving);
+        handAnimator.SetBool("isMoving", isMoving);
 
         if (onCrossGround && Input.GetKeyDown(KeyCode.S))
         {

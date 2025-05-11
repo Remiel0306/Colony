@@ -6,11 +6,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] float knockBackForce = 2f;
+    [SerializeField] EnemyAttack EnemyAttack;
 
     public float maxHealth = 5f;
     public bool isDied = false;
     public bool contactPlayer = false;
     public bool isStop = false;
+    public bool isShotgunShoot = false;
     public float currentHealth;
     Rigidbody2D rb2DParent;
 
@@ -52,10 +54,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.CompareTag("Shotgun Bullet"))
         {
-            Vector2 direction = (transform.position - collision.transform.position).normalized;
-            rb2DParent.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
-
             isStop = true;
+            isShotgunShoot = true;
         }
     }
 

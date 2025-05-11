@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] UiManager uiManager;
-    [SerializeField] int maxHealth = 5;
+    [SerializeField] int maxHealth = 6;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
