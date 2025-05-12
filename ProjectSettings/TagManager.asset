@@ -15,6 +15,7 @@ TagManager:
   - Boom
   - BoomBug
   - Toxic Mucus
+  - Battery
   layers:
   - Default
   - TransparentFX

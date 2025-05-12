@@ -121,15 +121,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: GAME OVER UI
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.4791667, y: -1.6666666}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 320
-      height: 180
+      width: 288
+      height: 39
     spriteID: 98a6632f6a9e2ff46b9c9b5a12dc9cfe
     spriteBone: []
     spriteOutline: []
@@ -151,10 +151,10 @@ ScriptedImporter:
     - name: GAME OVER UI
       frameIndex: 0
       cellRect:
-        x: 0
-        y: 0
-        width: 320
-        height: 180
+        x: 22
+        y: 65
+        width: 288
+        height: 39
       spriteId: 98a6632f6a9e2ff46b9c9b5a12dc9cfe
     linkedCells: []
     parentIndex: -1

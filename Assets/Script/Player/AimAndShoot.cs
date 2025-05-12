@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 public class AimAndShoot : MonoBehaviour
 {
+    [SerializeField] PlayerManager playerManager;
     [SerializeField] Shotgun shotgunScript;
     [SerializeField] GameObject gun;
     [SerializeField] GameObject bullet;
@@ -31,6 +32,8 @@ public class AimAndShoot : MonoBehaviour
     public bool canMove = true;
     public bool shotgunIsShoot = false;
     public bool isAim = false;
+    public int maxBulletCount = 15;
+    public int currentBulletCount;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +42,8 @@ public class AimAndShoot : MonoBehaviour
         impulseSource = GetComponent<CinemachineImpulseSource>();
 
         Cursor.SetCursor(cursorTexture, hotspot, cursorMode);
+
+        currentBulletCount = maxBulletCount;
     }
 
     // Update is called once per frame
@@ -70,9 +75,13 @@ public class AimAndShoot : MonoBehaviour
                 cinemachine.m_Lens.OrthographicSize = 4.2f;
 
                 HandleGunRotation();
-                if (shotgunScript.canShoot)
+                if (shotgunScript.canShoot && currentBulletCount > 0 && playerManager.currentHealth > 1)
                 {
                     HandleGunShooting();
+                }
+                if(shotgunScript.canShoot && currentBulletCount <= 0 && playerManager.currentHealth > 1)
+                {
+                    HandleGunShooting2();
                 }
             }
         }
@@ -89,6 +98,8 @@ public class AimAndShoot : MonoBehaviour
                 gun.transform.rotation = Quaternion.Lerp(gun.transform.rotation, Quaternion.Euler(0, 0, 180), 10f * Time.deltaTime);
             }
         }
+
+        Debug.Log(currentBulletCount);
     }
 
     private void HandleGunRotation()
@@ -134,9 +145,20 @@ public class AimAndShoot : MonoBehaviour
             bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
             //CameraShakeManager.instance.CameraShake(impulseSource);
             CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
+            currentBulletCount--;
         }
     }
-    
+    private void HandleGunShooting2()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
+            //CameraShakeManager.instance.CameraShake(impulseSource);
+            CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
+            playerManager.currentHealth--;
+        }
+    }
+
     private void ShotgunShoot()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)

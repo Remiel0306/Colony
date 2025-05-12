@@ -11,6 +11,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] Image blackPannel;
+    [SerializeField] Image energyBar;
+    [SerializeField] float maxEnergy;
+    [SerializeField] float currentEnergy;
     [SerializeField] GameObject respawnBtn;
     [SerializeField] Transform level1Point;
 
@@ -34,11 +37,18 @@ public class UiManager : MonoBehaviour
         cg.alpha = 0f;
         cg.interactable = false;
         cg.blocksRaycasts = false;
+
+        maxEnergy = aimAndShoot.maxBulletCount;
+
+        UpdateEnergyBar();
     }
 
     void Update()
     {
+        currentEnergy = aimAndShoot.currentBulletCount;
+
         UpdateHp();
+        UpdateEnergyBar();
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -77,6 +87,16 @@ public class UiManager : MonoBehaviour
         aimAndShoot.isAim = false;
 
         enemyManager.ResetBugs();
+    }
+    public void ConsumeEnergy(float amount)
+    {
+        currentEnergy = Mathf.Clamp(currentEnergy - amount, 0, maxEnergy);
+        UpdateEnergyBar();
+    }
+
+    void UpdateEnergyBar()
+    {
+        energyBar.fillAmount = currentEnergy / maxEnergy;
     }
 
     IEnumerator FadeInBlackPanel()
