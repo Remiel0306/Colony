@@ -13,11 +13,14 @@ public enum FlyBugState
 public class FlyEnemyAttack : MonoBehaviour 
 {
     [SerializeField] GameObject player;
+    [SerializeField] FlyEnemy flyEnemy;
     [SerializeField] Transform playerTransform;
-    [SerializeField] float speed = 5f;
     [SerializeField] FlyEnemy flyEnemyScript;
     [SerializeField] FlyBug flyBug;
     [SerializeField] Animator flyBugAnimator;
+    [SerializeField] Transform floorCheck;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float speed = 5f;
 
     FlyBugState currentState = FlyBugState.Stay;
 
@@ -27,6 +30,7 @@ public class FlyEnemyAttack : MonoBehaviour
     public bool finishDeathAnime = false;
     float attackDelay = 1.5f;
     float finishAttackDelay = 2f;
+    float touchWallCounter;
     bool isAttacking = false;
     bool reachedTarget = false;
     bool facingRight = false;
@@ -39,6 +43,8 @@ public class FlyEnemyAttack : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(touchWallCounter);
+
         StateMachine();
 
         if(currentState != FlyBugState.Attack && flyEnemyScript.contactPlayer == true)
@@ -50,12 +56,32 @@ public class FlyEnemyAttack : MonoBehaviour
         {
             currentState = FlyBugState.AttackToBack;
             flyBug.isTouchGround = false;
+            touchWallCounter++;
         }
+
+        if (isTouchFloor())
+        {
+            currentState = FlyBugState.AttackToBack;
+            flyBug.isTouchGround = false;
+            touchWallCounter++;
+        }
+
+        //if (touchWallCounter >= 3f)
+        //{
+        //    Debug.Log("In back");
+        //    StartCoroutine(ReturnToOriginalPosition());
+        //}
 
         if (flyEnemyScript.isDied)
         {
             currentState = FlyBugState.AttackToBack;
             flyBugAnimator.Play("Fly Bug Death");
+        }
+
+        if (flyEnemy.isStop && currentState == FlyBugState.Attack || flyEnemy.isStop && currentState != FlyBugState.Attack)
+        {
+            StartCoroutine(KnockbackFromPlayer(1f, 0.2f));
+            currentState = FlyBugState.StayToAttack;
         }
     }
 
@@ -104,15 +130,6 @@ public class FlyEnemyAttack : MonoBehaviour
         }
     }
 
-    IEnumerator AttackAfterDelay()
-    {
-        yield return new WaitForSeconds(attackDelay);
-
-        targetCurrentPosition = player.transform.position + Vector3.up * .15f;
-        isAttacking = true;
-        currentState = FlyBugState.Attack;
-    }
-
     void DoAttack()
     {
         if (!isAttacking) return;
@@ -122,6 +139,15 @@ public class FlyEnemyAttack : MonoBehaviour
 
         flyBugAnimator.SetBool("isAttack", true);
     }
+    IEnumerator AttackAfterDelay()
+    {
+        yield return new WaitForSeconds(attackDelay);
+
+        targetCurrentPosition = player.transform.position + Vector3.up * .15f;
+        isAttacking = true;
+        currentState = FlyBugState.Attack;
+    }
+
 
     IEnumerator FinishAttack()
     {
@@ -152,9 +178,48 @@ public class FlyEnemyAttack : MonoBehaviour
         currentState = FlyBugState.StayToAttack;
     }
 
+    IEnumerator KnockbackFromPlayer(float force, float duration)
+    {
+
+        Vector2 direction = (transform.position - playerTransform.position).normalized;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            transform.Translate(direction * force * Time.deltaTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        flyEnemy.isStop = false;
+    }
+
+    IEnumerator ReturnToOriginalPosition()
+    {
+        Vector3 startPos = transform.position;
+        float duration = 1f; // 回到原點的時間
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, originalPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        touchWallCounter = 0;
+        transform.position = originalPosition;
+        currentState = FlyBugState.StayToAttack; // 重設狀態
+    }
+
     void Flip()
     {
         transform.Rotate(0, 180, 0);
+    }
+
+    bool isTouchFloor()
+    {
+        return Physics2D.OverlapBox(floorCheck.position, new Vector2(0.6f, 0.05f), 0, groundLayer);
     }
 
     void FaceingPlayer()

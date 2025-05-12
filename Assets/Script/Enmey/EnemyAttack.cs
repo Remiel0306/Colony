@@ -55,8 +55,6 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("isDied: " + enemyScript.isDied);
-
         if (showUp)
         {
             color.a = Mathf.Lerp(color.a, 1f, Time.deltaTime * 1f);

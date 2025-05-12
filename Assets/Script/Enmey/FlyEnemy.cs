@@ -52,9 +52,6 @@ public class FlyEnemy : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.CompareTag("Shotgun Bullet"))
         {
-            Vector2 direction = (transform.position - collision.transform.position).normalized;
-            rb2DParent.AddForce(direction * knockBackForce, ForceMode2D.Impulse);
-
             isStop = true;
         }
     }

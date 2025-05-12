@@ -121,7 +121,7 @@ public class Shotgun : MonoBehaviour
     IEnumerator ChangeButterTime()
     {
         canShoot = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         canShoot = true;
     }
 
