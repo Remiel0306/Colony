@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using Unity.VisualScripting;
 
 public class AimAndShoot : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] GameObject shotgunBullet;
     [SerializeField] CinemachineVirtualCamera cinemachine;
     [SerializeField] Transform bulletSpwanPoint;
-    [SerializeField] float recoilForce;
+    [SerializeField] float recoilForce = 12;
     [SerializeField] private ScreenShakeProfile profile_Rifle;
     [SerializeField] private ScreenShakeProfile priflie_Shotgun;
     [SerializeField] Texture2D cursorTexture;
@@ -27,6 +28,7 @@ public class AimAndShoot : MonoBehaviour
     Vector2 direction;
     float angle;
 
+    public bool canMove = true;
     public bool shotgunIsShoot = false;
     public bool isAim = false;
 
@@ -151,6 +153,7 @@ public class AimAndShoot : MonoBehaviour
             }
 
             shotgunIsShoot = true;
+            canMove = false;
             ShutgunRecoil();
             CameraShakeManager.instance.ScreenShakeFromProfle(priflie_Shotgun, impulseSource);
         }

@@ -26,7 +26,7 @@ public class PlayerManager : MonoBehaviour
         if (currentHealth <= 0 && !isPlayerDead)
         {
             isPlayerDead = true;
-            gameObject.SetActive(false); // ✅ 只在第一次設死的那一刻執行一次
+            gameObject.SetActive(false);
         }
 
         if (isPlayerDead)

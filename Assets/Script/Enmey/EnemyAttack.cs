@@ -78,25 +78,22 @@ public class EnemyAttack : MonoBehaviour
             }
         }
 
-        Debug.Log("is Shotgun" + enemyScript.isShotgunShoot);
-
         if (enemyScript.isShotgunShoot && move)
         {
+            float knockbackForce = 4f;
             speed = 0f;
             Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
-            float knockbackForce = 4f;
 
             rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
             StartCoroutine(Wait());
         }
-        else if(enemyScript.isShotgunShoot && !move)
+        else if (enemyScript.isShotgunShoot && !move)
         {
+            float knockbackForce = 0.5f; // 可視情況調整，低於 1f 就很小了
             speed = 0f;
-            Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
-            float knockbackForce = .5f;
 
-            rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-            StartCoroutine(Wait());
+            Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
+            rb2D.velocity = knockbackDirection * knockbackForce;
         }
 
         if (IsPlatformAhead())

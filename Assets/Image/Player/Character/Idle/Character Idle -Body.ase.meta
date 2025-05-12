@@ -121,7 +121,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Character Idle -Body_Frame_0
     originalName: 
-    pivot: {x: 0.14999998, y: -0.058823533}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -141,7 +141,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: Character Idle -Body_Frame_1
     originalName: 
-    pivot: {x: 0.14999998, y: -0.058823533}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -161,7 +161,7 @@ ScriptedImporter:
     uvTransform: {x: 72, y: 4}
   - name: Character Idle -Body_Frame_2
     originalName: 
-    pivot: {x: 0.14999998, y: -0.058823533}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -181,7 +181,7 @@ ScriptedImporter:
     uvTransform: {x: 140, y: 4}
   - name: Character Idle -Body_Frame_3
     originalName: 
-    pivot: {x: 0.14999998, y: -0.058823533}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -201,7 +201,7 @@ ScriptedImporter:
     uvTransform: {x: 208, y: 4}
   - name: Character Idle -Body_Frame_4
     originalName: 
-    pivot: {x: 0.14999998, y: -0.058823533}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -221,7 +221,7 @@ ScriptedImporter:
     uvTransform: {x: 276, y: 4}
   - name: Character Idle -Body_Frame_5
     originalName: 
-    pivot: {x: 0.14999998, y: -0.0625}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -241,7 +241,7 @@ ScriptedImporter:
     uvTransform: {x: 344, y: 114}
   - name: Character Idle -Body_Frame_6
     originalName: 
-    pivot: {x: 0.14999998, y: -0.060606062}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -261,7 +261,7 @@ ScriptedImporter:
     uvTransform: {x: 412, y: 4}
   - name: Character Idle -Body_Frame_7
     originalName: 
-    pivot: {x: 0.14999998, y: -0.060606062}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -281,7 +281,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 114}
   - name: Character Idle -Body_Frame_8
     originalName: 
-    pivot: {x: 0.14999998, y: -0.060606062}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -301,7 +301,7 @@ ScriptedImporter:
     uvTransform: {x: 72, y: 114}
   - name: Character Idle -Body_Frame_9
     originalName: 
-    pivot: {x: 0.14999998, y: -0.060606062}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -321,7 +321,7 @@ ScriptedImporter:
     uvTransform: {x: 140, y: 114}
   - name: Character Idle -Body_Frame_10
     originalName: 
-    pivot: {x: 0.14999998, y: -0.060606062}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -341,7 +341,7 @@ ScriptedImporter:
     uvTransform: {x: 208, y: 114}
   - name: Character Idle -Body_Frame_11
     originalName: 
-    pivot: {x: 0.14999998, y: -0.060606062}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -361,7 +361,7 @@ ScriptedImporter:
     uvTransform: {x: 276, y: 114}
   - name: Character Idle -Body_Frame_12
     originalName: 
-    pivot: {x: 0.14999998, y: -0.058823533}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:

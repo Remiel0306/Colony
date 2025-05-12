@@ -81,7 +81,7 @@ public class UiManager : MonoBehaviour
 
     IEnumerator FadeInBlackPanel()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         float duration = 1f;
         float elapsed = 0f;
 

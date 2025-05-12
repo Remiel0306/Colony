@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class PlayerControl : MonoBehaviour ///
 {
+    [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] Animator bodyAnimator;
     [SerializeField] Animator gunAnimator;
     [SerializeField] Animator handAnimator;
-    [SerializeField] float Speed;
+    [SerializeField] float startSpeed;
     [SerializeField] float jumpTime;
     [SerializeField] float jumpPower;
     [SerializeField] float doubleJumpPower;
@@ -19,6 +21,7 @@ public class PlayerControl : MonoBehaviour ///
     [SerializeField] float coyoteTime;
     [SerializeField] float jumpBufferTime;
     [SerializeField] float boomForce;
+    [SerializeField] float wallCheckDistance = 0.1f;
     [SerializeField] BoxCollider2D boxCollider2D;
 
     [SerializeField] float acceleration = 20f;
@@ -27,10 +30,13 @@ public class PlayerControl : MonoBehaviour ///
     public Rigidbody2D rb2D;
     Vector2 vecGravity;
 
+    public float speed = 5f;
     public bool facingRight = true;
     public Transform groundCheck;
+    public Transform wallCheck;
     public LayerMask groundLayer;
 
+    bool isTouchingWall;
     bool doublejump;
     bool isJumping;
     bool onCrossGround = false;
@@ -41,18 +47,21 @@ public class PlayerControl : MonoBehaviour ///
     float jumpBufferCounter;
     float currentSpeed = 0f;
     Coroutine moveCoroutine;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
 
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
+        startSpeed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Shougun Shot: " + aimAndShoot.shotgunIsShoot);
+
         float facingCheck = 0f;
         if (Input.GetKey(KeyCode.A))
         {
@@ -63,19 +72,20 @@ public class PlayerControl : MonoBehaviour ///
             facingCheck = 1f;
         }
 
-        // 延遲移動控制（如果角色翻轉了，延遲一幀才移動）
-        if (facingCheck != 0)
+        if (aimAndShoot.canMove)
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, facingCheck * Speed, acceleration * Time.deltaTime);
-        }
-        else
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
+            if (facingCheck != 0 && !WallCheck())
+            {
+                currentSpeed = Mathf.MoveTowards(currentSpeed, facingCheck * speed, acceleration * Time.deltaTime);
+            }
+            else
+            {
+                currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
+            }
+
+            rb2D.velocity = new Vector2(currentSpeed, rb2D.velocity.y);
         }
 
-        rb2D.velocity = new Vector2(currentSpeed, rb2D.velocity.y);
-
-        // ─── 動畫控制 ─────────────────────────────
         bool isMoving = Mathf.Abs(currentSpeed) > 0.01f;
         bodyAnimator.SetBool("isMoving", isMoving);
         gunAnimator.SetBool("isMoving", isMoving);
@@ -187,8 +197,15 @@ public class PlayerControl : MonoBehaviour ///
 
             isBoom = false;
         }
-    }
 
+        if (!aimAndShoot.canMove)
+        {
+            speed = 0f;
+            currentSpeed = 0f;
+            //aimAndShoot.canMove = false;
+            StartCoroutine(ShotgunKnockBack());
+        }
+    }
     private void Flip()
     {
         facingRight = !facingRight;
@@ -197,7 +214,12 @@ public class PlayerControl : MonoBehaviour ///
 
     bool isGrounded()
     {
-        return Physics2D.OverlapBox(groundCheck.position, new Vector2(0.95f, 0.1f), 0, groundLayer);
+        return Physics2D.OverlapBox(groundCheck.position, new Vector2(0.4f, 0.1f), 0, groundLayer);
+    }
+    
+    bool WallCheck()
+    {
+        return Physics2D.OverlapBox(wallCheck.position, new Vector2(0.08f, 0.8f), 0, groundLayer);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -229,9 +251,13 @@ public class PlayerControl : MonoBehaviour ///
 
         boxCollider2D.enabled = true;
     }
-    IEnumerator DelayedMove(float direction)
+
+    IEnumerator ShotgunKnockBack()
     {
-        yield return null; // 等待 1 frame
-        rb2D.velocity = new Vector2(direction * Speed, rb2D.velocity.y);
+        yield return new WaitForSeconds(.3f);
+        
+        aimAndShoot.shotgunIsShoot = false;
+        speed = startSpeed;
+        aimAndShoot.canMove = true;
     }
 }
