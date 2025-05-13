@@ -21,6 +21,10 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] Vector2 hotspot = Vector2.zero;
     [SerializeField] CursorMode cursorMode = CursorMode.Auto;
 
+    [SerializeField] float zoomSmoothSpeed = 8f;
+    [SerializeField] float aimZoomSize = 4.2f;
+    [SerializeField] float defaultZoomSize = 4.7f;
+
     PlayerControl playerControl;
     CinemachineImpulseSource impulseSource;
 
@@ -62,7 +66,7 @@ public class AimAndShoot : MonoBehaviour
         {
             if (shotgunScript.isShotgun && shotgunScript.shotgunCanShoot)
             {
-                cinemachine.m_Lens.OrthographicSize =4.2f;
+                //cinemachine.m_Lens.OrthographicSize =4.2f;
 
                 HandleGunRotation();
                 if (shotgunScript.canShoot)
@@ -72,7 +76,7 @@ public class AimAndShoot : MonoBehaviour
             }
             else
             {
-                cinemachine.m_Lens.OrthographicSize = 4.2f;
+               // cinemachine.m_Lens.OrthographicSize = 4.2f;
 
                 HandleGunRotation();
                 if (shotgunScript.canShoot && currentBulletCount > 0 && playerManager.currentHealth > 1)
@@ -100,6 +104,13 @@ public class AimAndShoot : MonoBehaviour
         }
 
         Debug.Log(currentBulletCount);
+
+        float targetZoom = isAim ? aimZoomSize : defaultZoomSize;
+        cinemachine.m_Lens.OrthographicSize = Mathf.Lerp(
+            cinemachine.m_Lens.OrthographicSize,
+            targetZoom,
+            Time.deltaTime * zoomSmoothSpeed
+        );
     }
 
     private void HandleGunRotation()
