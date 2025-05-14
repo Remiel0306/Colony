@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,9 +21,9 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] Vector2 hotspot = Vector2.zero;
     [SerializeField] CursorMode cursorMode = CursorMode.Auto;
 
-    [SerializeField] float zoomSmoothSpeed = 8f;
     [SerializeField] float aimZoomSize = 4.2f;
     [SerializeField] float defaultZoomSize = 4.7f;
+    [SerializeField] float zoomSmoothSpeed = 10f;
 
     PlayerControl playerControl;
     CinemachineImpulseSource impulseSource;
@@ -91,20 +91,27 @@ public class AimAndShoot : MonoBehaviour
         }
         else
         {
-            cinemachine.m_Lens.OrthographicSize = 4.7f;
+            // ❌ 不要強制設定 OrthographicSize，讓 Lerp 控制就好！
 
             if (playerControl.facingRight)
             {
-                gun.transform.rotation = Quaternion.Lerp(gun.transform.rotation, Quaternion.Euler(0, 0, 0), 10f * Time.deltaTime);
+                gun.transform.rotation = Quaternion.Lerp(
+                    gun.transform.rotation,
+                    Quaternion.Euler(0, 0, 0),
+                    10f * Time.deltaTime
+                );
             }
             else
             {
-                gun.transform.rotation = Quaternion.Lerp(gun.transform.rotation, Quaternion.Euler(0, 0, 180), 10f * Time.deltaTime);
+                gun.transform.rotation = Quaternion.Lerp(
+                    gun.transform.rotation,
+                    Quaternion.Euler(0, 0, 180),
+                    10f * Time.deltaTime
+                );
             }
         }
 
-        Debug.Log(currentBulletCount);
-
+        // ✅ 鏡頭線性縮放控制（無論 isAim true/false 都執行）
         float targetZoom = isAim ? aimZoomSize : defaultZoomSize;
         cinemachine.m_Lens.OrthographicSize = Mathf.Lerp(
             cinemachine.m_Lens.OrthographicSize,

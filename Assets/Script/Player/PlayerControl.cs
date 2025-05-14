@@ -39,7 +39,6 @@ public class PlayerControl : MonoBehaviour ///
     bool isTouchingWall;
     bool doublejump;
     bool isJumping;
-    bool onCrossGround = false;
     bool isBoom = false;
     bool isFlip = false;
     float jumpCounter;
@@ -90,12 +89,6 @@ public class PlayerControl : MonoBehaviour ///
         bodyAnimator.SetBool("isMoving", isMoving);
         gunAnimator.SetBool("isMoving", isMoving);
         handAnimator.SetBool("isMoving", isMoving);
-
-        if (onCrossGround && Input.GetKeyDown(KeyCode.S))
-        {
-            boxCollider2D.enabled = false;
-            StartCoroutine(ColliderBack());
-        }
 
         if (facingCheck > 0 && !facingRight)
         {
@@ -221,23 +214,6 @@ public class PlayerControl : MonoBehaviour ///
     {
         return Physics2D.OverlapBox(wallCheck.position, new Vector2(0.08f, 0.8f), 0, groundLayer);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("CrossGround"))
-        {
-            onCrossGround = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("CrossGround"))
-        {
-            onCrossGround = false;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Boom"))
@@ -245,13 +221,6 @@ public class PlayerControl : MonoBehaviour ///
             isBoom = true;
         }
     }
-    IEnumerator ColliderBack()
-    {
-        yield return new WaitForSeconds(.2f);
-
-        boxCollider2D.enabled = true;
-    }
-
     IEnumerator ShotgunKnockBack()
     {
         yield return new WaitForSeconds(.3f);

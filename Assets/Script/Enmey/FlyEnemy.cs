@@ -11,6 +11,7 @@ public class FlyEnemy : MonoBehaviour, IDamageable
     public bool isDied = false;
     public bool contactPlayer = false;
     public bool isStop = false;
+
     float currentHealth;
     Rigidbody2D rb2DParent;
 

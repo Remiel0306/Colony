@@ -17,9 +17,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject respawnBtn;
     [SerializeField] Transform level1Point;
 
-    public int openDetector = 0;
-
     bool isPannelOpen = false;
+    bool isDetectorOpen = false;
 
     // 固定 panel 顏色為 RGB(225,225,225) = 0.882f
     private Color panelBaseColor = new Color(0.882f, 0.882f, 0.882f, 0f);
@@ -52,12 +51,8 @@ public class UiManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            openDetector++;
-
-            if (openDetector % 2 == 0)
-            {
-                detectorUi.SetActive(openDetector % 2 != 0);
-            }
+            isDetectorOpen = !isDetectorOpen;
+            detectorUi.SetActive(isDetectorOpen);
         }
 
         if (playerManager.isPlayerDead && !isPannelOpen)

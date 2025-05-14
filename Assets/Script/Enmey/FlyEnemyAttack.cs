@@ -31,6 +31,7 @@ public class FlyEnemyAttack : MonoBehaviour
     float attackDelay = 1.5f;
     float finishAttackDelay = 2f;
     float touchWallCounter;
+    float facingRightFloat = 0f;
     bool isAttacking = false;
     bool reachedTarget = false;
     bool facingRight = false;
@@ -66,6 +67,15 @@ public class FlyEnemyAttack : MonoBehaviour
             touchWallCounter++;
         }
 
+        if (facingRight)
+        {
+            facingRightFloat = -1f;
+        }
+        else
+        {
+            facingRightFloat = 1f;
+        }
+
         //if (touchWallCounter >= 3f)
         //{
         //    Debug.Log("In back");
@@ -78,7 +88,7 @@ public class FlyEnemyAttack : MonoBehaviour
             flyBugAnimator.Play("Fly Bug Death");
         }
 
-        if (flyEnemy.isStop && currentState == FlyBugState.Attack || flyEnemy.isStop && currentState != FlyBugState.Attack)
+        if (flyEnemy.isStop)
         {
             StartCoroutine(KnockbackFromPlayer(1f, 0.2f));
             currentState = FlyBugState.StayToAttack;
@@ -186,7 +196,7 @@ public class FlyEnemyAttack : MonoBehaviour
 
         while (timer < duration)
         {
-            transform.Translate(direction * force * Time.deltaTime);
+            transform.Translate(direction * facingRightFloat * force * Time.deltaTime);
             timer += Time.deltaTime;
             yield return null;
         }
