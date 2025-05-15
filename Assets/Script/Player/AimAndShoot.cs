@@ -36,6 +36,7 @@ public class AimAndShoot : MonoBehaviour
     public bool canMove = true;
     public bool shotgunIsShoot = false;
     public bool isAim = false;
+    public bool isKillBoomBug = false;
     public int maxBulletCount = 15;
     public int currentBulletCount;
 
@@ -118,6 +119,33 @@ public class AimAndShoot : MonoBehaviour
             targetZoom,
             Time.deltaTime * zoomSmoothSpeed
         );
+
+        if (isKillBoomBug)
+        {
+            int rewardAmount = 8;
+            int healthToHeal = playerManager.maxHealth - playerManager.currentHealth;
+            int bulletsToAddToMax = maxBulletCount - currentBulletCount;
+
+            // 1. 優先補血
+            if (playerManager.currentHealth < playerManager.maxHealth && rewardAmount > 0)
+            {
+                int healAmount = Mathf.Min(rewardAmount, healthToHeal);
+                playerManager.currentHealth += healAmount;
+                rewardAmount -= healAmount;
+            }
+
+            // 2. 補子彈
+            if (currentBulletCount < maxBulletCount && rewardAmount > 0)
+            {
+                int ammoToAdd = Mathf.Min(rewardAmount, bulletsToAddToMax);
+                currentBulletCount += ammoToAdd;
+                rewardAmount -= ammoToAdd;
+            }
+
+            // ✅ 重置旗標
+            isKillBoomBug = false;
+        }
+
     }
 
     private void HandleGunRotation()

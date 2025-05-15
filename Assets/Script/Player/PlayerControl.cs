@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
-public class PlayerControl : MonoBehaviour ///
+public class PlayerControl : MonoBehaviour //Fix boom knock back
 {
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] Animator bodyAnimator;

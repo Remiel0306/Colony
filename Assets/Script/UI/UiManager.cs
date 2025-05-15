@@ -8,6 +8,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] PlayerManager playerManager;
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] EnemyManager enemyManager;
+    [SerializeField] FlyBugManager flyBugManager;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] Image blackPannel;
@@ -80,8 +81,10 @@ public class UiManager : MonoBehaviour
         playerManager.currentHealth = 3;
         playerManager.isPlayerDead = false;
         aimAndShoot.isAim = false;
+        aimAndShoot.currentBulletCount = 8;
 
         enemyManager.ResetBugs();
+        flyBugManager.FlyBugReset();
     }
     public void ConsumeEnergy(float amount)
     {

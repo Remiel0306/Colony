@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] UiManager uiManager;
-    [SerializeField] int maxHealth = 6;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
@@ -13,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int respawnHealth = 3;
 
     public bool isPlayerDead = false;
+    public int maxHealth = 6;
     public bool isRespawn = false;
     public int currentHealth;
 

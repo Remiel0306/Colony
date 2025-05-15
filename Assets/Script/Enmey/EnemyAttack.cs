@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] bool facingRight = false;
     [SerializeField] Transform playerTransform;
     [SerializeField] BoxCollider2D bodyCollider;
@@ -143,6 +144,7 @@ public class EnemyAttack : MonoBehaviour
         {
             speed = 0f;
             boomAnimator.Play("Boom Bug Boom");
+            enemyScript.isDied = false;
             StartCoroutine(Boom());
         }
     }
@@ -230,8 +232,8 @@ public class EnemyAttack : MonoBehaviour
 
         CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
         boomObj.SetActive(true);
- 
-        enemyScript.isDied = false;
+
+        aimAndShoot.isKillBoomBug = true;
     }
 
     public IEnumerator DiedDelay()

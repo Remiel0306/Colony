@@ -14,29 +14,30 @@ public class FlyEnemyAttack : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] FlyEnemy flyEnemy;
+    [SerializeField] FlyBugManager flyBugManager;
     [SerializeField] Transform playerTransform;
     [SerializeField] FlyEnemy flyEnemyScript;
     [SerializeField] FlyBug flyBug;
-    [SerializeField] Animator flyBugAnimator;
+    [SerializeField] public Animator flyBugAnimator;
     [SerializeField] Transform floorCheck;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float speed = 5f;
 
-    FlyBugState currentState = FlyBugState.Stay;
+    public FlyBugState currentState = FlyBugState.Stay;
 
     Vector3 targetCurrentPosition;
-    Vector3 originalPosition;
+    public Vector3 originalPosition;
 
     public bool finishDeathAnime = false;
     float attackDelay = 1.5f;
     float finishAttackDelay = 2f;
     float touchWallCounter;
     float facingRightFloat = 0f;
-    bool isAttacking = false;
+    public bool isAttacking = false;
+    public bool facingRight = false;
+    public bool isEnter = false;
     bool reachedTarget = false;
-    bool facingRight = false;
-    bool isEnter = false;
-    
+
     void Start()
     {
         originalPosition = transform.position;
@@ -82,10 +83,11 @@ public class FlyEnemyAttack : MonoBehaviour
         //    StartCoroutine(ReturnToOriginalPosition());
         //}
 
-        if (flyEnemyScript.isDied)
+        if (flyEnemyScript.isFlyBugDied)
         {
             currentState = FlyBugState.AttackToBack;
             flyBugAnimator.Play("Fly Bug Death");
+            flyBugManager.notReset = true;
         }
 
         if (flyEnemy.isStop)
@@ -202,6 +204,13 @@ public class FlyEnemyAttack : MonoBehaviour
         }
 
         flyEnemy.isStop = false;
+    }
+
+    public IEnumerator DiedDelay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        gameObject.SetActive(false);
     }
 
     IEnumerator ReturnToOriginalPosition()
