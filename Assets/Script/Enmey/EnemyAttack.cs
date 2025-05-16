@@ -9,11 +9,13 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] bool facingRight = false;
     [SerializeField] Transform playerTransform;
-    [SerializeField] BoxCollider2D bodyCollider;
     [SerializeField] BoxCollider2D hitTrigger;
     [SerializeField] BoxCollider2D groundCheck;
     [SerializeField] ScreenShakeProfile boomProfile;
 
+    public GameObject boomObj;
+    public Animator boomAnimator;
+    public BoxCollider2D bodyCollider;
     public bool move = false;
     public bool showUp = false;
     public bool attackAgain = true;
@@ -22,8 +24,6 @@ public class EnemyAttack : MonoBehaviour
     public float showUpTime = 1.5f;
     public float speed;
     public float startSpeed;
-    public GameObject boomObj;
-    public Animator boomAnimator;
     bool isStopCoro = false;
 
     Enemy enemyScript;
@@ -143,8 +143,10 @@ public class EnemyAttack : MonoBehaviour
         if (enemyScript.isDied)
         {
             speed = 0f;
+            bodyCollider.enabled = false;
             boomAnimator.Play("Boom Bug Boom");
             enemyScript.isDied = false;
+            aimAndShoot.isKillBoomBug = true;
             StartCoroutine(Boom());
         }
     }
@@ -232,8 +234,6 @@ public class EnemyAttack : MonoBehaviour
 
         CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
         boomObj.SetActive(true);
-
-        aimAndShoot.isKillBoomBug = true;
     }
 
     public IEnumerator DiedDelay()

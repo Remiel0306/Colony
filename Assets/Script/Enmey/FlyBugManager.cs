@@ -12,6 +12,8 @@ public class FlyBugManager : MonoBehaviour
 
     public bool notReset = true;
 
+    bool deadOnce = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +23,15 @@ public class FlyBugManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (flyEnemy.isFlyBugDied)
+        if (flyEnemy.isFlyBugDied && !deadOnce)
         {
+            deadOnce = true;
             flyEnemyAttack.StartCoroutine(flyEnemyAttack.DiedDelay());
         }
 
         if (playerManager.isPlayerDead)
         {
+            deadOnce = true;
             flyEnemyAttack.StartCoroutine(flyEnemyAttack.DiedDelay());
         }
     }
@@ -36,15 +40,18 @@ public class FlyBugManager : MonoBehaviour
     {
         flyEnemyAttack.transform.position = flyEnemyAttack.originalPosition;
         flyEnemyAttack.isAttacking = false;
-        flyEnemyAttack.facingRight = true;
+        flyEnemyAttack.facingRight = false;
         flyEnemyAttack.isEnter = false;
         flyEnemy.isFlyBugDied = false;
         flyEnemyAttack.currentState = FlyBugState.Stay;
+        flyEnemyAttack.bodyCollider.enabled = false;
         flyEnemyAttack.flyBugAnimator.SetBool("isAttack", false);
         flyEnemyAttack.flyBugAnimator.Play("Fly Bug Idle");
 
         flyEnemy.currentHealth = flyEnemy.maxHealth;
         flybug.SetActive(true);
         flyBugBody.SetActive(true);
+
+        deadOnce = false;
     }
 }

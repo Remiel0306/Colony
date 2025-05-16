@@ -21,7 +21,10 @@ public class BulletBehavior : MonoBehaviour
     [SerializeField] private float shotgunBulletSpeed = 35f;
     [SerializeField] private float shotgunBulletDamage = .1f;
     [SerializeField] private float shotgunBulletDestoryTime = .2f;
-  
+
+    [SerializeField] GameObject impacEffect;
+    [SerializeField] Animator impacAnimation;
+
     private Rigidbody2D rb2D;
     private float damage;
 
@@ -93,6 +96,10 @@ public class BulletBehavior : MonoBehaviour
             }
 
             //destroy bullet
+            GameObject effect = Instantiate(impacEffect, transform.position, transform.rotation);
+            Animator impacAnimation = effect.GetComponent<Animator>();
+            Destroy(effect, impacAnimation.GetCurrentAnimatorStateInfo(0).length);
+            //StartCoroutine(DestroyAfterAnimation(impacEffect, impacAnimation));
             Destroy(gameObject);
         }
     }
@@ -133,5 +140,21 @@ public class BulletBehavior : MonoBehaviour
         {
             rb2D.gravityScale = physicsBulletGravity;
         }
+    }
+
+    private IEnumerator DestroyAfterAnimation(GameObject impact, Animator animator)
+    {
+        // 等一幀，讓 Animator 進入第一個動畫狀態
+        yield return null;
+
+        // 獲取動畫狀態長度
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        float animationLength = stateInfo.length;
+
+        // 等待動畫播放結束
+        yield return new WaitForSeconds(animationLength);
+
+        // 銷毀動畫物件
+        Destroy(impacEffect);
     }
 }

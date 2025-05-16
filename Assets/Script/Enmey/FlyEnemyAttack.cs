@@ -12,14 +12,16 @@ public enum FlyBugState
 
 public class FlyEnemyAttack : MonoBehaviour 
 {
-    [SerializeField] GameObject player;
     [SerializeField] FlyEnemy flyEnemy;
     [SerializeField] FlyBugManager flyBugManager;
+    [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] Transform playerTransform;
     [SerializeField] FlyEnemy flyEnemyScript;
     [SerializeField] FlyBug flyBug;
+    [SerializeField] GameObject player;
     [SerializeField] public Animator flyBugAnimator;
     [SerializeField] Transform floorCheck;
+    [SerializeField] Transform ceilingCheck;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float speed = 5f;
 
@@ -28,6 +30,7 @@ public class FlyEnemyAttack : MonoBehaviour
     Vector3 targetCurrentPosition;
     public Vector3 originalPosition;
 
+    public BoxCollider2D bodyCollider;
     public bool finishDeathAnime = false;
     float attackDelay = 1.5f;
     float finishAttackDelay = 2f;
@@ -41,6 +44,7 @@ public class FlyEnemyAttack : MonoBehaviour
     void Start()
     {
         originalPosition = transform.position;
+        bodyCollider.enabled = false;
     }
 
     void Update()
@@ -49,19 +53,23 @@ public class FlyEnemyAttack : MonoBehaviour
 
         StateMachine();
 
-        if(currentState != FlyBugState.Attack && flyEnemyScript.contactPlayer == true)
+        if (Vector3.Distance(transform.position, playerTransform.position) > 15f)
+        {
+            if (currentState != FlyBugState.Stay) 
+            {
+                StopAllCoroutines(); 
+                StartCoroutine(ReturnToOriginalPosition());
+                currentState = FlyBugState.Stay; 
+            }
+            return;
+        }
+
+        if (currentState != FlyBugState.Attack && flyEnemyScript.contactPlayer == true)
         {
             flyEnemyScript.contactPlayer = false;
         }
 
         if (currentState == FlyBugState.Attack && flyBug.isTouchGround)
-        {
-            currentState = FlyBugState.AttackToBack;
-            flyBug.isTouchGround = false;
-            touchWallCounter++;
-        }
-
-        if (isTouchFloor())
         {
             currentState = FlyBugState.AttackToBack;
             flyBug.isTouchGround = false;
@@ -77,17 +85,13 @@ public class FlyEnemyAttack : MonoBehaviour
             facingRightFloat = 1f;
         }
 
-        //if (touchWallCounter >= 3f)
-        //{
-        //    Debug.Log("In back");
-        //    StartCoroutine(ReturnToOriginalPosition());
-        //}
-
         if (flyEnemyScript.isFlyBugDied)
         {
             currentState = FlyBugState.AttackToBack;
             flyBugAnimator.Play("Fly Bug Death");
             flyBugManager.notReset = true;
+            aimAndShoot.isKillFlyBug = true;
+            flyEnemyScript.isFlyBugDied = false;
         }
 
         if (flyEnemy.isStop)
@@ -154,7 +158,8 @@ public class FlyEnemyAttack : MonoBehaviour
     IEnumerator AttackAfterDelay()
     {
         yield return new WaitForSeconds(attackDelay);
-
+        
+        bodyCollider.enabled = true;
         targetCurrentPosition = player.transform.position + Vector3.up * .15f;
         isAttacking = true;
         currentState = FlyBugState.Attack;
@@ -174,7 +179,7 @@ public class FlyEnemyAttack : MonoBehaviour
     IEnumerator BackToSky()
     {
         float riseDistance = 3.5f;
-        float riseSpeed = 2f; 
+        float riseSpeed = 2f;
         float duration = riseDistance / riseSpeed;
         float elapsed = 0f;
         Vector3 startPos = transform.position;
@@ -182,11 +187,18 @@ public class FlyEnemyAttack : MonoBehaviour
 
         while (elapsed < duration)
         {
+            if (IsTouchCeiling()) // 🔸 撞到天花板就中止
+            {
+                Debug.Log("撞到天花板，中止上升");
+                break;
+            }
+
             transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = endPos; // 確保落點精準
+
+        transform.position = transform.position; // 保持當前位置
         currentState = FlyBugState.StayToAttack;
     }
 
@@ -215,8 +227,12 @@ public class FlyEnemyAttack : MonoBehaviour
 
     IEnumerator ReturnToOriginalPosition()
     {
+        isAttacking = false;
+        flyBugAnimator.SetBool("isAttack", false);
+        bodyCollider.enabled = false;
+
         Vector3 startPos = transform.position;
-        float duration = 1f; // 回到原點的時間
+        float duration = 1.5f;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -226,9 +242,26 @@ public class FlyEnemyAttack : MonoBehaviour
             yield return null;
         }
 
-        touchWallCounter = 0;
         transform.position = originalPosition;
-        currentState = FlyBugState.StayToAttack; // 重設狀態
+
+        // 重設狀態與變數
+        touchWallCounter = 0;
+        flyEnemyScript.contactPlayer = false;
+        flyEnemy.isStop = false;
+        isAttacking = false;
+
+        // 稍等一下才重新進入攻擊流程
+        yield return new WaitForSeconds(1f);
+
+        currentState = FlyBugState.StayToAttack;
+        StartCoroutine(NotDeadReset());
+    }
+
+    IEnumerator NotDeadReset()
+    {
+        yield return new WaitForSeconds(.5f);
+
+        flyBugManager.FlyBugReset();
     }
 
     void Flip()
@@ -236,9 +269,9 @@ public class FlyEnemyAttack : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    bool isTouchFloor()
+    bool IsTouchCeiling()
     {
-        return Physics2D.OverlapBox(floorCheck.position, new Vector2(0.6f, 0.05f), 0, groundLayer);
+        return Physics2D.OverlapBox(ceilingCheck.position, new Vector2(0.6f, 0.05f), 0, groundLayer);
     }
 
     void FaceingPlayer()

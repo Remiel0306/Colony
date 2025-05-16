@@ -9,9 +9,13 @@ public class AimAndShoot : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
     [SerializeField] Shotgun shotgunScript;
+    [SerializeField] Enemy enemy;
+    [SerializeField] FlyEnemy flyEnemy;
     [SerializeField] GameObject gun;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shotgunBullet;
+    [SerializeField] GameObject fireLight;
+    [SerializeField] GameObject shotgunFireLight;
     [SerializeField] CinemachineVirtualCamera cinemachine;
     [SerializeField] Transform bulletSpwanPoint;
     [SerializeField] float recoilForce = 12;
@@ -37,8 +41,12 @@ public class AimAndShoot : MonoBehaviour
     public bool shotgunIsShoot = false;
     public bool isAim = false;
     public bool isKillBoomBug = false;
+    public bool isKillFlyBug = false;
     public int maxBulletCount = 15;
     public int currentBulletCount;
+
+    bool isFire = false;
+    bool isShotgunFire = false;
 
     // Start is called before the first frame update
     void Start()
@@ -112,7 +120,18 @@ public class AimAndShoot : MonoBehaviour
             }
         }
 
-        // ✅ 鏡頭線性縮放控制（無論 isAim true/false 都執行）
+        if (isFire)
+        {
+            fireLight.SetActive(true);
+            StartCoroutine(CloseFireLight());
+        }
+        if (isShotgunFire)
+        {
+            shotgunFireLight.SetActive(true);
+            StartCoroutine(CloseFireLight());
+        }
+
+        // Aim zoom in/out
         float targetZoom = isAim ? aimZoomSize : defaultZoomSize;
         cinemachine.m_Lens.OrthographicSize = Mathf.Lerp(
             cinemachine.m_Lens.OrthographicSize,
@@ -120,32 +139,33 @@ public class AimAndShoot : MonoBehaviour
             Time.deltaTime * zoomSmoothSpeed
         );
 
-        if (isKillBoomBug)
+        if (isKillBoomBug && !enemy.isDied)
         {
-            int rewardAmount = 8;
-            int healthToHeal = playerManager.maxHealth - playerManager.currentHealth;
-            int bulletsToAddToMax = maxBulletCount - currentBulletCount;
-
-            // 1. 優先補血
-            if (playerManager.currentHealth < playerManager.maxHealth && rewardAmount > 0)
+            if (playerManager.currentHealth < playerManager.maxHealth)
             {
-                int healAmount = Mathf.Min(rewardAmount, healthToHeal);
-                playerManager.currentHealth += healAmount;
-                rewardAmount -= healAmount;
+                playerManager.currentHealth += 1;
             }
 
-            // 2. 補子彈
-            if (currentBulletCount < maxBulletCount && rewardAmount > 0)
-            {
-                int ammoToAdd = Mathf.Min(rewardAmount, bulletsToAddToMax);
-                currentBulletCount += ammoToAdd;
-                rewardAmount -= ammoToAdd;
-            }
+            int ammoToAdd = Mathf.Min(8, maxBulletCount - currentBulletCount);
+            currentBulletCount += ammoToAdd;
 
-            // ✅ 重置旗標
             isKillBoomBug = false;
+            Debug.Log("isKillBoomBug");
         }
 
+        if (isKillFlyBug && !flyEnemy.isFlyBugDied)
+        {
+            if (playerManager.currentHealth < playerManager.maxHealth)
+            {
+                playerManager.currentHealth += 1;
+            }
+
+            int ammoToAdd = Mathf.Min(7, maxBulletCount - currentBulletCount);
+            currentBulletCount += ammoToAdd;
+
+            isKillFlyBug = false;
+            Debug.Log("isKillFlyBug");
+        }
     }
 
     private void HandleGunRotation()
@@ -191,6 +211,7 @@ public class AimAndShoot : MonoBehaviour
             bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
             //CameraShakeManager.instance.CameraShake(impulseSource);
             CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
+            isFire = true;
             currentBulletCount--;
         }
     }
@@ -201,6 +222,7 @@ public class AimAndShoot : MonoBehaviour
             bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
             //CameraShakeManager.instance.CameraShake(impulseSource);
             CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
+            isFire = true;
             playerManager.currentHealth--;
         }
     }
@@ -212,6 +234,8 @@ public class AimAndShoot : MonoBehaviour
             float spreadAngle = 45f;
             float startAngle = -spreadAngle / 2f;
             float angleStep = spreadAngle / (8 - 1);
+
+            isShotgunFire = true;
 
             for (int i = 0; i < 9; i++)
             {
@@ -231,6 +255,15 @@ public class AimAndShoot : MonoBehaviour
     {
         Vector2 recoilDirction = -gun.transform.right;
         playerControl.rb2D.AddForce(recoilDirction * recoilForce, ForceMode2D.Impulse);
+    }
+
+    IEnumerator CloseFireLight()
+    {
+        yield return new WaitForSeconds(.05f);
+        fireLight.SetActive(false);
+        shotgunFireLight.SetActive(false);
+        isFire = false;
+        isShotgunFire = false;
     }
 }
 

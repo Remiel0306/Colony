@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] float knockBackForce = 2f;
     [SerializeField] EnemyAttack EnemyAttack;
+    [SerializeField] SpriteRenderer spriteRenderer; // 設定敵人的 SpriteRenderer
 
     public float maxHealth = 5f;
     public bool isDied = false;
@@ -16,23 +17,27 @@ public class Enemy : MonoBehaviour, IDamageable
     public float currentHealth;
     Rigidbody2D rb2DParent;
 
+    bool isChangeColor = false;
+
     void Start()
     {
         currentHealth = maxHealth;
         rb2DParent = GetComponentInParent<Rigidbody2D>();
     }
-    private void Update()
+    void Update()
     {
-        if (isStop)
+        if (isChangeColor)
         {
-            //OnTriggerEnter2D("Shotgun Bullet");
+            StartCoroutine(FlashHit());
+            isChangeColor = false;
         }
     }
     public void Damage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        
-        if(currentHealth < 0)
+        isChangeColor = true;
+
+        if (currentHealth < 0)
         {
             isDied = true;
 
@@ -57,6 +62,18 @@ public class Enemy : MonoBehaviour, IDamageable
             isStop = true;
             isShotgunShoot = true;
         }
+
+        if (collision.gameObject.CompareTag("Normal Bullet"))
+        {
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
+        }
+    }
+
+    private IEnumerator FlashHit()
+    {
+        yield return new WaitForSeconds(.1f);
+        spriteRenderer.color = Color.white;
     }
 
     public IEnumerator Died()
@@ -64,6 +81,5 @@ public class Enemy : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(.7f);
 
         gameObject.SetActive(false);
-        //isDied = false;
     }
 }

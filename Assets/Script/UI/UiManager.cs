@@ -80,6 +80,7 @@ public class UiManager : MonoBehaviour
         playerManager.gameObject.SetActive(true);
         playerManager.currentHealth = 3;
         playerManager.isPlayerDead = false;
+        playerManager.spriteRenderer.color = Color.white;
         aimAndShoot.isAim = false;
         aimAndShoot.currentBulletCount = 8;
 

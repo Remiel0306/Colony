@@ -11,10 +11,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int toxicMucus = 1;
     [SerializeField] int respawnHealth = 3;
 
+    public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
     public int maxHealth = 6;
     public bool isRespawn = false;
     public int currentHealth;
+    bool isChangeColor = false;
 
     void Start()
     {
@@ -38,6 +40,12 @@ public class PlayerManager : MonoBehaviour
         {
             currentHealth = respawnHealth;
         }
+
+        if(isChangeColor)
+        {
+            StartCoroutine(ChangeColorBack());
+            isChangeColor = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -45,6 +53,8 @@ public class PlayerManager : MonoBehaviour
         if(collision.gameObject.CompareTag("Fly Bug"))
         {
             currentHealth -= flyBugDamage;
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
         }
     }
 
@@ -53,13 +63,16 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Boom"))
         {
             currentHealth -= boomDamage;
-
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
             Debug.Log("Boom Attack");
         }
 
         if (collision.gameObject.CompareTag("BoomBug"))
         {
             currentHealth -= boomBugDamage;
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
 
             Debug.Log("Touch");
         }
@@ -67,6 +80,14 @@ public class PlayerManager : MonoBehaviour
         if(collision.gameObject.CompareTag("Toxic Mucus"))
         {
             currentHealth -= toxicMucus;
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
         }
+    }
+
+    IEnumerator ChangeColorBack()
+    {
+        yield return new WaitForSeconds(.1f);
+        spriteRenderer.color = Color.white; 
     }
 }

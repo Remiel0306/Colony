@@ -212,7 +212,7 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
     
     bool WallCheck()
     {
-        return Physics2D.OverlapBox(wallCheck.position, new Vector2(0.08f, 0.8f), 0, groundLayer);
+        return Physics2D.OverlapBox(wallCheck.position, new Vector2(0.08f, 0.95f), 0, groundLayer);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

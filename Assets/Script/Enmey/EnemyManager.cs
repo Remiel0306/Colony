@@ -49,6 +49,7 @@ public class EnemyManager : MonoBehaviour
         enemy.currentHealth = enemy.maxHealth;
         enemyAttack.transform.position = startPosition;
         enemyAttack.boomObj.SetActive(false);
+        enemyAttack.bodyCollider.enabled = false;
 
         enemyAttack.color = enemyAttack.childSR.color;
         enemyAttack.color.a = 0.2f;

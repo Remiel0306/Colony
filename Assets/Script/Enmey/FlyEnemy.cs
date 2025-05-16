@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlyEnemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] public float maxHealth = 5f;
+    [SerializeField] public float maxHealth = 3f;
     [SerializeField] float knockBackForce = 2f;
 
     public bool isFlyBugDied = false;
@@ -22,10 +22,7 @@ public class FlyEnemy : MonoBehaviour, IDamageable
     }
     private void Update()
     {
-        if (isStop)
-        {
-            //OnTriggerEnter2D("Shotgun Bullet");
-        }
+
     }
     public void Damage(float damageAmount)
     {
