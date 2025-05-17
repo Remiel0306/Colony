@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Animations;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-
-public class PlayerControl : MonoBehaviour //Fix boom knock back
+public class PlayerControl : MonoBehaviour
 {
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] Animator bodyAnimator;
@@ -40,47 +35,32 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
     bool doublejump;
     bool isJumping;
     bool isBoom = false;
-    bool isFlip = false;
     float jumpCounter;
     float coyoteTimeCounter;
     float jumpBufferCounter;
     float currentSpeed = 0f;
-    Coroutine moveCoroutine;
 
-    // Start is called before the first frame update
+    Transform boomOrigin;
+
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
-
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
         startSpeed = speed;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log("Shougun Shot: " + aimAndShoot.shotgunIsShoot);
-
         float facingCheck = 0f;
-        if (Input.GetKey(KeyCode.A))
-        {
-            facingCheck = -1f;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            facingCheck = 1f;
-        }
+        if (Input.GetKey(KeyCode.A)) facingCheck = -1f;
+        else if (Input.GetKey(KeyCode.D)) facingCheck = 1f;
 
-        if (aimAndShoot.canMove)
+        if (aimAndShoot.canMove && !isBoom)
         {
             if (facingCheck != 0 && !WallCheck())
-            {
                 currentSpeed = Mathf.MoveTowards(currentSpeed, facingCheck * speed, acceleration * Time.deltaTime);
-            }
             else
-            {
                 currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
-            }
 
             rb2D.velocity = new Vector2(currentSpeed, rb2D.velocity.y);
         }
@@ -90,16 +70,8 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
         gunAnimator.SetBool("isMoving", isMoving);
         handAnimator.SetBool("isMoving", isMoving);
 
-        if (facingCheck > 0 && !facingRight)
-        {
-            Flip();
-            facingRight = true;
-        }
-        else if(facingCheck < 0 && facingRight)
-        {
-            Flip();
-            facingRight = false;
-        }
+        if (facingCheck > 0 && !facingRight) { Flip(); facingRight = true; }
+        else if (facingCheck < 0 && facingRight) { Flip(); facingRight = false; }
 
         if (isGrounded())
         {
@@ -107,10 +79,7 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
             doublejump = true;
             bodyAnimator.SetBool("isGrounded", true);
         }
-        else
-        {
-            coyoteTimeCounter -= Time.deltaTime;
-        }
+        else coyoteTimeCounter -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -121,20 +90,7 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
             gunAnimator.SetBool("isJumping", true);
             handAnimator.SetBool("isJumping", true);
         }
-        else
-        {
-            jumpBufferCounter -= Time.deltaTime;
-        }
-
-        if(jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
-        {
-            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpPower);
-            isJumping = true;
-            jumpCounter = 0f;
-            jumpBufferCounter = 0f;
-
-            //set animator bool
-        }
+        else jumpBufferCounter -= Time.deltaTime;
 
         if (jumpBufferCounter > 0f)
         {
@@ -147,7 +103,7 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
             }
             else if (doublejump)
             {
-                rb2D.velocity = new Vector2(rb2D.velocity.x, jumpPower);
+                rb2D.velocity = new Vector2(rb2D.velocity.x, doubleJumpPower);
                 isJumping = true;
                 jumpCounter = 0f;
                 jumpBufferCounter = 0f;
@@ -155,7 +111,7 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
             }
         }
 
-        if(rb2D.velocity.y < 0) // The falling moment
+        if (rb2D.velocity.y < 0)
         {
             rb2D.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
 
@@ -163,42 +119,29 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
             gunAnimator.SetBool("isJumping", false);
             handAnimator.SetBool("isJumping", false);
         }
+
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isJumping = false;
             jumpCounter = 0f;
-            if(rb2D.velocity.y > 0)
-            {
+            if (rb2D.velocity.y > 0)
                 rb2D.velocity = new Vector2(rb2D.velocity.x, rb2D.velocity.y * 0.6f);
-            }
             coyoteTimeCounter = 0f;
         }
 
-        if (doublejump) // && Input.GetKeyDown(KeyCode.Space)
-        {
+        if (doublejump)
             bodyAnimator.SetBool("isDoubleJump", false);
-        }
         else
-        {
             bodyAnimator.Play("Double Jump Body");
-        }
-
-        if (isBoom)
-        {
-            Vector2 boomDirction = -gameObject.transform.right;
-            rb2D.AddForce(boomDirction * boomForce, ForceMode2D.Impulse);
-
-            isBoom = false;
-        }
 
         if (!aimAndShoot.canMove)
         {
             speed = 0f;
             currentSpeed = 0f;
-            //aimAndShoot.canMove = false;
             StartCoroutine(ShotgunKnockBack());
         }
     }
+
     private void Flip()
     {
         facingRight = !facingRight;
@@ -209,22 +152,39 @@ public class PlayerControl : MonoBehaviour //Fix boom knock back
     {
         return Physics2D.OverlapBox(groundCheck.position, new Vector2(0.4f, 0.1f), 0, groundLayer);
     }
-    
+
     bool WallCheck()
     {
         return Physics2D.OverlapBox(wallCheck.position, new Vector2(0.08f, 0.95f), 0, groundLayer);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Boom"))
         {
             isBoom = true;
+            boomOrigin = collision.transform;
+            StartCoroutine(BoomKnockBack());
         }
     }
+
+    IEnumerator BoomKnockBack()
+    {
+        speed = 0f;
+        currentSpeed = 0f;
+
+        Vector2 boomDir = ((Vector2)transform.position - (Vector2)boomOrigin.position).normalized;
+        rb2D.velocity = Vector2.zero; // 清除舊速度避免方向亂掉
+        rb2D.AddForce(boomDir * boomForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.3f); // 給爆炸反應一點時間
+        speed = startSpeed;
+        isBoom = false;
+    }
+
     IEnumerator ShotgunKnockBack()
     {
         yield return new WaitForSeconds(.3f);
-        
         aimAndShoot.shotgunIsShoot = false;
         speed = startSpeed;
         aimAndShoot.canMove = true;

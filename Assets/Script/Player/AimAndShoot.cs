@@ -119,14 +119,30 @@ public class AimAndShoot : MonoBehaviour
                 );
             }
         }
-
         if (isFire)
         {
+            if (playerControl.facingRight)
+            {
+                fireLight.transform.localEulerAngles = new Vector3(0f, 0f, -90f); // 朝右
+            }
+            else
+            {
+                fireLight.transform.localEulerAngles = new Vector3(0f, 180f, -90f); // 朝左（Y 翻轉）
+            }
+
             fireLight.SetActive(true);
             StartCoroutine(CloseFireLight());
         }
         if (isShotgunFire)
         {
+            if (playerControl.facingRight)
+            {
+                shotgunFireLight.transform.localEulerAngles = new Vector3(0f, 0f, -90f); // 朝右
+            }
+            else
+            {
+                shotgunFireLight.transform.localEulerAngles = new Vector3(0f, 180f, -90f); // 朝左（Y 翻轉）
+            }
             shotgunFireLight.SetActive(true);
             StartCoroutine(CloseFireLight());
         }

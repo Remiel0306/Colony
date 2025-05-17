@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] UiManager uiManager;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
     [SerializeField] int toxicMucus = 1;
     [SerializeField] int respawnHealth = 3;
+    [SerializeField] int batteryAddBullet = 8;
+    [SerializeField] int batteryAddHealth = 3;
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
@@ -55,6 +58,17 @@ public class PlayerManager : MonoBehaviour
             currentHealth -= flyBugDamage;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
+        }
+
+        if (collision.gameObject.CompareTag("Battery"))
+        {
+            int ammoToAdd = Mathf.Min(8, aimAndShoot.maxBulletCount - aimAndShoot.currentBulletCount);
+            aimAndShoot.currentBulletCount += ammoToAdd;
+
+            int healthToAdd = Mathf.Min(3, maxHealth - currentHealth);
+            currentHealth += healthToAdd;
+
+            collision.gameObject.SetActive(false);
         }
     }
 

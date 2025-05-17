@@ -33,7 +33,7 @@ public class FlyEnemyAttack : MonoBehaviour
     public BoxCollider2D bodyCollider;
     public bool finishDeathAnime = false;
     float attackDelay = 1.5f;
-    float finishAttackDelay = 2f;
+    float finishAttackDelay = 1f;
     float touchWallCounter;
     float facingRightFloat = 0f;
     public bool isAttacking = false;
@@ -49,8 +49,6 @@ public class FlyEnemyAttack : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(touchWallCounter);
-
         StateMachine();
 
         if (Vector3.Distance(transform.position, playerTransform.position) > 15f)
@@ -87,8 +85,9 @@ public class FlyEnemyAttack : MonoBehaviour
 
         if (flyEnemyScript.isFlyBugDied)
         {
-            currentState = FlyBugState.AttackToBack;
+            currentState = FlyBugState.Stay;
             flyBugAnimator.Play("Fly Bug Death");
+            bodyCollider.enabled = false;
             flyBugManager.notReset = true;
             aimAndShoot.isKillFlyBug = true;
             flyEnemyScript.isFlyBugDied = false;

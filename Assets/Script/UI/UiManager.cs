@@ -11,6 +11,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] FlyBugManager flyBugManager;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
+    [SerializeField] GameObject[] battery;
     [SerializeField] Image blackPannel;
     [SerializeField] Image energyBar;
     [SerializeField] float maxEnergy;
@@ -83,6 +84,10 @@ public class UiManager : MonoBehaviour
         playerManager.spriteRenderer.color = Color.white;
         aimAndShoot.isAim = false;
         aimAndShoot.currentBulletCount = 8;
+        foreach (GameObject b in battery)
+        {
+            b.SetActive(true);
+        }
 
         enemyManager.ResetBugs();
         flyBugManager.FlyBugReset();
