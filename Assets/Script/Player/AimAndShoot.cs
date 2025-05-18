@@ -11,6 +11,7 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] Shotgun shotgunScript;
     [SerializeField] Enemy enemy;
     [SerializeField] FlyEnemy flyEnemy;
+    [SerializeField] AudioManager audioManager;
     [SerializeField] GameObject gun;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shotgunBullet;
@@ -227,6 +228,9 @@ public class AimAndShoot : MonoBehaviour
             bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
             //CameraShakeManager.instance.CameraShake(impulseSource);
             CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
+            audioManager.PlaySFX(audioManager.laserSound);
+            audioManager.PlaySFX(audioManager.rifleShotSound);
+
             isFire = true;
             currentBulletCount--;
         }
@@ -238,6 +242,9 @@ public class AimAndShoot : MonoBehaviour
             bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
             //CameraShakeManager.instance.CameraShake(impulseSource);
             CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
+            audioManager.PlaySFX(audioManager.laserSound);
+            audioManager.PlaySFX(audioManager.rifleShotSound);
+
             isFire = true;
             playerManager.currentHealth--;
         }
@@ -259,6 +266,8 @@ public class AimAndShoot : MonoBehaviour
                 Quaternion bulletRotation = gun.transform.rotation * Quaternion.Euler(0, 0, bulletAngle);
                 Instantiate(shotgunBullet, bulletSpwanPoint.transform.position, bulletRotation);
             }
+            audioManager.PlayShotgunSFX(audioManager.shotgunSound);
+            audioManager.PlayShotgunSFX(audioManager.laserShotgunSound);
 
             shotgunIsShoot = true;
             canMove = false;
