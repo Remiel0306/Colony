@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FlyEnemy : MonoBehaviour, IDamageable
 {
+    [SerializeField] AudioManager audioManager;
     [SerializeField] public float maxHealth = 3f;
     [SerializeField] float knockBackForce = 2f;
 
@@ -27,8 +28,9 @@ public class FlyEnemy : MonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        
-        if(currentHealth < 0)
+        audioManager.PlayHitBugSFX(audioManager.hitBug);
+
+        if (currentHealth < 0)
         {
             isFlyBugDied = true;
 
@@ -52,6 +54,8 @@ public class FlyEnemy : MonoBehaviour, IDamageable
         {
             isStop = true;
         }
+
+        audioManager.PlayHitBugSFX(audioManager.hitBug);
     }
 
     IEnumerator Died()

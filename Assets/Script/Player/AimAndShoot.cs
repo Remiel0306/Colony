@@ -30,6 +30,13 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] float defaultZoomSize = 4.7f;
     [SerializeField] float zoomSmoothSpeed = 10f;
 
+    // 💡 新增：Cinemachine Offset 相關
+    CinemachineFramingTransposer framingTransposer;
+    Vector3 defaultOffset;
+    [SerializeField] float aimOffsetStrength = 0.5f; // 偏移強度，可調整
+    [SerializeField] float aimOffsetSmooth = 5f;     // 平滑過渡速度
+
+
     PlayerControl playerControl;
     CinemachineImpulseSource impulseSource;
 
@@ -56,9 +63,16 @@ public class AimAndShoot : MonoBehaviour
         impulseSource = GetComponent<CinemachineImpulseSource>();
 
         Cursor.SetCursor(cursorTexture, hotspot, cursorMode);
-
         currentBulletCount = maxBulletCount;
+
+        // 💡 初始化 Cinemachine 組件
+        framingTransposer = cinemachine.GetCinemachineComponent<CinemachineFramingTransposer>();
+        if (framingTransposer != null)
+        {
+            defaultOffset = framingTransposer.m_TrackedObjectOffset;
+        }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -182,6 +196,41 @@ public class AimAndShoot : MonoBehaviour
 
             isKillFlyBug = false;
             Debug.Log("isKillFlyBug");
+        }
+        // 💡 滑鼠瞄準時讓鏡頭稍微偏移
+        // 💡 滑鼠瞄準時讓鏡頭稍微偏移，支援左右翻轉
+        if (framingTransposer != null)
+        {
+            if (isAim)
+            {
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                Vector3 playerPos = transform.position;
+
+                Vector3 aimDir = mouseWorldPos - playerPos;
+                aimDir.z = 0f;
+
+                // 💡 根據角色面向來翻轉方向（否則會顛倒）
+                float flipX = playerControl.facingRight ? 1f : -1f;
+                Vector3 flippedDir = new Vector3(aimDir.x * flipX, aimDir.y, 0f);
+
+                Vector3 clampedDir = Vector3.ClampMagnitude(flippedDir, 1f);
+
+                Vector3 targetOffset = defaultOffset + clampedDir * aimOffsetStrength;
+
+                framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(
+                    framingTransposer.m_TrackedObjectOffset,
+                    targetOffset,
+                    Time.deltaTime * aimOffsetSmooth
+                );
+            }
+            else
+            {
+                framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(
+                    framingTransposer.m_TrackedObjectOffset,
+                    defaultOffset,
+                    Time.deltaTime * aimOffsetSmooth
+                );
+            }
         }
     }
 

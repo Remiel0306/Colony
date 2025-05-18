@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] UiManager uiManager;
+    [SerializeField] AudioManager audioManager;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
@@ -13,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int respawnHealth = 3;
     [SerializeField] int batteryAddBullet = 8;
     [SerializeField] int batteryAddHealth = 3;
+    [SerializeField] Transform respawnPoint2;
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
@@ -58,6 +60,8 @@ public class PlayerManager : MonoBehaviour
             currentHealth -= flyBugDamage;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
+
+            audioManager.PlaySFX(audioManager.playerHurt);
         }
 
         if (collision.gameObject.CompareTag("Battery"))
@@ -79,7 +83,7 @@ public class PlayerManager : MonoBehaviour
             currentHealth -= boomDamage;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
-            Debug.Log("Boom Attack");
+            audioManager.PlaySFX(audioManager.playerHurt);
         }
 
         if (collision.gameObject.CompareTag("BoomBug"))
@@ -87,8 +91,7 @@ public class PlayerManager : MonoBehaviour
             currentHealth -= boomBugDamage;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
-
-            Debug.Log("Touch");
+            audioManager.PlaySFX(audioManager.playerHurt);
         }
 
         if(collision.gameObject.CompareTag("Toxic Mucus"))
@@ -96,6 +99,14 @@ public class PlayerManager : MonoBehaviour
             currentHealth -= toxicMucus;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
+            audioManager.PlaySFX(audioManager.playerHurt);
+        }
+
+        if(collision.gameObject.CompareTag("RespwanPoint 2"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint2.transform;
+
+            Debug.Log("123546578900");
         }
     }
 

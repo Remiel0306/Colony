@@ -18,6 +18,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] float currentEnergy;
     [SerializeField] GameObject respawnBtn;
     [SerializeField] Transform level1Point;
+    public Transform currentRespowanPoinot;
 
     bool isPannelOpen = false;
     bool isDetectorOpen = false;
@@ -40,6 +41,7 @@ public class UiManager : MonoBehaviour
         cg.blocksRaycasts = false;
 
         maxEnergy = aimAndShoot.maxBulletCount;
+        currentRespowanPoinot = level1Point.transform;
 
         UpdateEnergyBar();
     }
@@ -77,7 +79,7 @@ public class UiManager : MonoBehaviour
         StartCoroutine(FadeOutUI());
         isPannelOpen = false;
 
-        playerManager.gameObject.transform.position = level1Point.position;
+        playerManager.gameObject.transform.position = currentRespowanPoinot.position;
         playerManager.gameObject.SetActive(true);
         playerManager.currentHealth = 3;
         playerManager.isPlayerDead = false;

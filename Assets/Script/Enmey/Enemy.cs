@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] float knockBackForce = 2f;
     [SerializeField] EnemyAttack EnemyAttack;
+    [SerializeField] AudioManager audioManager;
     [SerializeField] SpriteRenderer spriteRenderer; // 設定敵人的 SpriteRenderer
+    [SerializeField] float knockBackForce = 2f;
 
     public float maxHealth = 5f;
     public bool isDied = false;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         currentHealth -= damageAmount;
         isChangeColor = true;
+        audioManager.PlayHitBugSFX(audioManager.hitBug);
 
         if (currentHealth < 0)
         {
@@ -61,6 +63,7 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             isStop = true;
             isShotgunShoot = true;
+            audioManager.PlayHitBugSFX(audioManager.hitBug);
         }
 
         if (collision.gameObject.CompareTag("Normal Bullet"))

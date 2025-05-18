@@ -8,12 +8,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource sfxSource;
     [SerializeField] AudioSource shotgunSFX;
+    [SerializeField] AudioSource hitBugSFX;
+    [SerializeField] AudioSource playerSFX;
     [Header("Audio Clip")]
     public AudioClip bgm;
     public AudioClip laserSound;
     public AudioClip rifleShotSound;
     public AudioClip shotgunSound;
     public AudioClip laserShotgunSound;
+    public AudioClip hitBug;
+    public AudioClip playerHurt;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,7 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    public void PlaySFX(AudioClip clip)
+    public void SfxSource(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
     }
@@ -37,4 +41,14 @@ public class AudioManager : MonoBehaviour
     {
         shotgunSFX.PlayOneShot(clip);
     }
+
+    public void PlayHitBugSFX(AudioClip clip)
+    {
+        hitBugSFX.PlayOneShot(clip);
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        playerSFX.PlayOneShot(clip);
+    } 
 }
