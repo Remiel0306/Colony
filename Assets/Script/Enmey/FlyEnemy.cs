@@ -1,67 +1,142 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class FlyEnemy : MonoBehaviour, IDamageable
+public class FlyEnemy : MonoBehaviour, IDamageable //
 {
-    [SerializeField] AudioManager audioManager;
+    [Header("Settings")]
     [SerializeField] public float maxHealth = 3f;
     [SerializeField] float knockBackForce = 2f;
+    [SerializeField] AudioManager audioManager;
 
+    [Header("References")]
+    [SerializeField] FlyEnemyAttack flyEnemyAttack;
+    [SerializeField] Collider2D flyBugBodyCollider;
+    [SerializeField] Animator flyBugAnimator;
+    [SerializeField] GameObject flyBugVisualRoot; // 包含圖層
+
+    [Header("Runtime Flags")]
     public bool isFlyBugDied = false;
     public bool contactPlayer = false;
     public bool isStop = false;
 
-    public float currentHealth;
-    Rigidbody2D rb2DParent;
+    [HideInInspector] public float currentHealth;
+    Vector3 originalPosition;
+    bool deadOnce = false;
 
     void Start()
     {
         currentHealth = maxHealth;
-        rb2DParent = GetComponentInParent<Rigidbody2D>();
-    }
-    private void Update()
-    {
+        originalPosition = transform.position;
 
+        if (flyEnemyAttack == null)
+            flyEnemyAttack = GetComponentInChildren<FlyEnemyAttack>();
+
+        if (flyBugAnimator == null)
+            flyBugAnimator = GetComponentInChildren<Animator>();
+
+        if (flyBugBodyCollider == null)
+            flyBugBodyCollider = GetComponentInChildren<Collider2D>();
     }
+    void Awake()
+    {
+        if (flyEnemyAttack == null)
+            flyEnemyAttack = GetComponentInChildren<FlyEnemyAttack>();
+
+        if (flyBugAnimator == null)
+            flyBugAnimator = GetComponentInChildren<Animator>();
+
+        if (flyBugBodyCollider == null)
+            flyBugBodyCollider = GetComponentInChildren<Collider2D>();
+
+        if (audioManager == null)
+            audioManager = FindObjectOfType<AudioManager>();
+
+        if (flyBugVisualRoot == null && flyEnemyAttack != null)
+            flyBugVisualRoot = flyEnemyAttack.transform.GetChild(0).gameObject;
+    }
+
+
+    void Update()
+    {
+        if ((isFlyBugDied || flyEnemyAttack.playerManager.isPlayerDead) && !deadOnce)
+        {
+            deadOnce = true;
+            StartCoroutine(ResetAfterDelay());
+        }
+    }
+
     public void Damage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        audioManager.PlayHitBugSFX(audioManager.hitBug);
+        audioManager?.PlayHitBugSFX(audioManager.hitBug);
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0 && !isFlyBugDied)
         {
             isFlyBugDied = true;
-
             StartCoroutine(Died());
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             contactPlayer = true;
-
-            Debug.Log("is Contact Player " + contactPlayer);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Shotgun Bullet"))
         {
             isStop = true;
         }
 
-        audioManager.PlayHitBugSFX(audioManager.hitBug);
+        audioManager?.PlayHitBugSFX(audioManager.hitBug);
     }
 
     IEnumerator Died()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(0.5f);
+        flyBugVisualRoot?.SetActive(false);
+    }
 
-        gameObject.SetActive(false);
+    IEnumerator ResetAfterDelay()
+    {
+        yield return new WaitForSeconds(2f); // 例如死亡後 2 秒重生
+        ResetFlyBug();
+    }
+
+    public void ResetFlyBug()
+    {
+        transform.position = originalPosition;
+        isFlyBugDied = false;
+        contactPlayer = false;
+        isStop = false;
+        currentHealth = maxHealth;
+
+        if (flyEnemyAttack != null)
+        {
+            flyEnemyAttack.ResetAttackState();
+        }
+
+        if (flyBugAnimator != null)
+        {
+            flyBugAnimator.SetBool("isAttack", false);
+            flyBugAnimator.Play("Fly Bug Idle");
+        }
+
+        if (flyBugBodyCollider != null)
+        {
+            flyBugBodyCollider.enabled = false;
+        }
+
+        if (flyBugVisualRoot != null)
+        {
+            flyBugVisualRoot.SetActive(true);
+        }
+
+        deadOnce = false;
     }
 }

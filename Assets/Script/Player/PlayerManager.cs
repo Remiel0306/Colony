@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour //
 {
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] UiManager uiManager;
     [SerializeField] AudioManager audioManager;
+    [SerializeField] BugGroupControl bugGroupControl;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
@@ -95,18 +96,25 @@ public class PlayerManager : MonoBehaviour
         }
 
         if(collision.gameObject.CompareTag("Toxic Mucus"))
-        {
+        { 
             currentHealth -= toxicMucus;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
             audioManager.PlaySFX(audioManager.playerHurt);
         }
 
-        if(collision.gameObject.CompareTag("RespwanPoint 2"))
+        if (collision.gameObject.CompareTag("Toxic Mucus Dead"))
+        {
+            currentHealth = 0;
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
+            audioManager.PlaySFX(audioManager.playerHurt);
+        }
+
+        if (collision.gameObject.CompareTag("Level2Respawn"))
         {
             uiManager.currentRespowanPoinot = respawnPoint2.transform;
-
-            Debug.Log("123546578900");
+            bugGroupControl.ActivateStage(2);
         }
     }
 

@@ -16,7 +16,8 @@ TagManager:
   - BoomBug
   - Toxic Mucus
   - Battery
-  - RespownPoint 2
+  - Level2Respawn
+  - Toxic Mucus Dead
   layers:
   - Default
   - TransparentFX

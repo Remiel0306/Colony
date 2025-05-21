@@ -25,6 +25,7 @@ public class FlyEnemyAttack : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float speed = 5f;
 
+    public PlayerManager playerManager;
     public FlyBugState currentState = FlyBugState.Stay;
 
     Vector3 targetCurrentPosition;
@@ -45,6 +46,38 @@ public class FlyEnemyAttack : MonoBehaviour
     {
         originalPosition = transform.position;
         bodyCollider.enabled = false;
+    }
+    void Awake()
+    {
+        if (flyEnemy == null)
+            flyEnemy = GetComponentInParent<FlyEnemy>();
+
+        if (flyBugManager == null)
+            flyBugManager = GetComponentInParent<FlyBugManager>();
+
+        if (aimAndShoot == null)
+            aimAndShoot = FindObjectOfType<AimAndShoot>(); // 或用 tag 或 player 子物件
+
+        if (playerTransform == null && GameObject.FindGameObjectWithTag("Player") != null)
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+
+        if (flyEnemyScript == null)
+            flyEnemyScript = GetComponentInParent<FlyEnemy>();
+
+        if (flyBug == null)
+            flyBug = GetComponent<FlyBug>();
+
+        if (flyBugAnimator == null)
+            flyBugAnimator = GetComponentInChildren<Animator>();
+
+        if (bodyCollider == null)
+            bodyCollider = GetComponent<BoxCollider2D>();
+
+        if (playerManager == null && player != null)
+            playerManager = player.GetComponent<PlayerManager>();
     }
 
     void Update()
@@ -287,6 +320,26 @@ public class FlyEnemyAttack : MonoBehaviour
                 Flip();
                 facingRight = false;
             }
+        }
+    }
+    public void ResetAttackState()
+    {
+        transform.position = originalPosition;
+        isAttacking = false;
+        facingRight = false;
+        isEnter = false;
+        currentState = FlyBugState.Stay;
+        transform.rotation = Quaternion.identity;
+
+        if (flyBugAnimator != null)
+        {
+            flyBugAnimator.SetBool("isAttack", false);
+            flyBugAnimator.Play("Fly Bug Idle");
+        }
+
+        if (bodyCollider != null)
+        {
+            bodyCollider.enabled = false;
         }
     }
 }
