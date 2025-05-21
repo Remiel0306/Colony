@@ -67,9 +67,6 @@ public class PlayerManager : MonoBehaviour //
 
         if (collision.gameObject.CompareTag("Battery"))
         {
-            int ammoToAdd = Mathf.Min(8, aimAndShoot.maxBulletCount - aimAndShoot.currentBulletCount);
-            aimAndShoot.currentBulletCount += ammoToAdd;
-
             int healthToAdd = Mathf.Min(3, maxHealth - currentHealth);
             currentHealth += healthToAdd;
 

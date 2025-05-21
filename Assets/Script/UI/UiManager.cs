@@ -41,7 +41,6 @@ public class UiManager : MonoBehaviour
         cg.interactable = false;
         cg.blocksRaycasts = false;
 
-        maxEnergy = aimAndShoot.maxBulletCount;
         currentRespowanPoinot = level1Point.transform;
 
         UpdateEnergyBar();
@@ -49,8 +48,6 @@ public class UiManager : MonoBehaviour
 
     void Update()
     {
-        currentEnergy = aimAndShoot.currentBulletCount;
-
         UpdateHp();
         UpdateEnergyBar();
 
@@ -86,7 +83,6 @@ public class UiManager : MonoBehaviour
         playerManager.isPlayerDead = false;
         playerManager.spriteRenderer.color = Color.white;
         aimAndShoot.isAim = false;
-        aimAndShoot.currentBulletCount = 8;
         foreach (GameObject b in battery)
         {
             b.SetActive(true);

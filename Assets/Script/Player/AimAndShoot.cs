@@ -100,40 +100,16 @@ public class AimAndShoot : MonoBehaviour
             }
             else
             {
-               // cinemachine.m_Lens.OrthographicSize = 4.2f;
+                // cinemachine.m_Lens.OrthographicSize = 4.2f;
 
                 HandleGunRotation();
-                if (shotgunScript.canShoot && currentBulletCount > 0 && playerManager.currentHealth > 1)
+                if (shotgunScript.canShoot)
                 {
                     HandleGunShooting();
                 }
-                if(shotgunScript.canShoot && currentBulletCount <= 0 && playerManager.currentHealth > 1)
-                {
-                    HandleGunShooting2();
-                }
             }
         }
-        else
-        {
-            // ❌ 不要強制設定 OrthographicSize，讓 Lerp 控制就好！
 
-            if (playerControl.facingRight)
-            {
-                gun.transform.rotation = Quaternion.Lerp(
-                    gun.transform.rotation,
-                    Quaternion.Euler(0, 0, 0),
-                    10f * Time.deltaTime
-                );
-            }
-            else
-            {
-                gun.transform.rotation = Quaternion.Lerp(
-                    gun.transform.rotation,
-                    Quaternion.Euler(0, 0, 180),
-                    10f * Time.deltaTime
-                );
-            }
-        }
         if (isFire)
         {
             if (playerControl.facingRight)
@@ -244,19 +220,6 @@ public class AimAndShoot : MonoBehaviour
         // Adjust the local scale based on the angle
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // Limit the angle based on the player's facing direction
-        if (playerControl.facingRight)
-        {
-            angle = Mathf.Clamp(angle, -89f, 89f); // Limit to right side
-        }
-        else
-        {
-            angle = Mathf.Clamp(angle, 91f, 290f); // Limit to left side  ////!! I can try this, but let's me use other way to fix the rotate limite
-        }
-
-        // Apply the rotation
-        gun.transform.rotation = Quaternion.Euler(0, 0, angle);
-
         Vector3 localScale = new Vector3(1f, 1f, 1f);
         if (angle > 90 || angle < -90)
         {
@@ -265,7 +228,7 @@ public class AimAndShoot : MonoBehaviour
         else
         {
             localScale.y = 1f;
-        }   
+        }
 
         gun.transform.localScale = localScale;
     }
@@ -282,20 +245,6 @@ public class AimAndShoot : MonoBehaviour
 
             isFire = true;
             currentBulletCount--;
-        }
-    }
-    private void HandleGunShooting2()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            bulletInst = Instantiate(bullet, bulletSpwanPoint.position, gun.transform.rotation);
-            //CameraShakeManager.instance.CameraShake(impulseSource);
-            CameraShakeManager.instance.ScreenShakeFromProfle(profile_Rifle, impulseSource);
-            audioManager.PlaySFX(audioManager.laserSound);
-            audioManager.PlaySFX(audioManager.rifleShotSound);
-
-            isFire = true;
-            playerManager.currentHealth--;
         }
     }
 
@@ -340,4 +289,3 @@ public class AimAndShoot : MonoBehaviour
         isShotgunFire = false;
     }
 }
-

@@ -142,7 +142,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
