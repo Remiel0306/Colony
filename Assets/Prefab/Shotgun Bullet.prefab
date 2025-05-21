@@ -174,7 +174,7 @@ MonoBehaviour:
   shotgunBulletSpeed: 35
   shotgunBulletDamage: 0.2
   shotgunBulletDestoryTime: 0.13
-  impacEffect: {fileID: 8209617766520477845, guid: 46860fd749970dd4b97d1e296ad89f5b, type: 3}
+  impacEffect: {fileID: 8704197053676426171, guid: b6a3aaeafde3e6340ae0b03d83050b80, type: 3}
   impacAnimation: {fileID: 5570437832261844281, guid: b6a3aaeafde3e6340ae0b03d83050b80, type: 3}
   bulletType: 2
 --- !u!114 &5156042055315458802

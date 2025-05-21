@@ -19,24 +19,6 @@ public class FlyBugManager : MonoBehaviour
     {
         
     }
-    void Awake()
-    {
-        if (playerManager == null)
-            playerManager = FindObjectOfType<PlayerManager>();
-
-        if (flyEnemyAttack == null)
-            flyEnemyAttack = GetComponentInChildren<FlyEnemyAttack>();
-
-        if (flyEnemy == null)
-            flyEnemy = GetComponentInChildren<FlyEnemy>();
-
-        if (flybug == null && flyEnemyAttack != null)
-            flybug = flyEnemyAttack.gameObject;
-
-        if (flyBugBody == null && flyEnemyAttack != null)
-            flyBugBody = flyEnemyAttack.transform.GetChild(0).gameObject; // 視情況抓子物件
-    }
-
 
     // Update is called once per frame
     void Update()

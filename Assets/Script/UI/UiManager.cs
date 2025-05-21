@@ -9,6 +9,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] AimAndShoot aimAndShoot;
     [SerializeField] EnemyManager enemyManager;
     [SerializeField] FlyBugManager flyBugManager;
+    [SerializeField] BugRespawnCtrl bugRespawnCtrl;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] GameObject[] battery;
@@ -93,6 +94,7 @@ public class UiManager : MonoBehaviour
 
         enemyManager.ResetBugs();
         flyBugManager.FlyBugReset();
+        bugRespawnCtrl.ResetAllFlyBug();
     }
     public void ConsumeEnergy(float amount)
     {
