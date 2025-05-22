@@ -48,11 +48,11 @@ public class Shotgun : MonoBehaviour
             }
         }
 
-        if (shotgunCanShoot && aimAndShoot.shotgunIsShoot)
-        {
-            SwitchGun2To1();
-            aimAndShoot.shotgunIsShoot = false;
-        }
+        //if (shotgunCanShoot && aimAndShoot.shotgunIsShoot)
+        //{
+        //    SwitchGun2To1();
+        //    aimAndShoot.shotgunIsShoot = false;
+        //}
 
         if (currentShotgunState == ShotgunState.Gun1To2 || currentShotgunState == ShotgunState.Gun2)
         {
@@ -75,7 +75,7 @@ public class Shotgun : MonoBehaviour
                 currentShotgunState = ShotgunState.Gun1To2;
                 isSwitching = true;
                 StartCoroutine(ChangeButterTime());
-                gunSR.DOColor(new Color(1f, 0.8f, 1f), .5f).OnComplete(() =>
+                gunSR.DOColor(new Color(1f, 0.8f, 1f), .2f).OnComplete(() =>
                 {
                     currentShotgunState = ShotgunState.Gun2;
                     isSwitching = false;
@@ -88,7 +88,7 @@ public class Shotgun : MonoBehaviour
                 currentShotgunState = ShotgunState.Gun2To1;
                 isSwitching = true;
                 shotgunCanShoot = false;
-                gunSR.DOColor(new Color(1f, 1f, 1f), .5f).OnComplete(() =>
+                gunSR.DOColor(new Color(1f, 1f, 1f), .2f).OnComplete(() =>
                 {
                     currentShotgunState = ShotgunState.Gun1;
                     isSwitching = false;
@@ -98,42 +98,10 @@ public class Shotgun : MonoBehaviour
         }
     }
 
-    void SwitchGun2To1()
-    {
-        if (currentShotgunState == ShotgunState.Gun2)
-        {
-            currentShotgunState = ShotgunState.Gun2To1;
-            StartCoroutine(ChangeBackBuffer());
-            isSwitching = true;
-            shotgunCanShoot = false;
-
-            gunSR.DOColor(new Color(1f, 1f, 1f), .5f).OnComplete(() =>
-            {
-                currentShotgunState = ShotgunState.Gun1;
-                isSwitching = false;
-            });
-
-            isShotgun = false;
-            shotgunAnimator.SetBool("isShotgun", false);
-        }
-    }
-
     IEnumerator ChangeButterTime()
     {
         canShoot = false;
         yield return new WaitForSeconds(.5f);
         canShoot = true;
-    }
-
-    IEnumerator ChangeBackBuffer()
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(.6f);
-        canShoot = true;
-    }
-
-    private void ChangeToShotgun()
-    {
-        gunSR.color = isShotgun ? new Color(1f, 0.8f, 1f) : new Color(1f, 1f, 1f);
     }
 }

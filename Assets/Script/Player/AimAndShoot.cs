@@ -19,7 +19,8 @@ public class AimAndShoot : MonoBehaviour
     [SerializeField] GameObject shotgunFireLight;
     [SerializeField] CinemachineVirtualCamera cinemachine;
     [SerializeField] Transform bulletSpwanPoint;
-    [SerializeField] float recoilForce = 12;
+    [SerializeField] public float recoilForce = 10;
+    [SerializeField] public float orginalRecoil;
     [SerializeField] private ScreenShakeProfile profile_Rifle;
     [SerializeField] private ScreenShakeProfile priflie_Shotgun;
     [SerializeField] Texture2D cursorTexture;
@@ -45,11 +46,14 @@ public class AimAndShoot : MonoBehaviour
     Vector2 direction;
     float angle;
 
+    public Vector2 aimDir { get; private set; }
+
     public bool canMove = true;
     public bool shotgunIsShoot = false;
     public bool isAim = false;
     public bool isKillBoomBug = false;
     public bool isKillFlyBug = false;
+    public bool aimFlip = false;
     public int maxBulletCount = 15;
     public int currentBulletCount;
 
@@ -63,7 +67,7 @@ public class AimAndShoot : MonoBehaviour
         impulseSource = GetComponent<CinemachineImpulseSource>();
 
         Cursor.SetCursor(cursorTexture, hotspot, cursorMode);
-        currentBulletCount = maxBulletCount;
+        orginalRecoil = recoilForce;
 
         // 💡 初始化 Cinemachine 組件
         framingTransposer = cinemachine.GetCinemachineComponent<CinemachineFramingTransposer>();
@@ -88,6 +92,7 @@ public class AimAndShoot : MonoBehaviour
 
         if (isAim)
         {
+            aimFlip = true;
             if (shotgunScript.isShotgun && shotgunScript.shotgunCanShoot)
             {
                 //cinemachine.m_Lens.OrthographicSize =4.2f;
@@ -108,6 +113,10 @@ public class AimAndShoot : MonoBehaviour
                     HandleGunShooting();
                 }
             }
+        }
+        else
+        {
+            aimFlip = false;
         }
 
         if (isFire)
@@ -152,9 +161,6 @@ public class AimAndShoot : MonoBehaviour
             {
                 playerManager.currentHealth += 1;
             }
-
-            int ammoToAdd = Mathf.Min(8, maxBulletCount - currentBulletCount);
-            currentBulletCount += ammoToAdd;
 
             isKillBoomBug = false;
             Debug.Log("isKillBoomBug");
@@ -224,10 +230,18 @@ public class AimAndShoot : MonoBehaviour
         if (angle > 90 || angle < -90)
         {
             localScale.y = -1f; // Flip the gun vertically
+            if (playerControl.facingRight)
+            {
+                playerControl.Flip();
+            }
         }
         else
         {
             localScale.y = 1f;
+            if (!playerControl.facingRight)
+            {
+                playerControl.Flip();
+            }
         }
 
         gun.transform.localScale = localScale;

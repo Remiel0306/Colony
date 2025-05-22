@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] AimAndShoot aimAndShoot;
+    [SerializeField] Shotgun shotgun;
     [SerializeField] Animator bodyAnimator;
     [SerializeField] Animator gunAnimator;
     [SerializeField] Animator handAnimator;
@@ -70,8 +71,8 @@ public class PlayerControl : MonoBehaviour
         gunAnimator.SetBool("isMoving", isMoving);
         handAnimator.SetBool("isMoving", isMoving);
 
-        if (facingCheck > 0 && !facingRight) { Flip(); facingRight = true; }
-        else if (facingCheck < 0 && facingRight) { Flip(); facingRight = false; }
+        if (facingCheck > 0 && !facingRight && !aimAndShoot.aimFlip) { Flip(); facingRight = true; }
+        else if (facingCheck < 0 && facingRight && !aimAndShoot.aimFlip) { Flip(); facingRight = false; }
 
         if (isGrounded())
         {
@@ -114,8 +115,16 @@ public class PlayerControl : MonoBehaviour
         if (rb2D.velocity.y < 0)
         {
             rb2D.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
+            if (shotgun.isShotgun)
+            {
+                fallMultiplier = 3f;
+            }
+            else
+            {
+                fallMultiplier = 6f;
+            }
 
-            bodyAnimator.SetBool("isJumping", false);
+                bodyAnimator.SetBool("isJumping", false);
             gunAnimator.SetBool("isJumping", false);
             handAnimator.SetBool("isJumping", false);
         }

@@ -18,6 +18,7 @@ TagManager:
   - Battery
   - Level2Respawn
   - Toxic Mucus Dead
+  - Level1DifferentGround
   layers:
   - Default
   - TransparentFX
