@@ -19,6 +19,8 @@ TagManager:
   - Level2Respawn
   - Toxic Mucus Dead
   - Level1DifferentGround
+  - Level1DifferentGround2
+  - Level1DifferentGround1-2
   layers:
   - Default
   - TransparentFX
