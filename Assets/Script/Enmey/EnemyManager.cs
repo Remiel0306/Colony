@@ -7,8 +7,8 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] Enemy enemy;
     [SerializeField] EnemyAttack enemyAttack;
-    [SerializeField] PlayerManager playerManager;
 
+    PlayerManager playerManager;
     Vector3 startPosition;
     bool deadOnce = false;
 
@@ -16,6 +16,8 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         startPosition = enemyAttack.transform.position;
+
+        playerManager = FindObjectOfType<PlayerManager>();
     }
 
     // Update is called once per frame
@@ -23,9 +25,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (enemy.isDied)
         {
-            //enemy.isDied = false;
             enemy.StartCoroutine(enemy.Died());
-
+            enemy.isDied = false;
         }
 
         if (playerManager.isPlayerDead && !deadOnce)

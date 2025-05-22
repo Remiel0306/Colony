@@ -4,26 +4,37 @@ using UnityEngine;
 
 public class BugGroupControl : MonoBehaviour
 {
-    [SerializeField] private GameObject stage1Bugs;
-    [SerializeField] private GameObject stage2Bugs;
+    [SerializeField] GameObject teachLevel;
+    [SerializeField] GameObject Level1Bugs;
+    [SerializeField] GameObject level2Bugs;
 
     public void ActivateStage(int stage)
     {
+        if (stage == 0)
+        {
+            teachLevel.SetActive(true);
+            Level1Bugs.SetActive(false);
+            level2Bugs.SetActive(false);
+        }
+
         if (stage == 1)
         {
-            stage1Bugs.SetActive(true);
-            stage2Bugs.SetActive(false);
+            Level1Bugs.SetActive(true);
+            level2Bugs.SetActive(false);
+            teachLevel.SetActive(false);
         }
         else if (stage == 2)
         {
-            stage1Bugs.SetActive(false); // 可保留 true，如果第一關蟲子還需存在
-            stage2Bugs.SetActive(true);
+            Level1Bugs.SetActive(false); // 可保留 true，如果第一關蟲子還需存在
+            level2Bugs.SetActive(true);
+            teachLevel.SetActive(false);
         }
     }
 
     public void DeactivateAll()
     {
-        stage1Bugs.SetActive(false);
-        stage2Bugs.SetActive(false);
+        Level1Bugs.SetActive(false);
+        level2Bugs.SetActive(false);
+        teachLevel.SetActive(false);
     }
 }

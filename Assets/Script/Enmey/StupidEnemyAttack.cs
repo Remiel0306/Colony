@@ -1,4 +1,4 @@
-using Cinemachine;
+ï»¿using Cinemachine;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +10,7 @@ public class StupidEnemyAttack : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float facingCheck;
     [SerializeField] float boomTime;
+    [SerializeField] float startSpeed;
     [SerializeField] bool needFlip = false;
     [SerializeField] bool isMove = false;
     [SerializeField] bool isNeedFall = false;
@@ -24,14 +25,20 @@ public class StupidEnemyAttack : MonoBehaviour
     [SerializeField] ScreenShakeProfile boomProfile;
 
     CinemachineImpulseSource impulseSource;
+    PlayerControl playerControl;
     bool facingRight = true;
+    bool doingKnockBack = false;
+    float knockbackForce = 20f;
 
     void Start()
     {
         boomTime = Random.Range(5f, 30f);
         boomObj.SetActive(false);
+        startSpeed = speed;
 
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        playerControl = FindObjectOfType<PlayerControl>();
+
         StartCoroutine(BoomTimer());
     }
 
@@ -40,7 +47,7 @@ public class StupidEnemyAttack : MonoBehaviour
         if (isMove)
         {
             animator.SetBool("isMoving", true);
-            rb2D.velocity = new Vector2(speed * facingCheck * Time.deltaTime, rb2D.velocity.y);
+            rb2D.velocity = new Vector3(speed * facingCheck * Time.deltaTime, rb2D.velocity.y);
         }
 
         if (startGroundCheck)
@@ -62,18 +69,24 @@ public class StupidEnemyAttack : MonoBehaviour
             StartCoroutine(Boom());
         }
 
-        if (enemy.isShotgunShoot)
+        if(playerControl.transform.position.x < transform.position.x)
         {
-            float knockbackForce = 4f;
-            speed = 0f;
-            Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
-
-            rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-            enemy.isShotgunShoot = false;
+            facingRight = true;
         }
         else
         {
-            speed = 250f;
+            facingRight = false;
+        }
+
+        if (enemy.isShotgunShoot)
+        {
+            isMove = false;
+            speed = 0f;
+            Vector2 knockbackDirection = facingRight ? Vector2.right : Vector2.left;
+
+            rb2D.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            enemy.isShotgunShoot = false;
+            StartCoroutine(Wait());
         }
     }
 
@@ -128,7 +141,7 @@ public class StupidEnemyAttack : MonoBehaviour
         boomObj.SetActive(true);
         CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
 
-        yield return new WaitForSeconds(0.7f); // µ¥«Ý°Êµeµ²§ô
+        yield return new WaitForSeconds(0.6f); // ç­‰å¾…å‹•ç•«çµæŸ
         Destroy(boomBugFather);
     }
 
@@ -136,5 +149,12 @@ public class StupidEnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(boomTime);
         doBoom = true;
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(.5f);
+        enemy.isShotgunShoot = false;
+        speed = startSpeed;
+        isMove = true;
     }
 }

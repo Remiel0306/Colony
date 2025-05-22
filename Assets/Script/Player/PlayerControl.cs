@@ -23,6 +23,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float acceleration = 20f;
     [SerializeField] float deceleration = 30f;
 
+    [SerializeField] float boxBoomForce;  // 後座力大小，可以調整
+    Transform boxBoomOrigin;  // 紀錄炸彈位置
+
     public Rigidbody2D rb2D;
     Vector2 vecGravity;
 
@@ -36,6 +39,7 @@ public class PlayerControl : MonoBehaviour
     bool doublejump;
     bool isJumping;
     bool isBoom = false;
+    bool boxBoom = false;
     float jumpCounter;
     float coyoteTimeCounter;
     float jumpBufferCounter;
@@ -124,7 +128,7 @@ public class PlayerControl : MonoBehaviour
                 fallMultiplier = 6f;
             }
 
-                bodyAnimator.SetBool("isJumping", false);
+            bodyAnimator.SetBool("isJumping", false);
             gunAnimator.SetBool("isJumping", false);
             handAnimator.SetBool("isJumping", false);
         }
@@ -175,6 +179,15 @@ public class PlayerControl : MonoBehaviour
             boomOrigin = collision.transform;
             StartCoroutine(BoomKnockBack());
         }
+
+        if (collision.gameObject.CompareTag("EletricBoxBoom"))
+        {
+            boxBoom = true;
+            isBoom = true;
+            boxBoomOrigin = collision.transform;
+            StartCoroutine(BoxBoomKnockBack());
+
+        }
     }
 
     IEnumerator BoomKnockBack()
@@ -197,5 +210,24 @@ public class PlayerControl : MonoBehaviour
         aimAndShoot.shotgunIsShoot = false;
         speed = startSpeed;
         aimAndShoot.canMove = true;
+    }
+
+    IEnumerator BoxBoomKnockBack()
+    {
+        // 停止玩家移動
+        speed = 0f;
+        currentSpeed = 0f;
+
+        // 計算後座力方向 (玩家位置 - 炸彈位置) 的反方向
+        Vector2 knockBackDir = ((Vector2)transform.position - (Vector2)boxBoomOrigin.position).normalized;
+
+        rb2D.velocity = Vector2.zero;  // 先清除原本速度
+        rb2D.AddForce(knockBackDir * boxBoomForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.3f); // 後座力持續時間
+
+        speed = startSpeed;
+        boxBoom = false;
+        isBoom = false;
     }
 }
