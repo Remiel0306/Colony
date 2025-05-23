@@ -23,6 +23,7 @@ public class StupidEnemyAttack : MonoBehaviour
     [SerializeField] Rigidbody2D rb2D;
     [SerializeField] Animator animator;
     [SerializeField] ScreenShakeProfile boomProfile;
+    [SerializeField] float boomShakeDistance = 15f;
 
     CinemachineImpulseSource impulseSource;
     PlayerControl playerControl;
@@ -139,7 +140,10 @@ public class StupidEnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
 
         boomObj.SetActive(true);
-        CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
+        if (Vector2.Distance(transform.position, playerControl.transform.position) < boomShakeDistance)
+        {
+            CameraShakeManager.instance.ScreenShakeFromProfle(boomProfile, impulseSource);
+        }
 
         yield return new WaitForSeconds(0.6f); // 等待動畫結束
         Destroy(boomBugFather);

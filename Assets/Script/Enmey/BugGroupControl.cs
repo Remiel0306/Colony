@@ -8,6 +8,10 @@ public class BugGroupControl : MonoBehaviour
     [SerializeField] GameObject Level1Bugs;
     [SerializeField] GameObject level2Bugs;
 
+    private void Start()
+    {
+        ActivateStage(0);
+    }
     public void ActivateStage(int stage)
     {
         if (stage == 0)

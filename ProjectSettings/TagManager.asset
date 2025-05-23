@@ -22,6 +22,7 @@ TagManager:
   - Level1DifferentGround2
   - Level1DifferentGround1-2
   - EletricBoxBoom
+  - Level1Respawn
   layers:
   - Default
   - TransparentFX

@@ -64,7 +64,10 @@ public class PlayerManager : MonoBehaviour //
 
             audioManager.PlaySFX(audioManager.playerHurt);
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Battery"))
         {
             int healthToAdd = Mathf.Min(3, maxHealth - currentHealth);
@@ -72,10 +75,7 @@ public class PlayerManager : MonoBehaviour //
 
             collision.gameObject.SetActive(false);
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         if (collision.gameObject.CompareTag("Boom"))
         {
             currentHealth -= boomDamage;
@@ -108,10 +108,10 @@ public class PlayerManager : MonoBehaviour //
             audioManager.PlaySFX(audioManager.playerHurt);
         }
 
-        if (collision.gameObject.CompareTag("Level2Respawn"))
+        if (collision.gameObject.CompareTag("Level1Respawn"))
         {
             uiManager.currentRespowanPoinot = respawnPoint2.transform;
-            bugGroupControl.ActivateStage(2);
+            bugGroupControl.ActivateStage(1);
         }
     }
 
