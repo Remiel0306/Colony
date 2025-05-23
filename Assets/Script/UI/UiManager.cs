@@ -10,11 +10,11 @@ public class UiManager : MonoBehaviour
     [SerializeField] EnemyManager enemyManager;
     [SerializeField] FlyBugManager flyBugManager;
     [SerializeField] BugRespawnCtrl bugRespawnCtrl;
+    [SerializeField] GameObject level1Enemy;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] GameObject[] battery;
     [SerializeField] Image blackPannel;
-    [SerializeField] Image energyBar;
     [SerializeField] float maxEnergy;
     [SerializeField] float currentEnergy;
     [SerializeField] GameObject respawnBtn;
@@ -42,14 +42,11 @@ public class UiManager : MonoBehaviour
         cg.blocksRaycasts = false;
 
         currentRespowanPoinot = level1Point.transform;
-
-        UpdateEnergyBar();
     }
 
     void Update()
     {
         UpdateHp();
-        UpdateEnergyBar();
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -91,18 +88,9 @@ public class UiManager : MonoBehaviour
         enemyManager.ResetBugs();
         flyBugManager.FlyBugReset();
         bugRespawnCtrl.ResetAllFlyBug();
-    }
-    public void ConsumeEnergy(float amount)
-    {
-        currentEnergy = Mathf.Clamp(currentEnergy - amount, 0, maxEnergy);
-        UpdateEnergyBar();
-    }
 
-    void UpdateEnergyBar()
-    {
-        energyBar.fillAmount = currentEnergy / maxEnergy;
+        level1Enemy.SetActive(false);
     }
-
     IEnumerator FadeInBlackPanel()
     {
         yield return new WaitForSeconds(0.3f);

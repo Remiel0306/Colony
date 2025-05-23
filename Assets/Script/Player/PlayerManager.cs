@@ -84,6 +84,14 @@ public class PlayerManager : MonoBehaviour //
             audioManager.PlaySFX(audioManager.playerHurt);
         }
 
+        if (collision.gameObject.CompareTag("StupidBoom"))
+        {
+            currentHealth -= 1;
+            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
+            isChangeColor = true;
+            audioManager.PlaySFX(audioManager.playerHurt);
+        }
+
         if (collision.gameObject.CompareTag("BoomBug"))
         {
             currentHealth -= boomBugDamage;

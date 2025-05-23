@@ -23,7 +23,7 @@ public class StupidEnemyAttack : MonoBehaviour
     [SerializeField] Rigidbody2D rb2D;
     [SerializeField] Animator animator;
     [SerializeField] ScreenShakeProfile boomProfile;
-    [SerializeField] float boomShakeDistance = 15f;
+    [SerializeField] float boomShakeDistance = 8f;
 
     CinemachineImpulseSource impulseSource;
     PlayerControl playerControl;

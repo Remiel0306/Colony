@@ -70,6 +70,8 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
+
+            currentHealth--;
         }
     }
 

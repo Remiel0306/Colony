@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2301414529363518}
   - component: {fileID: 1955836142030815617}
   - component: {fileID: 1567163439185023823}
-  - component: {fileID: 9130227705386861031}
   - component: {fileID: 3648528201865560097}
   m_Layer: 0
   m_Name: Bug
@@ -270,7 +269,7 @@ MonoBehaviour:
   boomBugFather: {fileID: 4772980494460073872}
   boomObj: {fileID: 5946465524076426943}
   enemy: {fileID: 7988512436698282252}
-  speed: 250
+  speed: 300
   facingCheck: 1
   boomTime: 0
   startSpeed: 0
@@ -288,38 +287,7 @@ MonoBehaviour:
   rb2D: {fileID: 1135362721087117496}
   animator: {fileID: 6518199962720530961}
   boomProfile: {fileID: 11400000, guid: 6e3eeb606ed018141a631d3f172c707e, type: 2}
---- !u!114 &9130227705386861031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2511318943449550487}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77cdfb1c4c5d41e4ab8cc736e365aec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aimAndShoot: {fileID: 0}
-  facingRight: 0
-  playerTransform: {fileID: 0}
-  hitTrigger: {fileID: 4391089297532906751}
-  groundCheck: {fileID: 1898908030636493199}
-  boomProfile: {fileID: 11400000, guid: 6e3eeb606ed018141a631d3f172c707e, type: 2}
-  boomObj: {fileID: 5946465524076426943}
-  boomAnimator: {fileID: 6518199962720530961}
-  bodyCollider: {fileID: 4484124457312128467}
-  move: 0
-  showUp: 0
-  attackAgain: 0
-  stopAttackTime: 1.5
-  attackAgainTime: 1.5
-  showUpTime: 1.5
-  speed: 340
-  startSpeed: 0
-  childSR: {fileID: 3654816096390810639}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  bugBody: {fileID: 8646860033540582082}
+  boomShakeDistance: 8
 --- !u!114 &3648528201865560097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +376,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.06, y: -1, z: 0}
+  m_DefaultVelocity: {x: 0.04, y: -1, z: 0}
 --- !u!1 &4772980494460073872
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,13 +417,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4772980494460073872}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 652a1a1d0e650334c9696bb0c9734ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7988512436698282252}
-  enemyAttack: {fileID: 9130227705386861031}
+  enemyAttack: {fileID: 0}
 --- !u!1 &5946465524076426943
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +436,7 @@ GameObject:
   - component: {fileID: 4181734168860414882}
   m_Layer: 0
   m_Name: Boom
-  m_TagString: Boom
+  m_TagString: StupidBoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -843,7 +811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a189fc16e692047b890fe9610fafdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyAttack: {fileID: 9130227705386861031}
+  EnemyAttack: {fileID: 0}
   audioManager: {fileID: 2473830270525743501, guid: 21a410abe0f4bdf41b542602185c1eee, type: 3}
   spriteRenderer: {fileID: 3654816096390810639}
   knockBackForce: 1.4
@@ -879,7 +847,7 @@ MonoBehaviour:
   - {x: 0.5199995, y: -0.6050001, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 199060
+  m_InstanceId: 258798
   m_LocalBounds:
     m_Center: {x: -0.00000047683716, y: -0.000000059604645, z: 0}
     m_Extent: {x: 0.52, y: 0.605, z: 0}
