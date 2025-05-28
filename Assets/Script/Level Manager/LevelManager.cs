@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("生成設定")]
     [SerializeField] float earlySpawnInterval = 3f;   // 前15秒每隔 2 秒
-    [SerializeField] float lateSpawnInterval = 5f;    // 15秒後每隔 5 秒
+    [SerializeField] float lateSpawnInterval = 3f;    // 15秒後每隔 5 秒
     [SerializeField] float switchTime = 15f;
 
     public int level1BoxCounter = 0;

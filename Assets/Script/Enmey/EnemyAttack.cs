@@ -22,7 +22,7 @@ public class EnemyAttack : MonoBehaviour
     public float stopAttackTime = 1.5f;
     public float attackAgainTime = 1.5f;
     public float showUpTime = 1.5f;
-    public float speed;
+    public float speed = 400;
     public float startSpeed;
     bool isStopCoro = false;
 

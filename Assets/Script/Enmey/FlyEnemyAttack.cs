@@ -45,7 +45,7 @@ public class FlyEnemyAttack : MonoBehaviour
     void Start()
     {
         originalPosition = transform.position;
-        bodyCollider.enabled = false;
+        bodyCollider.enabled = true;
     }
     void Awake()
     {
@@ -190,8 +190,7 @@ public class FlyEnemyAttack : MonoBehaviour
     IEnumerator AttackAfterDelay()
     {
         yield return new WaitForSeconds(attackDelay);
-        
-        bodyCollider.enabled = true;
+      
         targetCurrentPosition = player.transform.position + Vector3.up * .15f;
         isAttacking = true;
         currentState = FlyBugState.Attack;
