@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 1118184691379512538}
   m_Layer: 0
   m_Name: StupidBoomBug
-  m_TagString: Untagged
+  m_TagString: StupidBoomBug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -847,7 +847,7 @@ MonoBehaviour:
   - {x: 0.5199995, y: -0.6050001, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 258798
+  m_InstanceId: 191560
   m_LocalBounds:
     m_Center: {x: -0.00000047683716, y: -0.000000059604645, z: 0}
     m_Extent: {x: 0.52, y: 0.605, z: 0}

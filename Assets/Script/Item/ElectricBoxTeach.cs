@@ -102,9 +102,10 @@ public class ElectricBoxTeach : MonoBehaviour
     {
         currentPower = Mathf.Min(currentPower + amount, maxPower);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Normal Bullet"))
+        if (electricBoxManager.openBox && collision.gameObject.CompareTag("Normal Bullet"))
         {
             currentPower++;
         }

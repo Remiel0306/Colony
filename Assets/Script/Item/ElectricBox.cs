@@ -70,6 +70,7 @@ public class ElectricBox : MonoBehaviour
             {
                 levelManager.level1BoxCounter++;
                 finishCharge = true;
+                electricBoxManager.openBox = false;
             }
         }
         if(currentPower <= 0)
@@ -77,6 +78,7 @@ public class ElectricBox : MonoBehaviour
             for (int i = 0; i < boxPowerLight.Length; i++)
             {
                 boxPowerLight[i].SetActive(false);
+                //electricBoxManager.openBox = false;
             }
         }
     }
@@ -88,7 +90,7 @@ public class ElectricBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Normal Bullet"))
+        if (electricBoxManager.openBox && collision.gameObject.CompareTag("Normal Bullet"))
         {
             currentPower++;
         }

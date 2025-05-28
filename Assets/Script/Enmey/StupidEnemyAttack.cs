@@ -33,7 +33,7 @@ public class StupidEnemyAttack : MonoBehaviour
 
     void Start()
     {
-        boomTime = Random.Range(5f, 30f);
+        boomTime = Random.Range(5f, 25f);
         boomObj.SetActive(false);
         startSpeed = speed;
 
@@ -45,6 +45,8 @@ public class StupidEnemyAttack : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(onLestGround);
+
         if (isMove)
         {
             animator.SetBool("isMoving", true);
@@ -100,11 +102,19 @@ public class StupidEnemyAttack : MonoBehaviour
             isMove = true;
         }
 
-        if (collision.gameObject.CompareTag("Level1DifferentGround2") || collision.gameObject.CompareTag("Level1DifferentGround1-2"))
+        if (collision.gameObject.CompareTag("Level1DifferentGround1-2"))
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            facingRight = false;
             facingCheck = -1;
+        }
+
+        if (collision.gameObject.CompareTag("Level1DifferentGround2"))
+        {
+            //transform.rotation = Quaternion.Euler(0, 0, 0);
+            Flip();
             facingRight = true;
+            facingCheck *= -1;
         }
 
         if (collision.gameObject.CompareTag("Ground"))

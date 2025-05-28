@@ -10,6 +10,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] EnemyManager enemyManager;
     [SerializeField] FlyBugManager flyBugManager;
     [SerializeField] BugRespawnCtrl bugRespawnCtrl;
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] BugGroupControl bugGroupControl;
     [SerializeField] GameObject level1Enemy;
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
@@ -23,6 +25,7 @@ public class UiManager : MonoBehaviour
 
     bool isPannelOpen = false;
     bool isDetectorOpen = false;
+    bool resetLevel = false;
 
     // 固定 panel 顏色為 RGB(225,225,225) = 0.882f
     private Color panelBaseColor = new Color(0.882f, 0.882f, 0.882f, 0f);
@@ -88,8 +91,7 @@ public class UiManager : MonoBehaviour
         enemyManager.ResetBugs();
         flyBugManager.FlyBugReset();
         bugRespawnCtrl.ResetAllFlyBug();
-
-        level1Enemy.SetActive(false);
+        resetLevel = true;
     }
     IEnumerator FadeInBlackPanel()
     {

@@ -19,8 +19,9 @@ public class PlayerManager : MonoBehaviour //
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
-    public int maxHealth = 6;
     public bool isRespawn = false;
+    public int levelCounter = 0;
+    public int maxHealth = 6;
     public int currentHealth;
     bool isChangeColor = false;
 
@@ -120,6 +121,7 @@ public class PlayerManager : MonoBehaviour //
         {
             uiManager.currentRespowanPoinot = respawnPoint2.transform;
             bugGroupControl.ActivateStage(1);
+            levelCounter = 1;
         }
     }
 

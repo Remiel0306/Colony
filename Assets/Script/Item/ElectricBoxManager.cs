@@ -5,6 +5,7 @@ using UnityEngine;
 public class ElectricBoxManager : MonoBehaviour
 {
     [SerializeField] ElectricBox electricBox;
+    [SerializeField] ElectricBoxTeach electricBoxTeach;
     [SerializeField] GameObject eKey;
 
     public bool openBox = false;
@@ -24,7 +25,7 @@ public class ElectricBoxManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 openBox = true;
-                eKey.SetActive(false);
+                //eKey.SetActive(false);
             }
         }
         else
@@ -51,6 +52,7 @@ public class ElectricBoxManager : MonoBehaviour
             if(electricBox.currentPower < 9)
             {
                 electricBox.currentPower = 0;
+                electricBoxTeach.currentPower = 0;
             }
         }
     }

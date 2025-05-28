@@ -24,6 +24,7 @@ TagManager:
   - EletricBoxBoom
   - Level1Respawn
   - StupidBoom
+  - StupidBoomBug
   layers:
   - Default
   - TransparentFX

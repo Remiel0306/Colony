@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] PlayerManager playerManager;
     [Header("門與重生點")]
     [SerializeField] GameObject level1Door;
     [SerializeField] GameObject respawnPoint1;
@@ -13,11 +14,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject bugPrefab;
 
     [Header("生成設定")]
-    [SerializeField] float earlySpawnInterval = 2f;   // 前15秒每隔 2 秒
-    [SerializeField] float lateSpawnInterval = 2f;    // 15秒後每隔 5 秒
+    [SerializeField] float earlySpawnInterval = 3f;   // 前15秒每隔 2 秒
+    [SerializeField] float lateSpawnInterval = 5f;    // 15秒後每隔 5 秒
     [SerializeField] float switchTime = 15f;
 
     public int level1BoxCounter = 0;
+    public bool canSpawn = true;
 
     private float spawnTimer = 0f;
     private float timer = 0f;
@@ -34,6 +36,7 @@ public class LevelManager : MonoBehaviour
         if (level1BoxCounter >= 3)
         {
             level1Door.SetActive(false);
+
         }
 
         // 計算時間並切換頻率
@@ -42,12 +45,21 @@ public class LevelManager : MonoBehaviour
         {
             currentInterval = lateSpawnInterval;
         }
+
+        if (playerManager.isPlayerDead)
+        {
+            DeleteAllStupidBoomBugs();
+        }
     }
 
     IEnumerator SpawnBugsRoutine()
     {
         while (true)
         {
+            // 如果箱子數達到 3，就停止生成
+            if (level1BoxCounter >= 3)
+                yield break; // 結束協程
+
             SpawnBug(respawnPoint1.transform.position);
             SpawnBug(respawnPoint2.transform.position);
             yield return new WaitForSeconds(currentInterval);
@@ -57,5 +69,14 @@ public class LevelManager : MonoBehaviour
     void SpawnBug(Vector2 position)
     {
         Instantiate(bugPrefab, position, Quaternion.identity);
+    }
+
+    void DeleteAllStupidBoomBugs()
+    {
+        // 尋找場景中所有的 GameObject
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("StupidBoomBug"))
+        {
+            Destroy(go);
+        }
     }
 }

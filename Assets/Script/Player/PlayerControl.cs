@@ -56,6 +56,8 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(rb2D.velocity.y);
+
         float facingCheck = 0f;
         if (Input.GetKey(KeyCode.A)) facingCheck = -1f;
         else if (Input.GetKey(KeyCode.D)) facingCheck = 1f;
@@ -186,7 +188,6 @@ public class PlayerControl : MonoBehaviour
             isBoom = true;
             boxBoomOrigin = collision.transform;
             StartCoroutine(BoxBoomKnockBack());
-
         }
     }
 
@@ -206,11 +207,22 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator ShotgunKnockBack()
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(0.28f);
+
+        // 記錄當前的 Y 軸速度
+        float cachedXVelocity = rb2D.velocity.x;
+
+        yield return new WaitForEndOfFrame(); // 確保這是最後一幀不能控制的時機
+
+        // 玩家可動
         aimAndShoot.shotgunIsShoot = false;
         speed = startSpeed;
         aimAndShoot.canMove = true;
+
+        // 延續原來的 Y 方向速度
+        rb2D.velocity = new Vector2(cachedXVelocity, rb2D.velocity.y);
     }
+
 
     IEnumerator BoxBoomKnockBack()
     {
