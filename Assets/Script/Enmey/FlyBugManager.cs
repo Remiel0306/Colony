@@ -45,7 +45,7 @@ public class FlyBugManager : MonoBehaviour
         flyEnemy.isFlyBugDied = false;
         flyEnemyAttack.transform.Rotate(0f, 0f, 0f);
         flyEnemyAttack.currentState = FlyBugState.Stay;
-        flyEnemyAttack.bodyCollider.enabled = false;
+        flyEnemyAttack.bodyCollider.enabled = true;
         flyEnemyAttack.flyBugAnimator.SetBool("isAttack", false);
         flyEnemyAttack.flyBugAnimator.Play("Fly Bug Idle");
 

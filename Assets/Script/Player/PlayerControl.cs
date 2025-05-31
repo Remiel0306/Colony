@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     public bool facingRight = true;
     public Transform groundCheck;
     public Transform wallCheck;
-    public LayerMask groundLayer;
+    public LayerMask groundLayer, enemyLayer;
 
     bool isTouchingWall;
     bool doublejump;
@@ -56,8 +56,6 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(rb2D.velocity.y);
-
         float facingCheck = 0f;
         if (Input.GetKey(KeyCode.A)) facingCheck = -1f;
         else if (Input.GetKey(KeyCode.D)) facingCheck = 1f;
@@ -165,7 +163,8 @@ public class PlayerControl : MonoBehaviour
 
     bool isGrounded()
     {
-        return Physics2D.OverlapBox(groundCheck.position, new Vector2(0.4f, 0.1f), 0, groundLayer);
+        LayerMask combinedMask = groundLayer | enemyLayer; // 組合地面與敵人圖層
+        return Physics2D.OverlapBox(groundCheck.position, new Vector2(0.4f, 0.1f), 0, combinedMask);
     }
 
     bool WallCheck()

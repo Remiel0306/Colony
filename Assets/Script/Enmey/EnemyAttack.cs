@@ -79,7 +79,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (enemyScript.isShotgunShoot && move)
         {
-            float knockbackForce = 4f;
+            float knockbackForce = 12;
             speed = 0f;
             Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;
 
@@ -88,7 +88,7 @@ public class EnemyAttack : MonoBehaviour
         }
         else if (enemyScript.isShotgunShoot && !move)
         {
-            float knockbackForce = 0.5f; // 可視情況調整，低於 1f 就很小了
+            float knockbackForce = 12f; // 可視情況調整，低於 1f 就很小了
             speed = 0f;
 
             Vector2 knockbackDirection = facingRight ? Vector2.left : Vector2.right;

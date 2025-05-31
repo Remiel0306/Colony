@@ -128,7 +128,7 @@ public class FlyEnemyAttack : MonoBehaviour
 
         if (flyEnemy.isStop)
         {
-            StartCoroutine(KnockbackFromPlayer(1f, 0.2f));
+            StartCoroutine(KnockbackFromPlayer(.8f, 0.1f));
             currentState = FlyBugState.StayToAttack;
         }
     }

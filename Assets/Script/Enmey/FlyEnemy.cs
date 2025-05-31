@@ -14,6 +14,7 @@ public class FlyEnemy : MonoBehaviour, IDamageable //
     [SerializeField] Collider2D flyBugBodyCollider;
     [SerializeField] Animator flyBugAnimator;
     [SerializeField] GameObject flyBugVisualRoot; // ¥]§t¹Ï¼h
+    [SerializeField] GameObject flyBugWhite;
 
     [Header("Runtime Flags")]
     public bool isFlyBugDied = false;
@@ -28,6 +29,8 @@ public class FlyEnemy : MonoBehaviour, IDamageable //
     {
         currentHealth = maxHealth;
         originalPosition = transform.position;
+
+        flyBugWhite.SetActive(false);
 
         if (flyEnemyAttack == null)
             flyEnemyAttack = GetComponentInChildren<FlyEnemyAttack>();
@@ -78,7 +81,7 @@ public class FlyEnemy : MonoBehaviour, IDamageable //
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -86,14 +89,29 @@ public class FlyEnemy : MonoBehaviour, IDamageable //
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Shotgun Bullet"))
         {
             isStop = true;
+            flyBugWhite.SetActive(true);
+            StartCoroutine(FlashBack());
         }
 
         audioManager?.PlayHitBugSFX(audioManager.hitBug);
+
+        if(collision.gameObject.CompareTag("Normal Bullet"))
+        {
+            flyBugWhite.SetActive(true);
+            StartCoroutine(FlashBack());
+        }
+    }
+
+    IEnumerator FlashBack()
+    {
+        yield return new WaitForSeconds(0.08f);
+
+        flyBugWhite.SetActive(false);
     }
 
     IEnumerator Died()

@@ -6,6 +6,7 @@ public class StupidEnemyAttack : MonoBehaviour
 {
     [SerializeField] GameObject boomBugFather;
     [SerializeField] GameObject boomObj;
+    [SerializeField] GameObject flashWhite;
     [SerializeField] Enemy enemy;
     [SerializeField] float speed;
     [SerializeField] float facingCheck;
@@ -45,8 +46,6 @@ public class StupidEnemyAttack : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(onLestGround);
-
         if (isMove)
         {
             animator.SetBool("isMoving", true);
@@ -99,6 +98,7 @@ public class StupidEnemyAttack : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
             facingRight = false;
+
             isMove = true;
         }
 
@@ -106,6 +106,7 @@ public class StupidEnemyAttack : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             facingRight = false;
+
             facingCheck = -1;
         }
 
@@ -122,6 +123,40 @@ public class StupidEnemyAttack : MonoBehaviour
             startGroundCheck = true;
             onLestGround = true;
         }
+
+        if (collision.gameObject.CompareTag("Shotgun Bullet"))
+        {
+            //isStop = true;
+            //isShotgunShoot = true;
+            //audioManager.PlayHitBugSFX(audioManager.hitBug);
+
+            flashWhite.SetActive(true);
+            StartCoroutine(FlashBack());
+
+            enemy.currentHealth -= 0.4f;
+        }
+
+        if (collision.gameObject.CompareTag("Normal Bullet"))
+        {
+            //audioManager.PlayHitBugSFX(audioManager.hitBug);
+
+            flashWhite.SetActive(true);
+            StartCoroutine(FlashBack());
+
+            enemy.currentHealth -= 1f;
+        }
+
+        if (enemy.currentHealth <= 0)
+        {
+            enemy.isDied = true;
+            StartCoroutine(enemy.Died());
+        }
+    }
+    IEnumerator FlashBack()
+    {
+        yield return new WaitForSeconds(.08f);
+
+        flashWhite.SetActive(false);
     }
 
     private void Flip()

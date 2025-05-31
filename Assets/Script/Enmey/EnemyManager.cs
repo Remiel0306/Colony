@@ -41,6 +41,7 @@ public class EnemyManager : MonoBehaviour
         playerManager.isPlayerDead = false;
         enemy.isDied = false;
         enemy.contactPlayer = false;
+        enemy.flashWhite.SetActive(false);
         deadOnce = false;
         //enemy.isStop = false;
         //enemyAttack.showUp = false;

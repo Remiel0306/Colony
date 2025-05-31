@@ -1,59 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] EnemyAttack EnemyAttack;
     [SerializeField] AudioManager audioManager;
-    [SerializeField] SpriteRenderer spriteRenderer; // 設定敵人的 SpriteRenderer
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] public GameObject flashWhite;
     [SerializeField] float knockBackForce = 2f;
 
     public float maxHealth = 5f;
+    public float currentHealth;
+
     public bool isDied = false;
     public bool contactPlayer = false;
     public bool isStop = false;
     public bool isShotgunShoot = false;
-    public float currentHealth;
+
     Rigidbody2D rb2DParent;
 
-    bool isChangeColor = false;
 
     void Start()
     {
         currentHealth = maxHealth;
         rb2DParent = GetComponentInParent<Rigidbody2D>();
+
+        flashWhite.SetActive(false);
     }
-    void Update()
-    {
-        if (isChangeColor)
-        {
-            StartCoroutine(FlashHit());
-            isChangeColor = false;
-        }
-    }
+
     public void Damage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        isChangeColor = true;
         audioManager.PlayHitBugSFX(audioManager.hitBug);
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             isDied = true;
-
             StartCoroutine(Died());
-        }
-    }
-
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            contactPlayer = true;
-
-            Debug.Log("is Contact Player " + contactPlayer);
         }
     }
 
@@ -64,27 +47,52 @@ public class Enemy : MonoBehaviour, IDamageable
             isStop = true;
             isShotgunShoot = true;
             audioManager.PlayHitBugSFX(audioManager.hitBug);
+
+            flashWhite.SetActive(true);
+            StartCoroutine(FlashBack());
+
+            Debug.Log("222");
+
+            currentHealth -= 0.4f;
         }
 
         if (collision.gameObject.CompareTag("Normal Bullet"))
         {
-            spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
-            isChangeColor = true;
+            audioManager.PlayHitBugSFX(audioManager.hitBug);
 
-            currentHealth--;
+            flashWhite.SetActive(true);
+            StartCoroutine(FlashBack());
+
+            Debug.Log("111");
+
+            currentHealth -= 1f;
+        }
+
+        if (currentHealth <= 0)
+        {
+            isDied = true;
+            StartCoroutine(Died());
         }
     }
 
-    private IEnumerator FlashHit()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        yield return new WaitForSeconds(.1f);
-        spriteRenderer.color = Color.white;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            contactPlayer = true;
+            Debug.Log("Contacted Player");
+        }
     }
 
+    IEnumerator FlashBack()
+    {
+        yield return new WaitForSeconds(.08f);
+
+        flashWhite.SetActive(false);
+    }
     public IEnumerator Died()
     {
-        yield return new WaitForSeconds(.7f);
-
+        yield return new WaitForSeconds(0.7f);
         gameObject.SetActive(false);
     }
 }
