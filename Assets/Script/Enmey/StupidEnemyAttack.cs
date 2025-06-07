@@ -122,6 +122,7 @@ public class StupidEnemyAttack : MonoBehaviour
         {
             startGroundCheck = true;
             onLestGround = true;
+            speed = 360f;
         }
 
         if (collision.gameObject.CompareTag("Shotgun Bullet"))

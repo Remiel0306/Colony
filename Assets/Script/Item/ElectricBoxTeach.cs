@@ -12,6 +12,7 @@ public class ElectricBoxTeach : MonoBehaviour
     [SerializeField] GameObject boxBoom;
     [SerializeField] GameObject[] boxPowerLight;
     [SerializeField] GameObject teachText;
+    [SerializeField] Animator doorOpen;
     [SerializeField] int maxPower = 9;
     [SerializeField] public int currentPower = 0;
     [SerializeField] bool shotgunHit = false;
@@ -48,11 +49,6 @@ public class ElectricBoxTeach : MonoBehaviour
             boxOpenLight.SetActive(false);
         }
 
-        if (currentPower >= maxPower)
-        {
-            //good
-        }
-
         if(Input.GetKeyDown(KeyCode.E))
         {
             openText = !openText;
@@ -82,7 +78,8 @@ public class ElectricBoxTeach : MonoBehaviour
             {
                 //levelManager.level1BoxCounter++;
                 finishCharge = true;
-                level1EnterDoor.SetActive(false);
+                doorOpen.SetBool("canOpen", true);
+                StartCoroutine(OpenDoor());
             }
         }
         if(currentPower <= 0)
@@ -128,5 +125,12 @@ public class ElectricBoxTeach : MonoBehaviour
 
         boxBoom.SetActive(false);
         shotgunAdded = false;
+    }
+
+    IEnumerator OpenDoor()
+    {
+        yield return new WaitForSeconds(1f);
+        doorOpen.SetBool("canOpen", false);
+        level1EnterDoor.SetActive(false);
     }
 }

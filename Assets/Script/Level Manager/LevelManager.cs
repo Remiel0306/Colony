@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject level1Door;
     [SerializeField] GameObject respawnPoint1;
     [SerializeField] GameObject respawnPoint2;
+    [SerializeField] Animator doorOpen;
 
     [Header("蟲子 prefab")]
     [SerializeField] GameObject bugPrefab;
@@ -35,8 +36,8 @@ public class LevelManager : MonoBehaviour
     {
         if (level1BoxCounter >= 3)
         {
-            level1Door.SetActive(false);
-
+            doorOpen.SetBool("canOpen", true);
+            StartCoroutine(DoorOpen());
         }
 
         // 計算時間並切換頻率
@@ -78,5 +79,12 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(go);
         }
+    }
+
+    IEnumerator DoorOpen()
+    {
+        yield return new WaitForSeconds(1f);
+        level1Door.SetActive(false);
+        doorOpen.SetBool("canOpen", false);
     }
 }

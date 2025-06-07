@@ -33,6 +33,7 @@ public class PlayerControl : MonoBehaviour
     public bool facingRight = true;
     public Transform groundCheck;
     public Transform wallCheck;
+    public Transform wallCheckLeft;
     public LayerMask groundLayer, enemyLayer;
 
     bool isTouchingWall;
