@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
+
 
 public class PlayerManager : MonoBehaviour //
 {
@@ -8,6 +12,7 @@ public class PlayerManager : MonoBehaviour //
     [SerializeField] UiManager uiManager;
     [SerializeField] AudioManager audioManager;
     [SerializeField] BugGroupControl bugGroupControl;
+    [SerializeField] CinemachineVirtualCamera cinemachine;
     [SerializeField] int boomDamage = 2;
     [SerializeField] int boomBugDamage = 1;
     [SerializeField] int flyBugDamage = 1;
@@ -15,7 +20,7 @@ public class PlayerManager : MonoBehaviour //
     [SerializeField] int respawnHealth = 3;
     [SerializeField] int batteryAddBullet = 8;
     [SerializeField] int batteryAddHealth = 3;
-    [SerializeField] Transform respawnPoint2;
+    [SerializeField] Transform respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6;
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
@@ -23,11 +28,17 @@ public class PlayerManager : MonoBehaviour //
     public int levelCounter = 0;
     public int maxHealth = 6;
     public int currentHealth;
+
+    CinemachineTransposer transposer;
+    Vector3 cinemachinOffest = new Vector3(3f, 0f, 0f);
+    float lerpSpeed = 2f;
     bool isChangeColor = false;
 
     void Start()
     {
         currentHealth = maxHealth;
+
+        transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
     }
 
     void Update()
@@ -43,12 +54,12 @@ public class PlayerManager : MonoBehaviour //
             gameObject.SetActive(false);
         }
 
-        if(isRespawn)
+        if (isRespawn)
         {
             currentHealth = respawnHealth;
         }
 
-        if(isChangeColor)
+        if (isChangeColor)
         {
             StartCoroutine(ChangeColorBack());
             isChangeColor = false;
@@ -57,7 +68,7 @@ public class PlayerManager : MonoBehaviour //
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Fly Bug"))
+        if (collision.gameObject.CompareTag("Fly Bug"))
         {
             currentHealth -= flyBugDamage;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
@@ -101,8 +112,8 @@ public class PlayerManager : MonoBehaviour //
             audioManager.PlaySFX(audioManager.playerHurt);
         }
 
-        if(collision.gameObject.CompareTag("Toxic Mucus"))
-        { 
+        if (collision.gameObject.CompareTag("Toxic Mucus"))
+        {
             currentHealth -= toxicMucus;
             spriteRenderer.color = new Color(.5f, .2f, .2f, 1f);
             isChangeColor = true;
@@ -123,11 +134,47 @@ public class PlayerManager : MonoBehaviour //
             bugGroupControl.ActivateStage(1);
             levelCounter = 1;
         }
+
+        if (collision.gameObject.CompareTag("Level2Respawn"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint3.transform;
+            bugGroupControl.ActivateStage(2);
+            levelCounter = 2;
+            StartCoroutine(LerpCameraOffset(new Vector3(3f, 0f, 0f), 1.5f));
+        }
+        if (collision.gameObject.CompareTag("Level2Respawn2"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint4.transform;
+        }
+        if (collision.gameObject.CompareTag("Level2Respawn3"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint5.transform;
+        }
+        if (collision.gameObject.CompareTag("Level2Respawn4"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint6.transform;
+        }
     }
 
     IEnumerator ChangeColorBack()
     {
         yield return new WaitForSeconds(.1f);
-        spriteRenderer.color = Color.white; 
+        spriteRenderer.color = Color.white;
+    }
+    IEnumerator LerpCameraOffset(Vector3 targetOffset, float duration)
+    {
+        if (transposer == null) yield break;
+
+        Vector3 startOffset = transposer.m_FollowOffset;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transposer.m_FollowOffset = targetOffset;
     }
 }

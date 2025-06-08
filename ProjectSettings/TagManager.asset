@@ -25,6 +25,9 @@ TagManager:
   - Level1Respawn
   - StupidBoom
   - StupidBoomBug
+  - Level2Respawn2
+  - Level2Respawn3
+  - Level2Respawn4
   layers:
   - Default
   - TransparentFX

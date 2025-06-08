@@ -2,33 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamFollow : MonoBehaviour
+public class CamFollowObj : MonoBehaviour
 {
-    [SerializeField] Transform Player;
-    
-    PlayerControl playerCrontrol;
+    [Header("References")]
+    [SerializeField] private Transform playerTransform;
+    [Header("Flip Rotation Stats")]
+    [SerializeField] private float flipRotationTime = 0.5f;
 
-    private Vector3 offset = new Vector3(.5f, .8f, 0f);
-    // Start is called before the first frame update
-    void Start()
+    private Coroutine turnCoroutine;
+    private PlayerControl player;
+    private bool isFacingRight;
+
+    private void Awake()
     {
-        playerCrontrol = Player.GetComponent<PlayerControl>();
+        player = playerTransform.gameObject.GetComponent<PlayerControl>();
+
+        isFacingRight = player.facingRight;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
-        // CamFollowOgj face left will becom z -10, it's not finish !!!!
+        transform.position = playerTransform.position;
+    }
 
-        if (playerCrontrol.facingRight)
+    public void CallTurn()
+    {
+        turnCoroutine = StartCoroutine(FlipYLerp());
+    }
+
+    private IEnumerator FlipYLerp()
+    {
+        float startRotation = transform.localEulerAngles.y;
+        float endRotationAmount = DetermineEndRotation();
+        float yRotation = 0f;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < flipRotationTime)
         {
-            transform.position = Player.position + offset;
+            elapsedTime += Time.deltaTime;
+
+            yRotation = Mathf.Lerp(startRotation, endRotationAmount, (elapsedTime / flipRotationTime));
+            transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+
+            yield return null;
+        }
+    }
+
+    private float DetermineEndRotation()
+    {
+        isFacingRight = !isFacingRight;
+
+        if (isFacingRight)
+        {
+            return 0f;
         }
         else
         {
-            Vector3 flippedOffset = new Vector3(-offset.x, offset.y, offset.z);
-            transform.position = Player.position + flippedOffset;
+            return 180f;
         }
     }
 }
