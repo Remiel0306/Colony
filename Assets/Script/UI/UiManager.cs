@@ -16,6 +16,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] GameObject[] battery;
+    [SerializeField] GameObject healthBox;
     [SerializeField] Image blackPannel;
     [SerializeField] float maxEnergy;
     [SerializeField] float currentEnergy;
@@ -61,6 +62,8 @@ public class UiManager : MonoBehaviour
         {
             StartCoroutine(FadeInBlackPanel());
             isPannelOpen = true;
+
+            healthBox.SetActive(false);
         }
     }
 
@@ -79,6 +82,7 @@ public class UiManager : MonoBehaviour
 
         playerManager.gameObject.transform.position = currentRespowanPoinot.position;
         playerManager.gameObject.SetActive(true);
+        healthBox.SetActive(true);
         playerManager.currentHealth = 3;
         playerManager.isPlayerDead = false;
         playerManager.spriteRenderer.color = Color.white;
