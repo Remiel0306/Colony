@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Unity.VisualScripting;
+using Unity.VisualScripting; // 您原始程式碼中包含此引用
 
 public class CameraManager : MonoBehaviour
 {
@@ -32,6 +32,10 @@ public class CameraManager : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         for (int i = 0; i < allVirtualCamera.Length; i++)
         {
@@ -57,6 +61,7 @@ public class CameraManager : MonoBehaviour
     {
         lerpYPanCoroutine = StartCoroutine(LerpYAction(isPlayerFalling));
     }
+
     private IEnumerator LerpYAction(bool isPlayerFalling)
     {
         IsLerpingYDamping = true;
@@ -102,9 +107,9 @@ public class CameraManager : MonoBehaviour
         Vector2 endPos = Vector2.zero;
         Vector2 startingPos = Vector2.zero;
 
-        if (!panToStaringPos)       //handle pan from trigger
+        if (!panToStaringPos)         //handle pan from trigger
         {
-            switch (panDirection)   //set the direction and distance
+            switch (panDirection)    //set the direction and distance
             {
                 case PanDirection.Up:
                     endPos = Vector2.up;
@@ -124,7 +129,7 @@ public class CameraManager : MonoBehaviour
             startingPos = startingTrackObjectOffest;
             endPos += startingPos;
         }
-        else    //handle the pan back to starting position
+        else     //handle the pan back to starting position
         {
             startingPos = framingTransposer.m_TrackedObjectOffset;
             endPos = startingTrackObjectOffest;
@@ -148,7 +153,7 @@ public class CameraManager : MonoBehaviour
 
     public void SwapCamera(CinemachineVirtualCamera cameraFromLeft, CinemachineVirtualCamera cameraFromRight, Vector2 triggerExitDirection)
     {
-        //If current camera is the camera from the left and our trigger exit direction  was on the right
+        //If current camera is the camera from the left and our trigger exit direction was on the right
         if (currentCamera == cameraFromLeft && triggerExitDirection.x > 0f)
         {
             //active the new camera
