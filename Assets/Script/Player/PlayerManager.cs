@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour //
     [SerializeField] int respawnHealth = 3;
     [SerializeField] int batteryAddBullet = 8;
     [SerializeField] int batteryAddHealth = 3;
-    [SerializeField] Transform respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6;
+    [SerializeField] Transform respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6, respawnPoint7, respawnPoint8;
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
@@ -153,6 +153,14 @@ public class PlayerManager : MonoBehaviour //
         if (collision.gameObject.CompareTag("Level2Respawn4"))
         {
             uiManager.currentRespowanPoinot = respawnPoint6.transform;
+        }
+        if (collision.gameObject.CompareTag("Level2Respawn6"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint7.transform;
+        }
+        if (collision.gameObject.CompareTag("Level2Respawn7"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint8.transform;
         }
     }
 

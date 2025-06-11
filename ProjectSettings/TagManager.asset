@@ -28,6 +28,8 @@ TagManager:
   - Level2Respawn2
   - Level2Respawn3
   - Level2Respawn4
+  - Level2Respawn5
+  - Level2Respawn6
   layers:
   - Default
   - TransparentFX
