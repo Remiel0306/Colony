@@ -13,8 +13,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] BugRespawnCtrl bugRespawnCtrl1_5;
     [SerializeField] LevelManager levelManager;
     [SerializeField] BugGroupControl bugGroupControl;
+    [SerializeField] Comic2 comic2;
     [SerializeField] GameObject level1Enemy;
-    [SerializeField] GameObject detectorUi;
     [SerializeField] GameObject[] healthBlocks;
     [SerializeField] GameObject[] battery;
     [SerializeField] GameObject healthBox;
@@ -34,7 +34,6 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
-        detectorUi.SetActive(false);
         respawnBtn.SetActive(false);
         blackPannel.color = panelBaseColor;
 
@@ -56,7 +55,6 @@ public class UiManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             isDetectorOpen = !isDetectorOpen;
-            detectorUi.SetActive(isDetectorOpen);
         }
 
         if (playerManager.isPlayerDead && !isPannelOpen)
@@ -175,5 +173,10 @@ public class UiManager : MonoBehaviour
         cg.interactable = false;
         cg.blocksRaycasts = false;
         respawnBtn.SetActive(false);
+    }
+
+    public void PageDownBtn()
+    {
+        comic2.pageCounter++;
     }
 }
