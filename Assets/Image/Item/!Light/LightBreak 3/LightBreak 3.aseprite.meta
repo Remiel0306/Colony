@@ -1,0 +1,472 @@
+fileFormatVersion: 2
+guid: 09cbdb43f5439164085c2e7f95c6d038
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: LightBreak 3_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 92
+      y: 4
+      width: 14
+      height: 10
+    spriteID: 740830339986ff44bbe1779f2317e719
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 92, y: 4}
+  - name: LightBreak 3_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 92
+      y: 22
+      width: 14
+      height: 10
+    spriteID: 3253aa9ad3ab3534daad17547c04ac19
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 92, y: 22}
+  - name: LightBreak 3_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 27
+      y: 40
+      width: 14
+      height: 10
+    spriteID: 68cf3190081b7034b8a2e4424a33a43c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 27, y: 40}
+  - name: LightBreak 3_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 49
+      y: 40
+      width: 14
+      height: 10
+    spriteID: 6a21e1a977dd2d94cb2bf1a743d84624
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 49, y: 40}
+  - name: LightBreak 3_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -1.1333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 64
+      y: 4
+      width: 20
+      height: 15
+    spriteID: aabe96a7ba7e5c146bb9ae17a1ffdf79
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 64, y: 4}
+  - name: LightBreak 3_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.52380955}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 34
+      y: 4
+      width: 22
+      height: 21
+    spriteID: 89da6de17f90f804b817e376f9b8ef3a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 34, y: 4}
+  - name: LightBreak 3_Frame_6
+    originalName: 
+    pivot: {x: 0.5, y: -0.14285715}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 22
+      height: 28
+    spriteID: 7fa2d39a96e48b44d96a445072c1534f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: LightBreak 3_Frame_7
+    originalName: 
+    pivot: {x: 0.53333336, y: -0.032258064}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 40
+      width: 15
+      height: 31
+    spriteID: 41d5037aceeab1141933129b017640a4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 40}
+  - name: LightBreak 3_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 71
+      y: 40
+      width: 14
+      height: 10
+    spriteID: ae1300565a35b6d40a864797e93e2f16
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 71, y: 40}
+  - name: LightBreak 3_Frame_9
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 93
+      y: 40
+      width: 14
+      height: 10
+    spriteID: c36469cdc6d82e44c872c07bbef623b7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 93, y: 40}
+  - name: LightBreak 3_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 27
+      y: 58
+      width: 14
+      height: 10
+    spriteID: 27a3a912693569a4996df33c21f77fc2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 27, y: 58}
+  - name: LightBreak 3_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: -2.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 49
+      y: 58
+      width: 14
+      height: 10
+    spriteID: 41f0a1a1f2605d84a9920a2b74fbd44b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 49, y: 58}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -953930032
+    name: LightBreak 3
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: LightBreak 3_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: 740830339986ff44bbe1779f2317e719
+    - name: LightBreak 3_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: 3253aa9ad3ab3534daad17547c04ac19
+    - name: LightBreak 3_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: 68cf3190081b7034b8a2e4424a33a43c
+    - name: LightBreak 3_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: 6a21e1a977dd2d94cb2bf1a743d84624
+    - name: LightBreak 3_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 6
+        y: 17
+        width: 20
+        height: 15
+      spriteId: aabe96a7ba7e5c146bb9ae17a1ffdf79
+    - name: LightBreak 3_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 5
+        y: 11
+        width: 22
+        height: 21
+      spriteId: 89da6de17f90f804b817e376f9b8ef3a
+    - name: LightBreak 3_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 5
+        y: 4
+        width: 22
+        height: 28
+      spriteId: 7fa2d39a96e48b44d96a445072c1534f
+    - name: LightBreak 3_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 8
+        y: 1
+        width: 15
+        height: 31
+      spriteId: 41d5037aceeab1141933129b017640a4
+    - name: LightBreak 3_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: ae1300565a35b6d40a864797e93e2f16
+    - name: LightBreak 3_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: c36469cdc6d82e44c872c07bbef623b7
+    - name: LightBreak 3_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: 27a3a912693569a4996df33c21f77fc2
+    - name: LightBreak 3_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 9
+        y: 22
+        width: 14
+        height: 10
+      spriteId: 41f0a1a1f2605d84a9920a2b74fbd44b
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 32, y: 32}

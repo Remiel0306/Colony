@@ -6,6 +6,7 @@ public class ElectricBox : MonoBehaviour
 {
     [SerializeField] ElectricBoxManager electricBoxManager;
     [SerializeField] LevelManager levelManager;
+    [SerializeField] Level2SceondBoxSystem levelSecond;
     [SerializeField] GameObject boxSwitchOpen;
     [SerializeField] GameObject boxOpenLight;
     [SerializeField] GameObject boxBoom;
@@ -69,6 +70,7 @@ public class ElectricBox : MonoBehaviour
             if (!finishCharge)
             {
                 levelManager.level1BoxCounter++;
+                levelSecond.boxCounter++;
                 finishCharge = true;
                 electricBoxManager.openBox = false;
             }
