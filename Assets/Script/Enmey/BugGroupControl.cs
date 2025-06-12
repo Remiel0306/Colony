@@ -8,7 +8,6 @@ public class BugGroupControl : MonoBehaviour
     [SerializeField] GameObject teachLevel;
     [SerializeField] GameObject Level1Bugs;
     [SerializeField] GameObject level1To2Bugs;
-    //[SerializeField] GameObject level3Bugs;
 
     bool isClose = false;
 
@@ -25,7 +24,6 @@ public class BugGroupControl : MonoBehaviour
                 teachLevel.SetActive(true);
                 Level1Bugs.SetActive(false);
                 level1To2Bugs.SetActive(false);
-                //level3Bugs.SetActive(false);
                 isClose = false;
             }
 
@@ -34,7 +32,6 @@ public class BugGroupControl : MonoBehaviour
                 teachLevel.SetActive(false);
                 Level1Bugs.SetActive(true);
                 level1To2Bugs.SetActive(false);
-                //level3Bugs.SetActive(false);
                 isClose = false;
             }
             else if (stage == 2)
@@ -42,7 +39,6 @@ public class BugGroupControl : MonoBehaviour
                 teachLevel.SetActive(false);
                 Level1Bugs.SetActive(false); 
                 level1To2Bugs.SetActive(true);
-                //level3Bugs.SetActive(false);
                 isClose = false;
             }
             else if(stage == 3)
@@ -50,7 +46,6 @@ public class BugGroupControl : MonoBehaviour
                 teachLevel.SetActive(false);
                 Level1Bugs.SetActive(false);
                 level1To2Bugs.SetActive(false);
-                //level3Bugs.SetActive(true);
                 isClose = false;
             }
         }

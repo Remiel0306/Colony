@@ -33,6 +33,8 @@ TagManager:
   - FlyBugClone
   - Level1.5Respawn
   - ForBoom
+  - Level2Respawn7
+  - Level2Respawn8
   layers:
   - Default
   - TransparentFX
