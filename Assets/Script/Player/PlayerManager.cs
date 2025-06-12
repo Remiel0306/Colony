@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour //
     [SerializeField] int respawnHealth = 3;
     [SerializeField] int batteryAddBullet = 8;
     [SerializeField] int batteryAddHealth = 3;
-    [SerializeField] Transform respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6, respawnPoint7, respawnPoint8;
+    [SerializeField] Transform respawnPoint1_5, respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6, respawnPoint7, respawnPoint8;
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
@@ -135,6 +135,13 @@ public class PlayerManager : MonoBehaviour //
             levelCounter = 1;
         }
 
+        if (collision.gameObject.CompareTag("Level1.5Respawn"))
+        {
+            uiManager.currentRespowanPoinot = respawnPoint1_5.transform;
+            bugGroupControl.ActivateStage(2);
+            levelCounter = 2;
+        }
+
         if (collision.gameObject.CompareTag("Level2Respawn"))
         {
             uiManager.currentRespowanPoinot = respawnPoint3.transform;
@@ -142,6 +149,7 @@ public class PlayerManager : MonoBehaviour //
             levelCounter = 2;
             StartCoroutine(LerpCameraOffset(new Vector3(3f, 0f, 0f), 1.5f));
         }
+
         if (collision.gameObject.CompareTag("Level2Respawn2"))
         {
             uiManager.currentRespowanPoinot = respawnPoint4.transform;
@@ -157,10 +165,6 @@ public class PlayerManager : MonoBehaviour //
         if (collision.gameObject.CompareTag("Level2Respawn6"))
         {
             uiManager.currentRespowanPoinot = respawnPoint7.transform;
-        }
-        if (collision.gameObject.CompareTag("Level2Respawn7"))
-        {
-            uiManager.currentRespowanPoinot = respawnPoint8.transform;
         }
     }
 

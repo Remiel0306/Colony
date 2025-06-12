@@ -253,7 +253,7 @@ public class FlyEnemyAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     IEnumerator ReturnToOriginalPosition()

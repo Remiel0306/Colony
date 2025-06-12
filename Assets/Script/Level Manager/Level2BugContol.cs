@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class Level2BugContol : MonoBehaviour
 {
-    [SerializeField] GameObject flyBugFrefab;
+    [SerializeField] GameObject flyBugPrefab;
+    [SerializeField] GameObject boomBugPrefab;
     [SerializeField] Transform bugCreat1, bugCreat2;
-    [SerializeField] private CreatBoomBug playerSettings;
-    [SerializeField] bool isPlayerIn = false;
+    [SerializeField] Transform boomBugCreat;
+    [SerializeField] FlyEnemy flyEnemy;
+    [SerializeField] bool isCreatBoom = false;
     [SerializeField] bool isCreatBugs = false;
 
+    public bool isPlayerIn = false;
+    SpriteRenderer boomSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,12 @@ public class Level2BugContol : MonoBehaviour
         {
             StartCoroutine(StartCreatBug());
             isCreatBugs = true;
+        }
+
+        if (isPlayerIn && !isCreatBoom)
+        {
+            StartCoroutine(StartCreatBoomBug());
+            isCreatBoom = true;
         }
     }
 
@@ -46,18 +56,30 @@ public class Level2BugContol : MonoBehaviour
 
     IEnumerator StartCreatBug()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
 
-        Instantiate(flyBugFrefab, bugCreat1.position, Quaternion.identity);
-        Instantiate(flyBugFrefab, bugCreat2.position, Quaternion.identity);
+        Instantiate(flyBugPrefab, bugCreat1.position, Quaternion.identity);
+        Instantiate(flyBugPrefab, bugCreat2.position, Quaternion.identity);
 
         isCreatBugs = false;
     }
-}
 
-[System.Serializable]
-public class CreatBoomBug
-{
-    [SerializeField] Transform boomBugCreat;
-    [SerializeField] GameObject boomBugFrefab;
+    IEnumerator StartCreatBoomBug()
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (boomBugPrefab != null)
+        {
+            GameObject boomBug = Instantiate(boomBugPrefab, boomBugCreat.position, Quaternion.identity);
+
+            // 這裡才去抓 SpriteRenderer
+            SpriteRenderer boomSprite = boomBug.GetComponent<SpriteRenderer>();
+            if (boomSprite != null)
+            {
+                boomSprite.flipX = false;
+            }
+        }
+
+        isCreatBoom = false;
+    }
 }

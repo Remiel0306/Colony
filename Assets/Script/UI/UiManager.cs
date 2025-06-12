@@ -10,6 +10,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] EnemyManager enemyManager;
     [SerializeField] FlyBugManager flyBugManager;
     [SerializeField] BugRespawnCtrl bugRespawnCtrl;
+    [SerializeField] BugRespawnCtrl bugRespawnCtrl1_5;
     [SerializeField] LevelManager levelManager;
     [SerializeField] BugGroupControl bugGroupControl;
     [SerializeField] GameObject level1Enemy;
@@ -95,6 +96,8 @@ public class UiManager : MonoBehaviour
         enemyManager.ResetBugs();
         flyBugManager.FlyBugReset();
         bugRespawnCtrl.ResetAllFlyBug();
+        bugRespawnCtrl1_5.ResetAllFlyBug();
+        bugRespawnCtrl.ClearAllFlyBugs();
         resetLevel = true;
     }
     IEnumerator FadeInBlackPanel()

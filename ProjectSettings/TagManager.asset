@@ -30,6 +30,9 @@ TagManager:
   - Level2Respawn4
   - Level2Respawn5
   - Level2Respawn6
+  - FlyBugClone
+  - Level1.5Respawn
+  - ForBoom
   layers:
   - Default
   - TransparentFX

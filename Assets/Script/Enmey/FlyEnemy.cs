@@ -20,6 +20,7 @@ public class FlyEnemy : MonoBehaviour, IDamageable //
     public bool isFlyBugDied = false;
     public bool contactPlayer = false;
     public bool isStop = false;
+    public bool canDestory = false;
 
     [HideInInspector] public float currentHealth;
     Vector3 originalPosition;
@@ -117,6 +118,7 @@ public class FlyEnemy : MonoBehaviour, IDamageable //
     IEnumerator Died()
     {
         yield return new WaitForSeconds(0.5f);
+        canDestory = true;
         flyBugVisualRoot?.SetActive(false);
     }
 

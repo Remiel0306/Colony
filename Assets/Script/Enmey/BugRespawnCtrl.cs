@@ -10,6 +10,9 @@ public class BugRespawnCtrl : MonoBehaviour
     [Header("-----BoomBug-----")]
     [SerializeField] EnemyManager[] enemyManager;
     [SerializeField] GameObject[] boomBugs;
+    [Header("-----Prefab Enemy-----")]
+    [SerializeField] FlyEnemyType2 flyBugType2;
+    [SerializeField] DeletThatShit deletThatShit;
 
     //Start is called before the first frame update
     void Start()
@@ -25,7 +28,7 @@ public class BugRespawnCtrl : MonoBehaviour
 
     public void ResetAllFlyBug()
     {
-        for(int i = 0; i < flyBugs.Length; i++)
+        for (int i = 0; i < flyBugs.Length; i++)
         {
             flyBugs[i].SetActive(true);
             flyBugManager[i].FlyBugReset();
@@ -35,6 +38,18 @@ public class BugRespawnCtrl : MonoBehaviour
         {
             boomBugs[i].SetActive(true);
             enemyManager[i].ResetBugs();
+        }
+
+        //flyBugType2.Destory();
+        //deletThatShit.Destory();
+    }
+
+    public void ClearAllFlyBugs()
+    {
+        GameObject[] allBugs = GameObject.FindGameObjectsWithTag("FlyBugClone");
+        foreach (GameObject bug in allBugs)
+        {
+            Destroy(bug);
         }
     }
 }
