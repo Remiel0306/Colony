@@ -35,6 +35,7 @@ TagManager:
   - ForBoom
   - Level2Respawn7
   - Level2Respawn8
+  - Light
   layers:
   - Default
   - TransparentFX
@@ -51,7 +52,7 @@ TagManager:
   - CorssGround
   - Player
   - ElectricBox
-  - 
+  - Light
   - 
   - 
   - 

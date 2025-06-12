@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (level1BoxCounter >= 4)
+        if (level1BoxCounter >= 3)
         {
             doorOpen.SetBool("canOpen", true);
             StartCoroutine(DoorOpen());
@@ -58,7 +58,7 @@ public class LevelManager : MonoBehaviour
         while (true)
         {
             // 如果箱子數達到 3，就停止生成
-            if (level1BoxCounter >= 4)
+            if (level1BoxCounter >= 3)
                 yield break; // 結束協程
 
             SpawnBug(respawnPoint1.transform.position);

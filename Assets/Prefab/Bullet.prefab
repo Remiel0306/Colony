@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatDestoryBullet:
     serializedVersion: 2
-    m_Bits: 17416
+    m_Bits: 50184
   destoryTime: 0.5
   normalBulletSpeed: 25
   normalBulletDamage: 1

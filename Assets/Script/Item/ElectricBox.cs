@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,21 +17,19 @@ public class ElectricBox : MonoBehaviour
 
     bool shotgunAdded = false;
     bool finishCharge = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         boxSwitchOpen.SetActive(false);
         boxOpenLight.SetActive(false);
         boxBoom.SetActive(false);
 
-        for(int i = 0; i < boxPowerLight.Length; i++)
+        for (int i = 0; i < boxPowerLight.Length; i++)
         {
             boxPowerLight[i].SetActive(false);
         }
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (electricBoxManager.openBox)
@@ -45,14 +43,14 @@ public class ElectricBox : MonoBehaviour
             boxOpenLight.SetActive(false);
         }
 
-        if (currentPower >= maxPower)
+        // ✅ 判斷電量達標並只執行一次
+        if (currentPower >= maxPower && !finishCharge)
         {
-            //good
-        }
-
-        if (shotgunHit)
-        {
-
+            finishCharge = true;
+            boxPowerLight[2].SetActive(true);
+            levelManager.level1BoxCounter++;
+            levelSecond.boxCounter++;
+            electricBoxManager.openBox = false;
         }
 
         if (currentPower >= 3)
@@ -63,24 +61,11 @@ public class ElectricBox : MonoBehaviour
         {
             boxPowerLight[1].SetActive(true);
         }
-        if (currentPower >= 9)
-        {
-            boxPowerLight[2].SetActive(true);
-
-            if (!finishCharge)
-            {
-                levelManager.level1BoxCounter++;
-                levelSecond.boxCounter++;
-                finishCharge = true;
-                electricBoxManager.openBox = false;
-            }
-        }
-        if(currentPower <= 0)
+        if (currentPower <= 0)
         {
             for (int i = 0; i < boxPowerLight.Length; i++)
             {
                 boxPowerLight[i].SetActive(false);
-                //electricBoxManager.openBox = false;
             }
         }
     }
@@ -99,7 +84,7 @@ public class ElectricBox : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Shotgun Bullet"))
         {
-            if (electricBoxManager.openBox && !shotgunAdded && currentPower < 9)
+            if (electricBoxManager.openBox && !shotgunAdded && currentPower < maxPower)
             {
                 AddPower(6);
                 shotgunAdded = true;
@@ -111,8 +96,7 @@ public class ElectricBox : MonoBehaviour
 
     IEnumerator StopBoom()
     {
-        yield return new WaitForSeconds(.2f);
-
+        yield return new WaitForSeconds(0.2f);
         boxBoom.SetActive(false);
         shotgunAdded = false;
     }

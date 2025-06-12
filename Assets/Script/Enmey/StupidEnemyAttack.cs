@@ -92,12 +92,6 @@ public class StupidEnemyAttack : MonoBehaviour
             enemy.isShotgunShoot = false;
             StartCoroutine(Wait());
         }
-
-        if (!isFlip)
-        {
-            StartCoroutine(AutoFlip());
-            isFlip = true;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -153,11 +147,6 @@ public class StupidEnemyAttack : MonoBehaviour
             StartCoroutine(FlashBack());
 
             enemy.currentHealth -= 1f;
-        }
-
-        if (collision.gameObject.CompareTag("ForBoom"))
-        {
-            onGrass = true;
         }
 
         if (enemy.currentHealth <= 0)
@@ -219,14 +208,5 @@ public class StupidEnemyAttack : MonoBehaviour
         enemy.isShotgunShoot = false;
         speed = startSpeed;
         isMove = true;
-    }
-
-    IEnumerator AutoFlip()
-    {
-        yield return new WaitForSeconds(4f);
-
-        Flip();
-
-        isFlip = false;
     }
 }
