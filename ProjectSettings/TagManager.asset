@@ -36,6 +36,8 @@ TagManager:
   - Level2Respawn7
   - Level2Respawn8
   - Light
+  - TeachRespawn2
+  - StupidBoomBug2
   layers:
   - Default
   - TransparentFX

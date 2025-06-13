@@ -5,13 +5,18 @@ using UnityEngine.UI;
 
 public class Comic2 : MonoBehaviour
 {
+    [SerializeField] GameObject player;
+    [SerializeField] Rigidbody2D playerRb2D;
     [SerializeField] GameObject pageDownBtn;
     [SerializeField] GameObject blackGround;
     [SerializeField] GameObject[] comicPage;
+    [SerializeField] Transform fallPosition;
     [SerializeField] bool openComic = false;
     [SerializeField] bool openOnce = false;
     [SerializeField] bool isFinish = false;
     [SerializeField] public int pageCounter = 0;
+
+    bool shouldTeleport = false;
 
     void Start()
     {
@@ -75,7 +80,27 @@ public class Comic2 : MonoBehaviour
                 blackGround.SetActive(false);
                 pageDownBtn.SetActive(false);
                 isFinish = true;
+                shouldTeleport = true;
+                openComic = true;
             }
+        }
+
+
+    }
+
+    void FixedUpdate()
+    {
+        if (shouldTeleport)
+        {
+            //player.gameObject.transform.position = fallPosition.transform.position;
+
+            playerRb2D.velocity = Vector2.zero;
+            playerRb2D.MovePosition(fallPosition.transform.position);
+
+            Debug.Log("12456");
+            isFinish = false;
+            shouldTeleport = false;
+            openOnce = true;
         }
     }
 

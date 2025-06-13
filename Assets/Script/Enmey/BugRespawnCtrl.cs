@@ -51,5 +51,11 @@ public class BugRespawnCtrl : MonoBehaviour
         {
             Destroy(bug);
         }
+
+        GameObject[] allBugs2 = GameObject.FindGameObjectsWithTag("StupidBoomBug2");
+        foreach (GameObject bug in allBugs2)
+        {
+            Destroy(bug);
+        }
     }
 }

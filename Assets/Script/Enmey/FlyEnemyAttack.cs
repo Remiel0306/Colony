@@ -120,7 +120,7 @@ public class FlyEnemyAttack : MonoBehaviour
         {
             currentState = FlyBugState.Stay;
             flyBugAnimator.Play("Fly Bug Death");
-            bodyCollider.enabled = false;
+            //bodyCollider.enabled = false;
             flyBugManager.notReset = true;
             aimAndShoot.isKillFlyBug = true;
             flyEnemyScript.isFlyBugDied = false;
@@ -338,7 +338,7 @@ public class FlyEnemyAttack : MonoBehaviour
 
         if (bodyCollider != null)
         {
-            bodyCollider.enabled = false;
+            //bodyCollider.enabled = false;
         }
     }
 }

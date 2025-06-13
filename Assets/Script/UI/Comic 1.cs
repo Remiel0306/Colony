@@ -2,48 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Comic1 : MonoBehaviour
 {
-    [SerializeField] GameObject blackGround;
     [SerializeField] GameObject[] comicPage;
-    [SerializeField] bool openComic = false;
-    [SerializeField] bool openOnce = false;
-    [SerializeField] int pageCounter = 0;
+    [SerializeField] GameObject pageDownBtn;
+    public int pageCounter = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        pageCounter = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(openComic && !openOnce)
+        //if(pageCounter <= 0)
+        //{
+        //    for (int i = pageCounter; i < comicPage.Length; i++)
+        //    {
+        //        comicPage[i].SetActive(i == pageCounter);
+        //    }
+        //}
+        for (int i = pageCounter; i < comicPage.Length; i++)
+        {
+            comicPage[i].SetActive(i == pageCounter);
+        }
+
+        if (pageCounter > comicPage.Length)
         {
             for (int i = pageCounter; i < comicPage.Length; i++)
             {
-                comicPage[i].SetActive(i == pageCounter);
+                comicPage[i].SetActive(false);
             }
+
+            SceneManager.LoadScene("GameScence");
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            openComic = true;
-        }
-    }
-
-    public void PageUpButton()
-    {
-        pageCounter++;
-    }
-
-    public void PageDownButton()
-    {
-        pageCounter--;
     }
 }

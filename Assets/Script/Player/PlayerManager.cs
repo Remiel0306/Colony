@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour //
     [SerializeField] int respawnHealth = 3;
     [SerializeField] int batteryAddBullet = 8;
     [SerializeField] int batteryAddHealth = 3;
-    [SerializeField] Transform respawnPoint1_5, respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6, respawnPoint7, respawnPoint8, respawnPoint9, respawnPoint10;
+    [SerializeField] Transform teachRespawn2, respawnPoint1_5, respawnPoint2, respawnPoint3, respawnPoint4, respawnPoint5, respawnPoint6, respawnPoint7, respawnPoint8, respawnPoint9, respawnPoint10;
 
     public SpriteRenderer spriteRenderer;
     public bool isPlayerDead = false;
@@ -135,6 +135,11 @@ public class PlayerManager : MonoBehaviour //
             levelCounter = 1;
         }
 
+        if (collision.gameObject.CompareTag("TeachRespawn2"))
+        {
+            uiManager.currentRespowanPoinot = teachRespawn2.transform;
+        }
+
         if (collision.gameObject.CompareTag("Level1.5Respawn"))
         {
             uiManager.currentRespowanPoinot = respawnPoint1_5.transform;
@@ -200,5 +205,10 @@ public class PlayerManager : MonoBehaviour //
         }
 
         transposer.m_FollowOffset = targetOffset;
+    }
+
+    public void ResetPlayer()
+    {
+        currentHealth = 0;
     }
 }
